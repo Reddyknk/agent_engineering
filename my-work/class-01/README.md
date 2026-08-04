@@ -2,7 +2,7 @@
 
 ## Student Information
 - Name:Naveen Konreddy
-- GitHub username:
+- GitHub username:Reddyknk
 - Date completed:080326
 
 ## Workspace Setup
@@ -13,7 +13,7 @@
 - Committed and pushed
 
 ## What I Learned
-Write a short reflection.
+Learned how to fork and clone in Antigravity ide. Creating a working folder and making changes to file and then committing and pushing it to git hub.
 
 ## Challenges
-Describe what you fixed or learned
+Authenticating Antigravity with github
