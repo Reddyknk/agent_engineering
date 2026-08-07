@@ -1,0 +1,22 @@
+account:
+  company_name: Corner Market
+  industry: consumer_retail
+  employee_count: 350
+  region: united_states
+  buying_signals: []
+objective: Evaluate Corner Market for WidgetWare solutions.
+evidence:
+  - claim: Corner Market opened a new convenience retail outlet.
+    classification: verified_fact
+    source:
+      name: Corner Market News
+      url: https://example.com/fixtures/corner-news
+      retrieved_at: 2026-08-07
+    excerpt: Corner Market expanded its retail presence today.
+state:
+  current_step: start
+expected:
+  meets_minimum_employee_count: false
+  industry_is_preferred: false
+  region_is_preferred: true
+  is_explicitly_excluded: true

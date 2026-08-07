@@ -1,0 +1,8 @@
+README.md
+pyproject.toml
+src/widgetware_sdr/__init__.py
+src/widgetware_sdr_class_03.egg-info/PKG-INFO
+src/widgetware_sdr_class_03.egg-info/SOURCES.txt
+src/widgetware_sdr_class_03.egg-info/dependency_links.txt
+src/widgetware_sdr_class_03.egg-info/requires.txt
+src/widgetware_sdr_class_03.egg-info/top_level.txt

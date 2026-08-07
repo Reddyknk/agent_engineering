@@ -1,0 +1,15 @@
+account:
+  company_name: Unknown Manufacturing Group
+  industry: unknown
+  employee_count: null
+  region: unknown
+  buying_signals: []
+objective: Evaluate Unknown Manufacturing Group for WidgetWare solutions.
+evidence: []
+state:
+  current_step: start
+expected:
+  meets_minimum_employee_count: null
+  industry_is_preferred: false
+  region_is_preferred: false
+  is_explicitly_excluded: false

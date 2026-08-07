@@ -1,0 +1,25 @@
+account:
+  company_name: Conflict Corp
+  industry: aerospace_manufacturing
+  employee_count: 8000
+  region: united_states
+  buying_signals:
+    - plant_modernization
+objective: Evaluate Conflict Corp.
+evidence:
+  - claim: Conflict Corp has established a major aerospace manufacturing facility.
+    classification: verified_fact
+    source:
+      name: PR Newswire
+      url: https://example.com/fixtures/pr-newswire
+      retrieved_at: 2026-08-07
+    excerpt: Conflict Corp is opening a new aerospace assembly plant.
+  - claim: Conflict Corp has canceled all plans for aerospace assembly plant due to restructuring.
+    classification: conflict
+    source:
+      name: Tech Assembly Journal
+      url: https://example.com/fixtures/tech-journal
+      retrieved_at: 2026-08-07
+    excerpt: Conflict Corp shut down the Seattle aerospace operations.
+state:
+  current_step: start
