@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="sage">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AuraFocus — Mindful Pomodoro & Productivity</title>
+  <meta name="description" content="A calm, aesthetic Pomodoro timer and productivity suite with ambient soundscapes, task management, and mindful breathing exercises.">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Ambient Animated Background Canvas -->
+  <canvas id="bgCanvas"></canvas>
+  <div class="glass-overlay"></div>
+
+  <!-- App Header -->
+  <header class="app-header">
+    <div class="brand">
+      <div class="brand-logo">
+        <i data-lucide="sparkles"></i>
+      </div>
+      <span class="brand-name">AuraFocus</span>
+    </div>
+
+    <nav class="nav-links">
+      <button class="nav-btn active" data-tab="timer" title="Timer">
+        <i data-lucide="timer"></i>
+        <span>Focus</span>
+      </button>
+      <button class="nav-btn" data-tab="tasks" title="Tasks">
+        <i data-lucide="check-square"></i>
+        <span>Tasks</span>
+      </button>
+      <button class="nav-btn" data-tab="stats" title="Analytics">
+        <i data-lucide="bar-chart-3"></i>
+        <span>Stats</span>
+      </button>
+      <button class="nav-btn" data-tab="breathing" title="Breathing">
+        <i data-lucide="wind"></i>
+        <span>Breathe</span>
+      </button>
+    </nav>
+
+    <div class="header-actions">
+      <!-- Ambient Sound Button -->
+      <button class="icon-btn" id="ambientToggleBtn" title="Ambient Sounds">
+        <i data-lucide="headphones"></i>
+        <span class="badge" id="ambientBadge" style="display: none;"></span>
+      </button>
+      <!-- Zen Fullscreen Mode -->
+      <button class="icon-btn" id="zenToggleBtn" title="Zen Mode (Distraction-Free)">
+        <i data-lucide="maximize-2"></i>
+      </button>
+      <!-- Theme Selector Dropdown -->
+      <div class="theme-dropdown-wrapper">
+        <button class="icon-btn" id="themeBtn" title="Change Theme">
+          <i data-lucide="palette"></i>
+        </button>
+        <div class="theme-menu" id="themeMenu">
+          <button class="theme-option active" data-theme-val="sage">
+            <span class="theme-dot sage-dot"></span> Sage Forest
+          </button>
+          <button class="theme-option" data-theme-val="fog">
+            <span class="theme-dot fog-dot"></span> Nordic Fog
+          </button>
+          <button class="theme-option" data-theme-val="sunset">
+            <span class="theme-dot sunset-dot"></span> Sunset Glow
+          </button>
+          <button class="theme-option" data-theme-val="midnight">
+            <span class="theme-dot midnight-dot"></span> Deep Midnight
+          </button>
+          <button class="theme-option" data-theme-val="sand">
+            <span class="theme-dot sand-dot"></span> Warm Sand
+          </button>
+        </div>
+      </div>
+      <!-- Settings Modal Button -->
+      <button class="icon-btn" id="settingsBtn" title="Settings">
+        <i data-lucide="settings"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="app-main">
+    
+    <!-- TAB 1: TIMER / FOCUS -->
+    <section class="tab-content active" id="tab-timer">
+      <div class="timer-container">
+        
+        <!-- Mode Tabs -->
+        <div class="mode-selector">
+          <button class="mode-btn active" data-mode="pomodoro">Pomodoro</button>
+          <button class="mode-btn" data-mode="shortBreak">Short Break</button>
+          <button class="mode-btn" data-mode="longBreak">Long Break</button>
+        </div>
+
+        <!-- Active Task Indicator -->
+        <div class="active-task-banner" id="activeTaskBanner">
+          <i data-lucide="target" class="task-icon"></i>
+          <span class="active-task-title" id="activeTaskTitle">Select a task to focus on</span>
+          <button class="clear-task-btn" id="clearActiveTaskBtn" title="Clear active task" style="display:none;">
+            <i data-lucide="x"></i>
+          </button>
+        </div>
+
+        <!-- SVG Circular Countdown Timer -->
+        <div class="timer-display-wrapper">
+          <svg class="timer-svg" viewBox="0 0 300 300">
+            <defs>
+              <linearGradient id="timerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="var(--accent-primary)" />
+                <stop offset="100%" stop-color="var(--accent-secondary)" />
+              </linearGradient>
+              <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="6" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+            <circle class="timer-circle-bg" cx="150" cy="150" r="130"></circle>
+            <circle class="timer-circle-progress" id="timerProgressCircle" cx="150" cy="150" r="130"></circle>
+          </svg>
+          
+          <div class="timer-inner">
+            <div class="timer-time" id="timerTime">25:00</div>
+            <div class="timer-phase-label" id="timerPhaseLabel">Time to Focus</div>
+            <div class="cycle-dots" id="cycleDots">
+              <span class="cycle-dot active"></span>
+              <span class="cycle-dot"></span>
+              <span class="cycle-dot"></span>
+              <span class="cycle-dot"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Timer Primary Controls -->
+        <div class="timer-controls">
+          <button class="control-btn secondary-btn" id="resetBtn" title="Reset Timer">
+            <i data-lucide="rotate-ccw"></i>
+          </button>
+          <button class="control-btn primary-btn" id="startPauseBtn" title="Start Focus">
+            <i data-lucide="play" id="startPauseIcon"></i>
+            <span id="startPauseText">Start</span>
+          </button>
+          <button class="control-btn secondary-btn" id="skipBtn" title="Skip Phase">
+            <i data-lucide="skip-forward"></i>
+          </button>
+        </div>
+
+        <!-- Quote of the Moment -->
+        <div class="quote-container" id="quoteContainer">
+          <p class="quote-text" id="quoteText">"Focus on being productive instead of busy."</p>
+          <span class="quote-author" id="quoteAuthor">— Tim Ferriss</span>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TAB 2: TASKS -->
+    <section class="tab-content" id="tab-tasks">
+      <div class="tasks-container glass-card">
+        <div class="card-header">
+          <h2>Task Management</h2>
+          <div class="task-stats-brief">
+            <span id="taskCompletedCount">0/0 Tasks</span>
+          </div>
+        </div>
+
+        <!-- Task Input Box -->
+        <form class="task-form" id="taskForm">
+          <div class="input-group">
+            <i data-lucide="plus-circle" class="input-icon"></i>
+            <input type="text" id="taskInput" placeholder="What are you working on?" required autocomplete="off">
+          </div>
+          <div class="task-pomo-est">
+            <label for="pomoEstInput">Est. Pomodoros:</label>
+            <input type="number" id="pomoEstInput" min="1" max="20" value="1">
+          </div>
+          <button type="submit" class="btn primary-action-btn">Add Task</button>
+        </form>
+
+        <!-- Filter Bar -->
+        <div class="task-filter-bar">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="active">Active</button>
+          <button class="filter-btn" data-filter="completed">Completed</button>
+        </div>
+
+        <!-- Task List Container -->
+        <div class="task-list" id="taskList">
+          <!-- Populated via JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: STATS & ANALYTICS -->
+    <section class="tab-content" id="tab-stats">
+      <div class="stats-container">
+        <div class="stats-grid">
+          
+          <!-- Summary Cards -->
+          <div class="stat-card glass-card">
+            <div class="stat-icon-wrapper">
+              <i data-lucide="clock"></i>
+            </div>
+            <div class="stat-info">
+              <span class="stat-value" id="statTodayTime">0h 0m</span>
+              <span class="stat-label">Focus Time Today</span>
+            </div>
+          </div>
+
+          <div class="stat-card glass-card">
+            <div class="stat-icon-wrapper">
+              <i data-lucide="check-circle-2"></i>
+            </div>
+            <div class="stat-info">
+              <span class="stat-value" id="statPomoCount">0</span>
+              <span class="stat-label">Pomodoros Done</span>
+            </div>
+          </div>
+
+          <div class="stat-card glass-card">
+            <div class="stat-icon-wrapper">
+              <i data-lucide="flame"></i>
+            </div>
+            <div class="stat-info">
+              <span class="stat-value" id="statStreak">0 Days</span>
+              <span class="stat-label">Daily Streak</span>
+            </div>
+          </div>
+
+          <div class="stat-card glass-card">
+            <div class="stat-icon-wrapper">
+              <i data-lucide="target"></i>
+            </div>
+            <div class="stat-info">
+              <span class="stat-value" id="statTaskRate">0%</span>
+              <span class="stat-label">Tasks Completed</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Focus Activity Chart -->
+        <div class="chart-card glass-card">
+          <h3>Weekly Focus Hours</h3>
+          <div class="chart-wrapper">
+            <canvas id="weeklyChart" height="200"></canvas>
+          </div>
+        </div>
+
+        <!-- Session History Log -->
+        <div class="history-card glass-card">
+          <h3>Recent Focus Sessions</h3>
+          <div class="history-list" id="historyList">
+            <!-- Populated via JavaScript -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: BREATHING EXERCISES -->
+    <section class="tab-content" id="tab-breathing">
+      <div class="breathing-container glass-card">
+        <h2>Mindful Breathing</h2>
+        <p class="breathing-subtitle">Regulate your nervous system and restore focus.</p>
+        
+        <div class="breathing-technique-selector">
+          <button class="technique-btn active" data-technique="box">Box Breathing (4-4-4-4)</button>
+          <button class="technique-btn" data-technique="relax">Relaxing (4-7-8)</button>
+          <button class="technique-btn" data-technique="calm">Deep Calm (4-6)</button>
+        </div>
+
+        <div class="breathing-circle-wrapper">
+          <div class="breathing-circle" id="breathingCircle">
+            <span class="breathing-instruction" id="breathingInstruction">Press Start</span>
+          </div>
+          <div class="breathing-timer" id="breathingPhaseTimer"></div>
+        </div>
+
+        <button class="btn primary-action-btn" id="startBreathingBtn">Start Exercise</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Ambient Sound Drawer Modal -->
+  <div class="ambient-drawer" id="ambientDrawer">
+    <div class="drawer-header">
+      <h3><i data-lucide="headphones"></i> Ambient Soundscapes</h3>
+      <button class="close-btn" id="closeAmbientBtn"><i data-lucide="x"></i></button>
+    </div>
+    <div class="ambient-sound-list">
+      
+      <!-- Sound 1: Gentle Rain -->
+      <div class="sound-item" data-sound="rain">
+        <div class="sound-info">
+          <i data-lucide="cloud-rain"></i>
+          <span>Gentle Rain</span>
+        </div>
+        <input type="range" class="volume-slider" min="0" max="100" value="0">
+      </div>
+
+      <!-- Sound 2: Ocean Waves -->
+      <div class="sound-item" data-sound="ocean">
+        <div class="sound-info">
+          <i data-lucide="waves"></i>
+          <span>Ocean Waves</span>
+        </div>
+        <input type="range" class="volume-slider" min="0" max="100" value="0">
+      </div>
+
+      <!-- Sound 3: Forest Wind -->
+      <div class="sound-item" data-sound="wind">
+        <div class="sound-info">
+          <i data-lucide="wind"></i>
+          <span>Forest Breeze</span>
+        </div>
+        <input type="range" class="volume-slider" min="0" max="100" value="0">
+      </div>
+
+      <!-- Sound 4: Pink Noise -->
+      <div class="sound-item" data-sound="pinkNoise">
+        <div class="sound-info">
+          <i data-lucide="radio"></i>
+          <span>Calm Pink Noise</span>
+        </div>
+        <input type="range" class="volume-slider" min="0" max="100" value="0">
+      </div>
+
+      <!-- Sound 5: Binaural Beats (40Hz Focus) -->
+      <div class="sound-item" data-sound="binaural">
+        <div class="sound-info">
+          <i data-lucide="zap"></i>
+          <span>40Hz Gamma Focus</span>
+        </div>
+        <input type="range" class="volume-slider" min="0" max="100" value="0">
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div class="modal-backdrop" id="settingsModal">
+    <div class="modal-card glass-card">
+      <div class="modal-header">
+        <h3>Timer Settings</h3>
+        <button class="close-btn" id="closeSettingsBtn"><i data-lucide="x"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="setting-item">
+          <label for="pomoTimeInput">Pomodoro Duration (minutes):</label>
+          <input type="number" id="pomoTimeInput" min="1" max="120" value="25">
+        </div>
+        <div class="setting-item">
+          <label for="shortBreakInput">Short Break Duration (minutes):</label>
+          <input type="number" id="shortBreakInput" min="1" max="60" value="5">
+        </div>
+        <div class="setting-item">
+          <label for="longBreakInput">Long Break Duration (minutes):</label>
+          <input type="number" id="longBreakInput" min="1" max="60" value="15">
+        </div>
+        <div class="setting-item toggle-item">
+          <span>Auto-start Breaks</span>
+          <label class="switch">
+            <input type="checkbox" id="autoStartBreaksToggle">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="setting-item toggle-item">
+          <span>Auto-start Pomodoros</span>
+          <label class="switch">
+            <input type="checkbox" id="autoStartPomosToggle">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="setting-item toggle-item">
+          <span>Completion Sound Chime</span>
+          <label class="switch">
+            <input type="checkbox" id="soundEnabledToggle" checked>
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn secondary-btn" id="cancelSettingsBtn">Cancel</button>
+        <button class="btn primary-action-btn" id="saveSettingsBtn">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Modules -->
+  <script src="js/audio.js"></script>
+  <script src="js/timer.js"></script>
+  <script src="js/tasks.js"></script>
+  <script src="js/stats.js"></script>
+  <script src="js/breathing.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

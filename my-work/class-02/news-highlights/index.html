@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finviz Market Movers & Intelligence Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #080b11;
+            --bg-card: #0f1422;
+            --bg-card-glass: rgba(15, 20, 34, 0.6);
+            --border-color: rgba(255, 255, 255, 0.06);
+            --border-hover: rgba(255, 255, 255, 0.15);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --green: #10b981;
+            --green-glow: rgba(16, 185, 129, 0.12);
+            --red: #f43f5e;
+            --red-glow: rgba(244, 63, 94, 0.12);
+            --accent: #3b82f6;
+            --accent-glow: rgba(59, 130, 246, 0.15);
+            --accent-purple: #a855f7;
+            --sidebar-width: 420px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.5;
+            overflow: hidden;
+        }
+
+        /* Layout Grid */
+        .app-container {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+        }
+
+        .main-content {
+            flex: 1;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        /* Custom Scrollbar for Main Content and Sidebar */
+        .main-content::-webkit-scrollbar,
+        .sidebar-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .main-content::-webkit-scrollbar-track,
+        .sidebar-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .main-content::-webkit-scrollbar-thumb,
+        .sidebar-content::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 9999px;
+        }
+
+        .main-content::-webkit-scrollbar-thumb:hover,
+        .sidebar-content::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Header Style */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .header h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, #60a5fa, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .badges {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 0.75rem;
+        }
+
+        .badge {
+            background-color: rgba(30, 41, 59, 0.5);
+            color: #38bdf8;
+            padding: 0.35rem 0.85rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid rgba(51, 65, 85, 0.5);
+            letter-spacing: 0.02em;
+        }
+
+        /* Controls Block */
+        .controls {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+            background: var(--bg-card-glass);
+            padding: 1rem;
+            border-radius: 1rem;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+        }
+
+        .tab-btn {
+            padding: 0.65rem 1.35rem;
+            border-radius: 0.75rem;
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.9rem;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .tab-btn.active-all {
+            background: var(--accent-glow);
+            color: #60a5fa;
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .tab-btn.active-gainers {
+            background: var(--green-glow);
+            color: var(--green);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .tab-btn.active-losers {
+            background: var(--red-glow);
+            color: var(--red);
+            border-color: rgba(244, 63, 94, 0.3);
+        }
+
+        .search-input, .select-input {
+            padding: 0.65rem 1.25rem;
+            background: rgba(15, 20, 34, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 0.75rem;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 240px;
+        }
+
+        .search-input:focus, .select-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        }
+
+        /* Sector Section Cards */
+        .sector-section {
+            background: var(--bg-card-glass);
+            border: 1px solid var(--border-color);
+            border-radius: 1.25rem;
+            overflow: hidden;
+            backdrop-filter: blur(16px);
+            transition: all 0.3s ease;
+        }
+
+        .sector-section:hover {
+            border-color: var(--border-hover);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .sector-header {
+            padding: 1.25rem 1.75rem;
+            background: rgba(22, 30, 49, 0.4);
+            font-size: 1.35rem;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            letter-spacing: -0.02em;
+        }
+
+        /* Table styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        th {
+            background-color: rgba(8, 11, 17, 0.4);
+            padding: 1rem 1.5rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        td {
+            padding: 1.1rem 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            transition: all 0.15s ease;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Hover & Active row states */
+        tr.stock-row {
+            cursor: pointer;
+        }
+
+        tr.stock-row:hover td {
+            background-color: rgba(255, 255, 255, 0.02);
+            color: var(--text-primary);
+        }
+
+        tr.stock-row.selected-row td {
+            background-color: rgba(59, 130, 246, 0.06);
+            border-bottom-color: rgba(59, 130, 246, 0.2);
+        }
+        
+        tr.stock-row.selected-row td:first-child {
+            border-left: 3px solid var(--accent);
+            padding-left: calc(1.5rem - 3px);
+        }
+
+        .ticker-link {
+            color: #60a5fa;
+            font-weight: 700;
+            text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .ticker-link:hover {
+            color: #93c5fd;
+            text-decoration: underline;
+        }
+
+        .change-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.25rem 0.65rem;
+            border-radius: 0.5rem;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: -0.01em;
+        }
+
+        .change-pill.gainer {
+            background: var(--green-glow);
+            color: var(--green);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .change-pill.loser {
+            background: var(--red-glow);
+            color: var(--red);
+            border: 1px solid rgba(244, 63, 94, 0.2);
+        }
+
+        .price {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .vol-cell {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        /* Sidebar - News Highlights Panel */
+        .sidebar-panel {
+            width: var(--sidebar-width);
+            height: 100vh;
+            border-left: 1px solid var(--border-color);
+            background: rgba(11, 15, 25, 0.8);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-header {
+            padding: 1.75rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #a855f7, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .close-sidebar-btn {
+            display: none; /* Only visible on smaller screens */
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 2rem;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .sidebar-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* Empty State */
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            height: 100%;
+            color: var(--text-secondary);
+            gap: 1rem;
+            padding: 2rem 0;
+        }
+
+        .empty-state-icon {
+            font-size: 3.5rem;
+            filter: drop-shadow(0 0 10px rgba(96, 165, 250, 0.2));
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .empty-state h3 {
+            color: var(--text-primary);
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .empty-state p {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            max-width: 280px;
+        }
+
+        /* Floating aggregates */
+        .market-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            width: 100%;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            padding: 1.25rem 1rem;
+            border-radius: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .stat-val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .stat-lbl {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+        }
+
+        /* Detail Panel Card styles */
+        .company-overview {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .ticker-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .ticker-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .overview-meta {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .divider {
+            height: 1px;
+            background: var(--border-color);
+            width: 100%;
+        }
+
+        /* AI Catalyst Highlight card */
+        .ai-highlight-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(168, 85, 247, 0.08) 100%);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 1.25rem;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.1);
+        }
+
+        .ai-highlight-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--accent), var(--accent-purple));
+        }
+
+        .ai-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+            color: #93c5fd;
+        }
+
+        .ai-content {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #f1f5f9;
+        }
+
+        /* Sentiment Gauge styles */
+        .sentiment-section {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .sentiment-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+        }
+
+        .sentiment-bar-container {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 9999px;
+            overflow: hidden;
+            display: flex;
+        }
+
+        .sentiment-bullish {
+            height: 100%;
+            background: var(--green);
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+            transition: width 0.5s ease;
+        }
+
+        .sentiment-bearish {
+            height: 100%;
+            background: var(--red);
+            box-shadow: 0 0 10px rgba(244, 63, 94, 0.5);
+            transition: width 0.5s ease;
+        }
+
+        .sentiment-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* News Headlines feed */
+        .headlines-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .headline-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            padding: 1rem 1.25rem;
+            border-radius: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .headline-card:hover {
+            border-color: var(--border-hover);
+            background: rgba(255, 255, 255, 0.04);
+            transform: translateY(-2px);
+        }
+
+        .headline-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            line-height: 1.4;
+            color: var(--text-primary);
+        }
+
+        .headline-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .source-badge {
+            padding: 0.15rem 0.5rem;
+            border-radius: 0.25rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 0.03em;
+        }
+
+        /* Specific mock sources color coding */
+        .source-bloomberg { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.2); }
+        .source-reuters { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.2); }
+        .source-cnbc { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.2); }
+        .source-marketwatch { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.2); }
+
+        /* Share panel utilities */
+        .share-row {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border-radius: 0.75rem;
+            border: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-family: inherit;
+            transition: all 0.2s ease;
+        }
+
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--border-hover);
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: calc(var(--sidebar-width) + 2rem);
+            background: #10b981;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            opacity: 0;
+            transform: translateY(1rem);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 1024px) {
+            .sidebar-panel {
+                position: fixed;
+                right: 0;
+                top: 0;
+                transform: translateX(100%);
+                height: 100vh;
+                box-shadow: -10px 0 40px rgba(0, 0, 0, 0.6);
+            }
+
+            .sidebar-panel.open {
+                transform: translateX(0);
+            }
+
+            .close-sidebar-btn {
+                display: block;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .main-content {
+                padding: 1.5rem;
+            }
+            .header h1 {
+                font-size: 1.75rem;
+            }
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .search-input {
+                min-width: 100%;
+            }
+            td, th {
+                padding: 0.75rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Main Panel (Left side) -->
+        <main class="main-content">
+            <div class="header">
+                <div>
+                    <h1>Finviz Market Movers</h1>
+                    <div class="badges">
+                        <span class="badge">Country: USA</span>
+                        <span class="badge">Price: &gt; $15</span>
+                        <span class="badge">Volume: Above Average (Rel Vol &gt; 1)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button class="tab-btn active-all" id="btn-all" onclick="setFilterMode('all')">All Movers</button>
+                <button class="tab-btn" id="btn-gainers" onclick="setFilterMode('gainers')">🟢 Top Gainers</button>
+                <button class="tab-btn" id="btn-losers" onclick="setFilterMode('losers')">🔴 Top Losers</button>
+
+                <select id="sector-select" class="select-input" onchange="renderData()">
+                    <option value="ALL">All Sectors</option>
+                </select>
+
+                <input type="text" id="search-bar" class="search-input" placeholder="Search Ticker, Company or Industry..." oninput="renderData()">
+            </div>
+
+            <div id="sectors-container"></div>
+        </main>
+
+        <!-- Market Intelligence / News Highlights Panel (Right side) -->
+        <aside class="sidebar-panel" id="intel-panel">
+            <div class="sidebar-header">
+                <h2>Market Intelligence</h2>
+                <button class="close-sidebar-btn" onclick="toggleSidebar(false)">×</button>
+            </div>
+            
+            <div id="intel-panel-content" class="sidebar-content">
+                <!-- Default empty state -->
+                <div class="empty-state">
+                    <div class="empty-state-icon">📊</div>
+                    <h3>No Stock Selected</h3>
+                    <p>Click on any stock row to view context-rich headlines, catalyst breakdown, and AI-generated highlights.</p>
+                    <div class="market-stats">
+                        <div class="stat-card">
+                            <span class="stat-val" id="total-movers-count">0</span>
+                            <span class="stat-lbl">Active Movers</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-val" id="avg-gain-val">+0.0%</span>
+                            <span class="stat-lbl">Avg Gain/Loss</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Toast popup for actions -->
+    <div id="action-toast" class="toast">Highlights copied!</div>
+
+    <script>
+        const appData = {"timestamp": "2026-08-05", "filters": {"country": "USA", "price": "> $15", "volume": "Relative Volume > 1 (Above Average)"}, "raw_gainers": [{"no": "1", "ticker": "OOESX", "company": "Orion Energy Systems Inc", "sector": "Industrials", "industry": "Electrical Equipment & Parts", "country": "USA", "market_cap": "65.15M", "pe": "-", "price": 16.06, "price_str": "16.06", "change": 54.42, "change_str": "54.42%", "volume": "677,271"}, {"no": "2", "ticker": "SSHPU", "company": "Direxion Daily SHOP Bull 2X ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 16.71, "price_str": "16.71", "change": 33.71, "change_str": "33.71%", "volume": "1,648,926"}, {"no": "3", "ticker": "MMTRN", "company": "Materion Corp", "sector": "Basic Materials", "industry": "Other Industrial Metals & Mining", "country": "USA", "market_cap": "6.18B", "pe": "81.18", "price": 297.08, "price_str": "297.08", "change": 30.81, "change_str": "30.81%", "volume": "926,910"}, {"no": "4", "ticker": "SSSPC", "company": "Leverage Shares 2X Short SPCX Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 21.21, "price_str": "21.21", "change": 30.68, "change_str": "30.68%", "volume": "26,412,953"}, {"no": "5", "ticker": "FFTK", "company": "Flotek Industries Inc", "sector": "Energy", "industry": "Oil & Gas Equipment & Services", "country": "USA", "market_cap": "1.30B", "pe": "46.05", "price": 36.07, "price_str": "36.07", "change": 27.86, "change_str": "27.86%", "volume": "1,552,457"}, {"no": "6", "ticker": "ZZETX", "company": "Defiance Daily Target 2x Long ZETA ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 32.67, "price_str": "32.67", "change": 23.14, "change_str": "23.14%", "volume": "203,706"}, {"no": "7", "ticker": "GGDXU", "company": "MicroSectors Gold Miners 3X Leveraged ETN", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 107.14, "price_str": "107.14", "change": 22.45, "change_str": "22.45%", "volume": "3,150,848"}, {"no": "8", "ticker": "WWTTR", "company": "Select Water Solutions Inc", "sector": "Energy", "industry": "Oil & Gas Equipment & Services", "country": "USA", "market_cap": "3.13B", "pe": "109.66", "price": 22.26, "price_str": "22.26", "change": 20.32, "change_str": "20.32%", "volume": "6,975,000"}, {"no": "9", "ticker": "UURGN", "company": "UroGen Pharma Ltd", "sector": "Healthcare", "industry": "Biotechnology", "country": "USA", "market_cap": "2.26B", "pe": "-", "price": 46.43, "price_str": "46.43", "change": 16.31, "change_str": "16.31%", "volume": "2,480,830"}, {"no": "10", "ticker": "TTWST", "company": "Twist Bioscience Corp", "sector": "Healthcare", "industry": "Diagnostics & Research", "country": "USA", "market_cap": "7.21B", "pe": "-", "price": 115.01, "price_str": "115.01", "change": 15.65, "change_str": "15.65%", "volume": "3,293,810"}, {"no": "11", "ticker": "HHY", "company": "Hyster Yale Inc", "sector": "Industrials", "industry": "Farm & Heavy Construction Machinery", "country": "USA", "market_cap": "725.06M", "pe": "-", "price": 40.47, "price_str": "40.47", "change": 15.2, "change_str": "15.20%", "volume": "374,802"}, {"no": "12", "ticker": "JJNUG", "company": "Direxion Daily Junior Gold Miners Index Bull 2X ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 144.76, "price_str": "144.76", "change": 14.8, "change_str": "14.80%", "volume": "418,212"}, {"no": "13", "ticker": "NNUGT", "company": "Direxion Daily Gold Miners Index Bull 2X ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 140.21, "price_str": "140.21", "change": 14.65, "change_str": "14.65%", "volume": "967,623"}, {"no": "14", "ticker": "FFRPT", "company": "Freshpet Inc", "sector": "Consumer Defensive", "industry": "Packaged Foods", "country": "USA", "market_cap": "3.51B", "pe": "19.15", "price": 71.47, "price_str": "71.47", "change": 14.57, "change_str": "14.57%", "volume": "6,436,351"}, {"no": "15", "ticker": "LLIME", "company": "Neutron Holdings Inc", "sector": "Industrials", "industry": "Rental & Leasing Services", "country": "USA", "market_cap": "2.28B", "pe": "-", "price": 35.6, "price_str": "35.60", "change": 14.54, "change_str": "14.54%", "volume": "516,083"}, {"no": "16", "ticker": "MMEI", "company": "Methode Electronics Inc", "sector": "Technology", "industry": "Electronic Components", "country": "USA", "market_cap": "612.24M", "pe": "-", "price": 17.26, "price_str": "17.26", "change": 14.3, "change_str": "14.30%", "volume": "1,163,326"}, {"no": "17", "ticker": "RROCK", "company": "Gibraltar Industries Inc", "sector": "Industrials", "industry": "Building Products & Equipment", "country": "USA", "market_cap": "1.63B", "pe": "-", "price": 54.86, "price_str": "54.86", "change": 14.15, "change_str": "14.15%", "volume": "746,807"}, {"no": "18", "ticker": "AAUGO", "company": "Aura Minerals Inc", "sector": "Basic Materials", "industry": "Gold", "country": "USA", "market_cap": "5.51B", "pe": "61.79", "price": 65.76, "price_str": "65.76", "change": 13.79, "change_str": "13.79%", "volume": "2,209,798"}, {"no": "19", "ticker": "AAGL", "company": "Agilon Health Inc", "sector": "Healthcare", "industry": "Medical Care Facilities", "country": "USA", "market_cap": "1.80B", "pe": "-", "price": 107.85, "price_str": "107.85", "change": 13.79, "change_str": "13.79%", "volume": "1,115,743"}, {"no": "20", "ticker": "QQLYS", "company": "Qualys Inc", "sector": "Technology", "industry": "Software - Infrastructure", "country": "USA", "market_cap": "6.45B", "pe": "32.89", "price": 183.25, "price_str": "183.25", "change": 13.78, "change_str": "13.78%", "volume": "1,620,836"}, {"no": "21", "ticker": "BBVS", "company": "Bioventus Inc", "sector": "Healthcare", "industry": "Medical Devices", "country": "USA", "market_cap": "1.27B", "pe": "37.02", "price": 15.26, "price_str": "15.26", "change": 13.71, "change_str": "13.71%", "volume": "2,526,295"}, {"no": "22", "ticker": "NNEMG", "company": "Leverage Shares 2x Long NEM Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 16.51, "price_str": "16.51", "change": 13.56, "change_str": "13.56%", "volume": "14,469"}, {"no": "23", "ticker": "AADIG", "company": "ADI Global Distribution Inc", "sector": "Technology", "industry": "Electronics & Computer Distribution", "country": "USA", "market_cap": "-", "pe": "-", "price": 24.98, "price_str": "24.98", "change": 13.55, "change_str": "13.55%", "volume": "1,511,050"}, {"no": "24", "ticker": "IINTA", "company": "Intapp Inc", "sector": "Technology", "industry": "Software - Application", "country": "USA", "market_cap": "2.85B", "pe": "-", "price": 36.96, "price_str": "36.96", "change": 12.75, "change_str": "12.75%", "volume": "1,895,853"}, {"no": "25", "ticker": "VVHC", "company": "Virnetx Holding Corp", "sector": "Technology", "industry": "Software - Infrastructure", "country": "USA", "market_cap": "63.88M", "pe": "-", "price": 15.26, "price_str": "15.26", "change": 12.54, "change_str": "12.54%", "volume": "25,691"}, {"no": "26", "ticker": "BBXC", "company": "Bluelinx Hldgs Inc", "sector": "Industrials", "industry": "Industrial Distribution", "country": "USA", "market_cap": "564.53M", "pe": "-", "price": 72.54, "price_str": "72.54", "change": 12.53, "change_str": "12.53%", "volume": "320,664"}, {"no": "27", "ticker": "SSHAK", "company": "Shake Shack Inc", "sector": "Consumer Cyclical", "industry": "Restaurants", "country": "USA", "market_cap": "3.18B", "pe": "75.52", "price": 74.33, "price_str": "74.33", "change": 12.25, "change_str": "12.25%", "volume": "8,963,431"}, {"no": "28", "ticker": "TTVTX", "company": "Travere Therapeutics Inc", "sector": "Healthcare", "industry": "Biotechnology", "country": "USA", "market_cap": "5.84B", "pe": "-", "price": 62.76, "price_str": "62.76", "change": 12.03, "change_str": "12.03%", "volume": "6,308,483"}, {"no": "29", "ticker": "ZZETA", "company": "Zeta Global Holdings Corp", "sector": "Technology", "industry": "Software - Infrastructure", "country": "USA", "market_cap": "6.75B", "pe": "-", "price": 27.07, "price_str": "27.07", "change": 11.58, "change_str": "11.58%", "volume": "36,368,869"}, {"no": "30", "ticker": "CCRL", "company": "Charles River Laboratories International Inc", "sector": "Healthcare", "industry": "Diagnostics & Research", "country": "USA", "market_cap": "12.56B", "pe": "-", "price": 260.72, "price_str": "260.72", "change": 11.36, "change_str": "11.36%", "volume": "1,782,701"}, {"no": "31", "ticker": "DDT", "company": "Dynatrace Inc", "sector": "Technology", "industry": "Software - Application", "country": "USA", "market_cap": "14.76B", "pe": "94.87", "price": 50.86, "price_str": "50.86", "change": 11.27, "change_str": "11.27%", "volume": "18,356,514"}, {"no": "32", "ticker": "PPLPC", "company": "Preformed Line Products Co", "sector": "Industrials", "industry": "Electrical Equipment & Parts", "country": "USA", "market_cap": "2.30B", "pe": "53.13", "price": 471.29, "price_str": "471.29", "change": 11.26, "change_str": "11.26%", "volume": "144,683"}, {"no": "33", "ticker": "PPPTA", "company": "Perpetua Resources Corp", "sector": "Basic Materials", "industry": "Other Precious Metals & Mining", "country": "USA", "market_cap": "2.87B", "pe": "-", "price": 22.93, "price_str": "22.93", "change": 10.88, "change_str": "10.88%", "volume": "2,086,221"}, {"no": "34", "ticker": "SSNDQ", "company": "Tradr 2X Short SNDK Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 24.41, "price_str": "24.41", "change": 10.75, "change_str": "10.75%", "volume": "26,468,337"}, {"no": "35", "ticker": "SSKY", "company": "Champion Homes Inc", "sector": "Consumer Cyclical", "industry": "Residential Construction", "country": "USA", "market_cap": "5.00B", "pe": "24.96", "price": 91.16, "price_str": "91.16", "change": 10.68, "change_str": "10.68%", "volume": "1,448,104"}, {"no": "36", "ticker": "SSSMR", "company": "Sunshine Silver Mining & Refining Co", "sector": "Basic Materials", "industry": "Other Industrial Metals & Mining", "country": "USA", "market_cap": "2.32B", "pe": "-", "price": 16.12, "price_str": "16.12", "change": 10.11, "change_str": "10.11%", "volume": "309,495"}, {"no": "37", "ticker": "GGDMN", "company": "WisdomTree Efficient Gold Plus Gold Miners Strategy Fund", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 82.87, "price_str": "82.87", "change": 10.05, "change_str": "10.05%", "volume": "83,565"}, {"no": "38", "ticker": "LLLYX", "company": "Defiance Daily Target 2X Long LLY ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 25.81, "price_str": "25.81", "change": 10.02, "change_str": "10.02%", "volume": "1,586,243"}, {"no": "39", "ticker": "AAXTC", "company": "Corgi AXTI 2x Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 21.83, "price_str": "21.83", "change": 9.91, "change_str": "9.91%", "volume": "36,364"}, {"no": "40", "ticker": "GGFF", "company": "Griffon Corp", "sector": "Industrials", "industry": "Building Products & Equipment", "country": "USA", "market_cap": "4.72B", "pe": "165.00", "price": 102.81, "price_str": "102.81", "change": 9.86, "change_str": "9.86%", "volume": "785,466"}, {"no": "41", "ticker": "XXPEL", "company": "XPEL Inc", "sector": "Consumer Cyclical", "industry": "Auto Parts", "country": "USA", "market_cap": "1.39B", "pe": "26.31", "price": 50.29, "price_str": "50.29", "change": 9.54, "change_str": "9.54%", "volume": "540,091"}, {"no": "42", "ticker": "HHYMC", "company": "Hycroft Mining Holding Corp", "sector": "Basic Materials", "industry": "Gold", "country": "USA", "market_cap": "2.28B", "pe": "-", "price": 24.48, "price_str": "24.48", "change": 9.48, "change_str": "9.48%", "volume": "2,776,732"}, {"no": "43", "ticker": "EELIL", "company": "Direxion Daily LLY Bull 2X ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 29.05, "price_str": "29.05", "change": 9.38, "change_str": "9.38%", "volume": "666,882"}, {"no": "44", "ticker": "NNRGD", "company": "MicroSectors U.S. Big Oil -3 Inverse Leveraged ETNs", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 22.41, "price_str": "22.41", "change": 9.32, "change_str": "9.32%", "volume": "51,397"}, {"no": "45", "ticker": "GGDXW", "company": "Roundhill Gold Miners WeeklyPay ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 39.19, "price_str": "39.19", "change": 9.21, "change_str": "9.21%", "volume": "56,196"}, {"no": "46", "ticker": "NNEGG", "company": "Newegg Commerce Inc", "sector": "Consumer Cyclical", "industry": "Internet Retail", "country": "USA", "market_cap": "350.25M", "pe": "-", "price": 16.7, "price_str": "16.70", "change": 9.15, "change_str": "9.15%", "volume": "149,677"}, {"no": "47", "ticker": "SSSRM", "company": "SSR Mining Inc", "sector": "Basic Materials", "industry": "Gold", "country": "USA", "market_cap": "6.02B", "pe": "27.94", "price": 29.0, "price_str": "29.00", "change": 9.1, "change_str": "9.10%", "volume": "5,660,574"}, {"no": "48", "ticker": "IIFF", "company": "International Flavors & Fragrances Inc", "sector": "Basic Materials", "industry": "Specialty Chemicals", "country": "USA", "market_cap": "22.48B", "pe": "26.98", "price": 88.07, "price_str": "88.07", "change": 8.88, "change_str": "8.88%", "volume": "3,440,911"}, {"no": "49", "ticker": "PPRMB", "company": "Primo Brands Corp", "sector": "Consumer Defensive", "industry": "Beverages - Non-Alcoholic", "country": "USA", "market_cap": "9.19B", "pe": "160.86", "price": 25.32, "price_str": "25.32", "change": 8.72, "change_str": "8.72%", "volume": "10,286,669"}, {"no": "50", "ticker": "AAU", "company": "AngloGold Ashanti Plc", "sector": "Basic Materials", "industry": "Gold", "country": "USA", "market_cap": "44.74B", "pe": "11.86", "price": 88.6, "price_str": "88.60", "change": 8.71, "change_str": "8.71%", "volume": "3,716,666"}, {"no": "51", "ticker": "IIDR", "company": "Idaho Strategic Resources Inc", "sector": "Basic Materials", "industry": "Gold", "country": "USA", "market_cap": "523.78M", "pe": "23.80", "price": 33.13, "price_str": "33.13", "change": 8.69, "change_str": "8.69%", "volume": "377,576"}, {"no": "52", "ticker": "SSUPN", "company": "Supernus Pharmaceuticals Inc", "sector": "Healthcare", "industry": "Drug Manufacturers - Specialty & Generic", "country": "USA", "market_cap": "2.73B", "pe": "-", "price": 46.91, "price_str": "46.91", "change": 8.46, "change_str": "8.46%", "volume": "1,671,774"}, {"no": "53", "ticker": "UUGL", "company": "ProShares Ultra Gold 2x Shares", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 48.56, "price_str": "48.56", "change": 8.44, "change_str": "8.44%", "volume": "3,788,610"}, {"no": "54", "ticker": "NNRP", "company": "Natural Resource Partners LP", "sector": "Energy", "industry": "Thermal Coal", "country": "USA", "market_cap": "1.39B", "pe": "12.34", "price": 105.0, "price_str": "105.00", "change": 8.31, "change_str": "8.31%", "volume": "124,570"}, {"no": "55", "ticker": "GGOEX", "company": "Global X Gold Explorers ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 78.83, "price_str": "78.83", "change": 8.31, "change_str": "8.31%", "volume": "18,352"}, {"no": "56", "ticker": "AAGQ", "company": "ProShares Ultra Silver 2x Shares", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 73.14, "price_str": "73.14", "change": 8.31, "change_str": "8.31%", "volume": "3,148,395"}, {"no": "57", "ticker": "SSN", "company": "SharkNinja Inc", "sector": "Consumer Cyclical", "industry": "Furnishings, Fixtures & Appliances", "country": "USA", "market_cap": "25.77B", "pe": "36.71", "price": 182.11, "price_str": "182.11", "change": 8.28, "change_str": "8.28%", "volume": "3,709,398"}, {"no": "58", "ticker": "PPFX", "company": "PhenixFIN Corp", "sector": "Financial", "industry": "Asset Management", "country": "USA", "market_cap": "91.47M", "pe": "-", "price": 46.15, "price_str": "46.15", "change": 8.21, "change_str": "8.21%", "volume": "189,400"}, {"no": "59", "ticker": "UUGLD", "company": "Direxion Daily Gold Bull 2X ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 21.33, "price_str": "21.33", "change": 8.12, "change_str": "8.12%", "volume": "95,748"}, {"no": "60", "ticker": "FFLYW", "company": "Flywire Corp", "sector": "Technology", "industry": "Software - Infrastructure", "country": "USA", "market_cap": "2.27B", "pe": "80.53", "price": 18.65, "price_str": "18.65", "change": 8.05, "change_str": "8.05%", "volume": "5,678,585"}, {"no": "61", "ticker": "UUSLV", "company": "Direxion Daily Silver Bull 2X ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 15.04, "price_str": "15.04", "change": 8.05, "change_str": "8.05%", "volume": "128,015"}, {"no": "62", "ticker": "AAIRT", "company": "Air T Inc", "sector": "Industrials", "industry": "Conglomerates", "country": "USA", "market_cap": "86.11M", "pe": "1.11", "price": 31.99, "price_str": "31.99", "change": 8.0, "change_str": "8.00%", "volume": "117,291"}, {"no": "63", "ticker": "AANEL", "company": "Defiance Daily Target 2x Long ANET ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 27.31, "price_str": "27.31", "change": 7.99, "change_str": "7.99%", "volume": "620,429"}, {"no": "64", "ticker": "RRING", "company": "iShares MSCI Global Gold Miners ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 72.19, "price_str": "72.19", "change": 7.91, "change_str": "7.91%", "volume": "1,855,520"}, {"no": "65", "ticker": "CCOAG", "company": "Hemab Therapeutics Holdings Inc", "sector": "Healthcare", "industry": "Biotechnology", "country": "USA", "market_cap": "2.34B", "pe": "-", "price": 50.09, "price_str": "50.09", "change": 7.67, "change_str": "7.67%", "volume": "353,203"}, {"no": "66", "ticker": "JJJSF", "company": "J&J Snack Foods Corp", "sector": "Consumer Defensive", "industry": "Packaged Foods", "country": "USA", "market_cap": "1.59B", "pe": "28.40", "price": 84.66, "price_str": "84.66", "change": 7.66, "change_str": "7.66%", "volume": "395,075"}, {"no": "67", "ticker": "AAUMI", "company": "Themes Gold Miners ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 86.72, "price_str": "86.72", "change": 7.53, "change_str": "7.53%", "volume": "4,836"}, {"no": "68", "ticker": "AAUAU", "company": "Global X Gold Miners ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 36.02, "price_str": "36.02", "change": 7.53, "change_str": "7.53%", "volume": "3,822"}, {"no": "69", "ticker": "CCDE", "company": "Coeur Mining Inc", "sector": "Basic Materials", "industry": "Gold", "country": "USA", "market_cap": "17.96B", "pe": "14.41", "price": 17.43, "price_str": "17.43", "change": 7.53, "change_str": "7.53%", "volume": "53,766,112"}, {"no": "70", "ticker": "HHL", "company": "Hecla Mining Co", "sector": "Basic Materials", "industry": "Other Precious Metals & Mining", "country": "USA", "market_cap": "11.09B", "pe": "23.77", "price": 16.54, "price_str": "16.54", "change": 7.47, "change_str": "7.47%", "volume": "46,804,475"}, {"no": "71", "ticker": "GGDXJ", "company": "VanEck Junior Gold Miners ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 109.48, "price_str": "109.48", "change": 7.42, "change_str": "7.42%", "volume": "9,309,724"}, {"no": "72", "ticker": "GGDX", "company": "VanEck Gold Miners ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 83.68, "price_str": "83.68", "change": 7.39, "change_str": "7.39%", "volume": "40,626,356"}, {"no": "73", "ticker": "SSLVP", "company": "iShares MSCI Global Silver and Metals Miners ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 34.02, "price_str": "34.02", "change": 7.28, "change_str": "7.28%", "volume": "359,692"}, {"no": "74", "ticker": "NNVDG", "company": "Leverage Shares 2X Long NVDA Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 20.04, "price_str": "20.04", "change": 7.27, "change_str": "7.27%", "volume": "399,759"}, {"no": "75", "ticker": "VVTVT", "company": "vTv Therapeutics Inc", "sector": "Healthcare", "industry": "Biotechnology", "country": "USA", "market_cap": "135.46M", "pe": "-", "price": 34.39, "price_str": "34.39", "change": 7.27, "change_str": "7.27%", "volume": "102,683"}, {"no": "76", "ticker": "NNGL", "company": "NGL Energy Partners LP", "sector": "Energy", "industry": "Oil & Gas Midstream", "country": "USA", "market_cap": "2.12B", "pe": "-", "price": 17.0, "price_str": "17.00", "change": 7.26, "change_str": "7.26%", "volume": "550,722"}, {"no": "77", "ticker": "AAIZ", "company": "Assurant Inc", "sector": "Financial", "industry": "Insurance - Property & Casualty", "country": "USA", "market_cap": "14.94B", "pe": "15.35", "price": 301.57, "price_str": "301.57", "change": 7.2, "change_str": "7.20%", "volume": "711,600"}, {"no": "78", "ticker": "FFIGG", "company": "Leverage Shares 2x Long FIG Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 31.23, "price_str": "31.23", "change": 7.2, "change_str": "7.20%", "volume": "384,379"}, {"no": "79", "ticker": "WWEYS", "company": "Weyco Group Inc", "sector": "Consumer Cyclical", "industry": "Footwear & Accessories", "country": "USA", "market_cap": "418.46M", "pe": "17.66", "price": 43.9, "price_str": "43.90", "change": 7.18, "change_str": "7.18%", "volume": "45,051"}, {"no": "80", "ticker": "GGBUG", "company": "Sprott Active Gold & Silver Miners ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 44.33, "price_str": "44.33", "change": 7.17, "change_str": "7.17%", "volume": "56,036"}, {"no": "81", "ticker": "SSGDM", "company": "Sprott Gold Miners ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 69.05, "price_str": "69.05", "change": 7.14, "change_str": "7.14%", "volume": "53,740"}, {"no": "82", "ticker": "NNVDU", "company": "Direxion Daily NVDA Bull 2X ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 139.27, "price_str": "139.27", "change": 7.07, "change_str": "7.07%", "volume": "543,172"}, {"no": "83", "ticker": "PPTHS", "company": "Pelthos Therapeutics Inc", "sector": "Healthcare", "industry": "Biotechnology", "country": "USA", "market_cap": "99.20M", "pe": "-", "price": 28.54, "price_str": "28.54", "change": 6.89, "change_str": "6.89%", "volume": "59,722"}, {"no": "84", "ticker": "SSLVR", "company": "Sprott Silver Miners & Physical Silver ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 55.02, "price_str": "55.02", "change": 6.88, "change_str": "6.88%", "volume": "171,558"}, {"no": "85", "ticker": "KKIDS", "company": "OrthoPediatrics corp", "sector": "Healthcare", "industry": "Medical Devices", "country": "USA", "market_cap": "573.03M", "pe": "-", "price": 22.31, "price_str": "22.31", "change": 6.85, "change_str": "6.85%", "volume": "709,501"}, {"no": "86", "ticker": "OOILD", "company": "MicroSectors Oil & Gas Exploration & Production -3X Inverse Leveraged", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 40.38, "price_str": "40.38", "change": 6.84, "change_str": "6.84%", "volume": "105,738"}, {"no": "87", "ticker": "NNEM", "company": "Newmont Corp", "sector": "Basic Materials", "industry": "Gold", "country": "USA", "market_cap": "109.89B", "pe": "13.17", "price": 104.29, "price_str": "104.29", "change": 6.71, "change_str": "6.71%", "volume": "9,531,358"}, {"no": "88", "ticker": "KKTOS", "company": "Kratos Defense & Security Solutions Inc", "sector": "Industrials", "industry": "Aerospace & Defense", "country": "USA", "market_cap": "10.38B", "pe": "327.26", "price": 55.34, "price_str": "55.34", "change": 6.69, "change_str": "6.69%", "volume": "9,207,712"}, {"no": "89", "ticker": "OOZ", "company": "Belpointe PREP LLC", "sector": "Real Estate", "industry": "Real Estate - Development", "country": "USA", "market_cap": "199.10M", "pe": "-", "price": 49.8, "price_str": "49.80", "change": 6.64, "change_str": "6.64%", "volume": "8,877"}, {"no": "90", "ticker": "SSIL", "company": "Global X Silver Miners ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 83.77, "price_str": "83.77", "change": 6.59, "change_str": "6.59%", "volume": "1,815,790"}, {"no": "91", "ticker": "BBKNG", "company": "Booking Holdings Inc", "sector": "Consumer Cyclical", "industry": "Travel Services", "country": "USA", "market_cap": "160.42B", "pe": "27.22", "price": 207.02, "price_str": "207.02", "change": 6.56, "change_str": "6.56%", "volume": "10,653,568"}, {"no": "92", "ticker": "PPBT", "company": "Permian Basin Royalty Trust", "sector": "Energy", "industry": "Oil & Gas Midstream", "country": "USA", "market_cap": "1.61B", "pe": "109.27", "price": 34.53, "price_str": "34.53", "change": 6.54, "change_str": "6.54%", "volume": "346,409"}, {"no": "93", "ticker": "SSOXS", "company": "Direxion Daily Semiconductor Bear 3X ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 45.08, "price_str": "45.08", "change": 6.5, "change_str": "6.50%", "volume": "64,928,603"}, {"no": "94", "ticker": "NNHC", "company": "National Healthcare Corp", "sector": "Healthcare", "industry": "Medical Care Facilities", "country": "USA", "market_cap": "3.46B", "pe": "28.11", "price": 221.45, "price_str": "221.45", "change": 6.36, "change_str": "6.36%", "volume": "134,389"}, {"no": "95", "ticker": "AAGMI", "company": "Themes Silver Miners ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 68.08, "price_str": "68.08", "change": 6.32, "change_str": "6.32%", "volume": "3,242"}, {"no": "96", "ticker": "EEQH", "company": "Equitable Holdings Inc", "sector": "Financial", "industry": "Asset Management", "country": "USA", "market_cap": "14.00B", "pe": "-", "price": 51.3, "price_str": "51.30", "change": 6.32, "change_str": "6.32%", "volume": "7,811,449"}, {"no": "97", "ticker": "CCRBG", "company": "Corebridge Financial Inc", "sector": "Financial", "industry": "Asset Management", "country": "USA", "market_cap": "14.97B", "pe": "56.45", "price": 33.59, "price_str": "33.59", "change": 6.3, "change_str": "6.30%", "volume": "8,541,417"}, {"no": "98", "ticker": "SSILJ", "company": "Amplify Junior Silver Miners ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 27.75, "price_str": "27.75", "change": 6.28, "change_str": "6.28%", "volume": "6,381,825"}, {"no": "99", "ticker": "FFCXG", "company": "Leverage Shares 2x Long FCX Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 15.23, "price_str": "15.23", "change": 6.23, "change_str": "6.23%", "volume": "44,415"}, {"no": "100", "ticker": "GGLDN", "company": "Nicholas Gold Income ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 15.28, "price_str": "15.28", "change": 6.18, "change_str": "6.18%", "volume": "8,047"}], "raw_losers": [{"no": "1", "ticker": "LLMB", "company": "Limbach Holdings Inc", "sector": "Industrials", "industry": "Building Products & Equipment", "country": "USA", "market_cap": "592.83M", "pe": "18.10", "price": 49.73, "price_str": "49.73", "change": -35.51, "change_str": "-35.51%", "volume": "1,696,257"}, {"no": "2", "ticker": "VVPG", "company": "Vishay Precision Group Inc", "sector": "Technology", "industry": "Scientific & Technical Instruments", "country": "USA", "market_cap": "978.42M", "pe": "166.20", "price": 73.56, "price_str": "73.56", "change": -27.17, "change_str": "-27.17%", "volume": "2,048,202"}, {"no": "3", "ticker": "LLMAT", "company": "Lemaitre Vascular Inc", "sector": "Healthcare", "industry": "Medical Instruments & Supplies", "country": "USA", "market_cap": "1.81B", "pe": "29.11", "price": 79.0, "price_str": "79.00", "change": -25.32, "change_str": "-25.32%", "volume": "2,181,879"}, {"no": "4", "ticker": "DDBGI", "company": "Digital Brands Group Inc", "sector": "Consumer Cyclical", "industry": "Apparel Retail", "country": "USA", "market_cap": "9.36M", "pe": "-", "price": 16.28, "price_str": "16.28", "change": -24.73, "change_str": "-24.73%", "volume": "2,450,215"}, {"no": "5", "ticker": "TTDC", "company": "Teradata Corp", "sector": "Technology", "industry": "Software - Infrastructure", "country": "USA", "market_cap": "2.47B", "pe": "6.01", "price": 26.23, "price_str": "26.23", "change": -23.73, "change_str": "-23.73%", "volume": "10,736,296"}, {"no": "6", "ticker": "GGDXD", "company": "MicroSectors Gold Miners -3X Inverse Leveraged ETNs", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 32.22, "price_str": "32.22", "change": -21.91, "change_str": "-21.91%", "volume": "1,430,452"}, {"no": "7", "ticker": "TTYRA", "company": "Tyra Biosciences Inc", "sector": "Healthcare", "industry": "Biotechnology", "country": "USA", "market_cap": "1.53B", "pe": "-", "price": 25.71, "price_str": "25.71", "change": -20.97, "change_str": "-20.97%", "volume": "2,741,316"}, {"no": "8", "ticker": "AADV", "company": "Advantage Solutions Inc", "sector": "Communication Services", "industry": "Advertising Agencies", "country": "USA", "market_cap": "439.01M", "pe": "-", "price": 33.02, "price_str": "33.02", "change": -20.85, "change_str": "-20.85%", "volume": "273,833"}, {"no": "9", "ticker": "PPODD", "company": "Insulet Corp", "sector": "Healthcare", "industry": "Medical Devices", "country": "USA", "market_cap": "9.23B", "pe": "31.02", "price": 133.26, "price_str": "133.26", "change": -20.12, "change_str": "-20.12%", "volume": "7,175,377"}, {"no": "10", "ticker": "EEXTR", "company": "Extreme Networks Inc", "sector": "Technology", "industry": "Communication Equipment", "country": "USA", "market_cap": "3.43B", "pe": "217.71", "price": 26.19, "price_str": "26.19", "change": -19.02, "change_str": "-19.02%", "volume": "4,354,467"}, {"no": "11", "ticker": "HHUTG", "company": "Leverage Shares 2X Long HUT Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 16.5, "price_str": "16.50", "change": -17.75, "change_str": "-17.75%", "volume": "120,425"}, {"no": "12", "ticker": "DDVA", "company": "DaVita Inc", "sector": "Healthcare", "industry": "Medical Care Facilities", "country": "USA", "market_cap": "12.11B", "pe": "18.11", "price": 188.69, "price_str": "188.69", "change": -17.24, "change_str": "-17.24%", "volume": "3,814,642"}, {"no": "13", "ticker": "AAMDL", "company": "GraniteShares 2x Long AMD Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 52.04, "price_str": "52.04", "change": -16.9, "change_str": "-16.90%", "volume": "8,088,180"}, {"no": "14", "ticker": "RRRX", "company": "Regal Rexnord Corp", "sector": "Industrials", "industry": "Specialty Industrial Machinery", "country": "USA", "market_cap": "12.20B", "pe": "42.59", "price": 183.24, "price_str": "183.24", "change": -16.72, "change_str": "-16.72%", "volume": "4,227,303"}, {"no": "15", "ticker": "AAMUU", "company": "Direxion Daily AMD Bull 2X ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 183.67, "price_str": "183.67", "change": -16.68, "change_str": "-16.68%", "volume": "214,456"}, {"no": "16", "ticker": "AAMDG", "company": "Leverage Shares 2X Long AMD Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 89.11, "price_str": "89.11", "change": -16.51, "change_str": "-16.51%", "volume": "129,714"}, {"no": "17", "ticker": "OOBX", "company": "Obsidian Therapeutics Inc", "sector": "Healthcare", "industry": "Biotechnology", "country": "USA", "market_cap": "33.06M", "pe": "0.07", "price": 28.51, "price_str": "28.51", "change": -16.15, "change_str": "-16.15%", "volume": "18,450"}, {"no": "18", "ticker": "PPARR", "company": "Par Pacific Holdings Inc", "sector": "Energy", "industry": "Oil & Gas Refining & Marketing", "country": "USA", "market_cap": "3.51B", "pe": "7.80", "price": 69.92, "price_str": "69.92", "change": -15.76, "change_str": "-15.76%", "volume": "2,321,706"}, {"no": "19", "ticker": "AAMDC", "company": "Corgi AMD 2x Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 18.62, "price_str": "18.62", "change": -15.23, "change_str": "-15.23%", "volume": "48,963"}, {"no": "20", "ticker": "DDUST", "company": "Direxion Daily Gold Miners Index Bear 2X ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 48.93, "price_str": "48.93", "change": -14.77, "change_str": "-14.77%", "volume": "1,410,006"}, {"no": "21", "ticker": "VVSH", "company": "Vishay Intertechnology Inc", "sector": "Technology", "industry": "Semiconductors", "country": "USA", "market_cap": "5.09B", "pe": "2073.75", "price": 33.18, "price_str": "33.18", "change": -14.59, "change_str": "-14.59%", "volume": "11,396,683"}, {"no": "22", "ticker": "JJDST", "company": "Direxion Daily Junior Gold Miners Index Bear 2X ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 31.19, "price_str": "31.19", "change": -14.55, "change_str": "-14.55%", "volume": "759,466"}, {"no": "23", "ticker": "RRBA", "company": "RB Global Inc", "sector": "Industrials", "industry": "Specialty Business Services", "country": "USA", "market_cap": "17.82B", "pe": "44.31", "price": 95.63, "price_str": "95.63", "change": -13.89, "change_str": "-13.89%", "volume": "6,967,623"}, {"no": "24", "ticker": "GGLXY", "company": "Galaxy Digital Inc", "sector": "Financial", "industry": "Capital Markets", "country": "USA", "market_cap": "7.43B", "pe": "-", "price": 19.07, "price_str": "19.07", "change": -13.89, "change_str": "-13.89%", "volume": "16,143,845"}, {"no": "25", "ticker": "AASTE", "company": "Astec Industries Inc", "sector": "Industrials", "industry": "Farm & Heavy Construction Machinery", "country": "USA", "market_cap": "1.04B", "pe": "40.45", "price": 45.04, "price_str": "45.04", "change": -13.8, "change_str": "-13.80%", "volume": "792,157"}, {"no": "26", "ticker": "SSPCX", "company": "Space Exploration Technologies Corp", "sector": "Industrials", "industry": "Aerospace & Defense", "country": "USA", "market_cap": "1436.43B", "pe": "-", "price": 108.27, "price_str": "108.27", "change": -13.61, "change_str": "-13.61%", "volume": "208,131,208"}, {"no": "27", "ticker": "NNYT", "company": "New York Times Co", "sector": "Communication Services", "industry": "Publishing", "country": "USA", "market_cap": "10.60B", "pe": "28.13", "price": 65.48, "price_str": "65.48", "change": -13.4, "change_str": "-13.40%", "volume": "8,652,239"}, {"no": "28", "ticker": "CCHCT", "company": "Community Healthcare Trust Inc", "sector": "Real Estate", "industry": "REIT - Healthcare Facilities", "country": "USA", "market_cap": "439.72M", "pe": "140.93", "price": 15.39, "price_str": "15.39", "change": -13.1, "change_str": "-13.10%", "volume": "1,422,882"}, {"no": "29", "ticker": "WWDCC", "company": "Corgi WDC 2x Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 18.63, "price_str": "18.63", "change": -12.87, "change_str": "-12.87%", "volume": "15,955"}, {"no": "30", "ticker": "MMDLN", "company": "Medline Inc", "sector": "Healthcare", "industry": "Medical Instruments & Supplies", "country": "USA", "market_cap": "48.17B", "pe": "30.67", "price": 36.67, "price_str": "36.67", "change": -12.79, "change_str": "-12.79%", "volume": "24,814,759"}, {"no": "31", "ticker": "AALAB", "company": "Astera Labs Inc", "sector": "Technology", "industry": "Semiconductors", "country": "USA", "market_cap": "54.58B", "pe": "214.63", "price": 318.43, "price_str": "318.43", "change": -11.96, "change_str": "-11.96%", "volume": "9,281,149"}, {"no": "32", "ticker": "FFLUT", "company": "Flutter Entertainment Plc", "sector": "Consumer Cyclical", "industry": "Gambling", "country": "USA", "market_cap": "16.16B", "pe": "-", "price": 92.91, "price_str": "92.91", "change": -11.48, "change_str": "-11.48%", "volume": "15,815,793"}, {"no": "33", "ticker": "SSNDU", "company": "T-REX 2X Long SNDK Daily Target ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 17.87, "price_str": "17.87", "change": -10.83, "change_str": "-10.83%", "volume": "16,142,783"}, {"no": "34", "ticker": "OOUSL", "company": "Defiance Daily Target 2X Long OUST ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 22.31, "price_str": "22.31", "change": -10.42, "change_str": "-10.42%", "volume": "80,920"}, {"no": "35", "ticker": "PPAY", "company": "Paymentus Holdings Inc", "sector": "Technology", "industry": "Software - Infrastructure", "country": "USA", "market_cap": "5.03B", "pe": "60.73", "price": 40.0, "price_str": "40.00", "change": -10.31, "change_str": "-10.31%", "volume": "2,767,078"}, {"no": "36", "ticker": "WWDCX", "company": "Tradr 2X Long WDC Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 24.83, "price_str": "24.83", "change": -10.17, "change_str": "-10.17%", "volume": "2,640,438"}, {"no": "37", "ticker": "PPCRX", "company": "Pacira BioSciences Inc", "sector": "Healthcare", "industry": "Drug Manufacturers - Specialty & Generic", "country": "USA", "market_cap": "978.26M", "pe": "199.12", "price": 24.87, "price_str": "24.87", "change": -9.96, "change_str": "-9.96%", "volume": "1,701,966"}, {"no": "38", "ticker": "DDK", "company": "Delek US Holdings Inc", "sector": "Energy", "industry": "Oil & Gas Refining & Marketing", "country": "USA", "market_cap": "3.66B", "pe": "-", "price": 59.75, "price_str": "59.75", "change": -9.74, "change_str": "-9.74%", "volume": "1,994,686"}, {"no": "39", "ticker": "GGXO", "company": "GXO Logistics Inc", "sector": "Industrials", "industry": "Integrated Freight & Logistics", "country": "USA", "market_cap": "5.48B", "pe": "41.63", "price": 47.62, "price_str": "47.62", "change": -9.07, "change_str": "-9.07%", "volume": "5,519,282"}, {"no": "40", "ticker": "CCDW", "company": "CDW Corp", "sector": "Technology", "industry": "Information Technology Services", "country": "USA", "market_cap": "17.90B", "pe": "17.06", "price": 140.1, "price_str": "140.10", "change": -9.03, "change_str": "-9.03%", "volume": "5,811,174"}, {"no": "41", "ticker": "WWULX", "company": "Tradr 2X Long WULF Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 21.42, "price_str": "21.42", "change": -8.99, "change_str": "-8.99%", "volume": "362,535"}, {"no": "42", "ticker": "RRSI", "company": "Rush Street Interactive Inc", "sector": "Consumer Cyclical", "industry": "Gambling", "country": "USA", "market_cap": "6.01B", "pe": "87.42", "price": 25.92, "price_str": "25.92", "change": -8.7, "change_str": "-8.70%", "volume": "4,530,796"}, {"no": "43", "ticker": "PPINS", "company": "Pinterest Inc", "sector": "Communication Services", "industry": "Internet Content & Information", "country": "USA", "market_cap": "13.09B", "pe": "48.44", "price": 23.36, "price_str": "23.36", "change": -8.68, "change_str": "-8.68%", "volume": "22,987,712"}, {"no": "44", "ticker": "GGOU", "company": "GraniteShares 2x Long GOOGL Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 28.59, "price_str": "28.59", "change": -8.3, "change_str": "-8.30%", "volume": "191,786"}, {"no": "45", "ticker": "WWTIU", "company": "MicroSectorsTM Energy 3X Leveraged ETNs", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 16.47, "price_str": "16.47", "change": -8.3, "change_str": "-8.30%", "volume": "68,448"}, {"no": "46", "ticker": "GGLL", "company": "ProShares UltraShort Gold -2x Shares", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 23.97, "price_str": "23.97", "change": -8.23, "change_str": "-8.23%", "volume": "4,472,029"}, {"no": "47", "ticker": "PPRIM", "company": "Primoris Services Corp", "sector": "Industrials", "industry": "Engineering & Construction", "country": "USA", "market_cap": "4.52B", "pe": "18.42", "price": 83.4, "price_str": "83.40", "change": -8.2, "change_str": "-8.20%", "volume": "2,454,425"}, {"no": "48", "ticker": "AASYS", "company": "Amtech Systems Inc", "sector": "Technology", "industry": "Semiconductor Equipment & Materials", "country": "USA", "market_cap": "279.92M", "pe": "95.87", "price": 16.01, "price_str": "16.01", "change": -8.2, "change_str": "-8.20%", "volume": "557,228"}, {"no": "49", "ticker": "CCIFR", "company": "Cipher Digital Inc", "sector": "Technology", "industry": "Information Technology Services", "country": "USA", "market_cap": "7.65B", "pe": "-", "price": 18.71, "price_str": "18.71", "change": -8.19, "change_str": "-8.19%", "volume": "35,297,935"}, {"no": "50", "ticker": "AAMRC", "company": "Ameresco Inc", "sector": "Industrials", "industry": "Engineering & Construction", "country": "USA", "market_cap": "1.36B", "pe": "49.33", "price": 25.66, "price_str": "25.66", "change": -8.16, "change_str": "-8.16%", "volume": "788,971"}, {"no": "51", "ticker": "GGGLL", "company": "Direxion Daily GOOGL Bull 2X ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 113.44, "price_str": "113.44", "change": -8.14, "change_str": "-8.14%", "volume": "3,107,805"}, {"no": "52", "ticker": "TTDW", "company": "Tidewater Inc", "sector": "Energy", "industry": "Oil & Gas Equipment & Services", "country": "USA", "market_cap": "3.85B", "pe": "15.64", "price": 77.36, "price_str": "77.36", "change": -8.11, "change_str": "-8.11%", "volume": "859,233"}, {"no": "53", "ticker": "GGOGL", "company": "Corgi GOOGL 2x Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 26.87, "price_str": "26.87", "change": -8.11, "change_str": "-8.11%", "volume": "37,254"}, {"no": "54", "ticker": "GGUSH", "company": "Direxion Daily S&P Oil & Gas Exp. & Prod. Bull 2X ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 34.75, "price_str": "34.75", "change": -8.09, "change_str": "-8.09%", "volume": "991,653"}, {"no": "55", "ticker": "MMEC", "company": "Mayville Engineering Company Inc", "sector": "Industrials", "industry": "Metal Fabrication", "country": "USA", "market_cap": "650.10M", "pe": "-", "price": 25.5, "price_str": "25.50", "change": -8.04, "change_str": "-8.04%", "volume": "1,438,051"}, {"no": "56", "ticker": "OONTX", "company": "Corgi ONTO 2x Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 16.59, "price_str": "16.59", "change": -8.04, "change_str": "-8.04%", "volume": "34,083"}, {"no": "57", "ticker": "GGOOX", "company": "T-Rex 2X Long Alphabet Daily Target ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 80.89, "price_str": "80.89", "change": -8.02, "change_str": "-8.02%", "volume": "353,644"}, {"no": "58", "ticker": "BBL", "company": "BlackLine Inc", "sector": "Technology", "industry": "Software - Application", "country": "USA", "market_cap": "1.79B", "pe": "71.81", "price": 30.47, "price_str": "30.47", "change": -8.0, "change_str": "-8.00%", "volume": "2,020,128"}, {"no": "59", "ticker": "IICHR", "company": "Ichor Holdings Ltd", "sector": "Technology", "industry": "Semiconductor Equipment & Materials", "country": "USA", "market_cap": "2.29B", "pe": "-", "price": 65.59, "price_str": "65.59", "change": -7.97, "change_str": "-7.97%", "volume": "1,323,756"}, {"no": "60", "ticker": "JJBTM", "company": "JBT Marel Corp", "sector": "Industrials", "industry": "Specialty Industrial Machinery", "country": "USA", "market_cap": "6.35B", "pe": "33.22", "price": 122.01, "price_str": "122.01", "change": -7.9, "change_str": "-7.90%", "volume": "1,595,130"}, {"no": "61", "ticker": "DDKNG", "company": "DraftKings Inc", "sector": "Consumer Cyclical", "industry": "Gambling", "country": "USA", "market_cap": "19.35B", "pe": "361.46", "price": 21.76, "price_str": "21.76", "change": -7.84, "change_str": "-7.84%", "volume": "26,963,750"}, {"no": "62", "ticker": "AAMDY", "company": "Yieldmax AMD Option Income Strategy ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 46.27, "price_str": "46.27", "change": -7.76, "change_str": "-7.76%", "volume": "585,513"}, {"no": "63", "ticker": "MMTCH", "company": "Match Group Inc", "sector": "Communication Services", "industry": "Internet Content & Information", "country": "USA", "market_cap": "8.90B", "pe": "14.56", "price": 38.15, "price_str": "38.15", "change": -7.49, "change_str": "-7.49%", "volume": "7,529,341"}, {"no": "64", "ticker": "UUMAL", "company": "Defiance Daily Target 2X Long UMAC ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 16.8, "price_str": "16.80", "change": -7.41, "change_str": "-7.41%", "volume": "68,861"}, {"no": "65", "ticker": "VVTOL", "company": "Bristow Group Inc", "sector": "Energy", "industry": "Oil & Gas Equipment & Services", "country": "USA", "market_cap": "1.31B", "pe": "11.52", "price": 44.24, "price_str": "44.24", "change": -7.33, "change_str": "-7.33%", "volume": "510,830"}, {"no": "66", "ticker": "WW", "company": "Wayfair Inc", "sector": "Consumer Cyclical", "industry": "Internet Retail", "country": "USA", "market_cap": "14.20B", "pe": "-", "price": 107.57, "price_str": "107.57", "change": -7.33, "change_str": "-7.33%", "volume": "5,467,192"}, {"no": "67", "ticker": "PPBF", "company": "PBF Energy Inc", "sector": "Energy", "industry": "Oil & Gas Refining & Marketing", "country": "USA", "market_cap": "7.25B", "pe": "5.41", "price": 61.17, "price_str": "61.17", "change": -7.16, "change_str": "-7.16%", "volume": "3,667,953"}, {"no": "68", "ticker": "MMQ", "company": "Marqeta Inc", "sector": "Technology", "industry": "Software - Infrastructure", "country": "USA", "market_cap": "1.77B", "pe": "771.30", "price": 16.66, "price_str": "16.66", "change": -7.13, "change_str": "-7.13%", "volume": "2,573,237"}, {"no": "69", "ticker": "AAMD", "company": "Advanced Micro Devices Inc", "sector": "Technology", "industry": "Semiconductors", "country": "USA", "market_cap": "786.03B", "pe": "158.21", "price": 482.05, "price_str": "482.05", "change": -7.04, "change_str": "-7.04%", "volume": "49,572,139"}, {"no": "70", "ticker": "LLSCC", "company": "Lattice Semiconductor Corp", "sector": "Technology", "industry": "Semiconductors", "country": "USA", "market_cap": "17.58B", "pe": "903.59", "price": 128.31, "price_str": "128.31", "change": -7.02, "change_str": "-7.02%", "volume": "4,224,110"}, {"no": "71", "ticker": "SSITM", "company": "SiTime Corp", "sector": "Technology", "industry": "Semiconductors", "country": "USA", "market_cap": "14.34B", "pe": "-", "price": 543.12, "price_str": "543.12", "change": -6.85, "change_str": "-6.85%", "volume": "679,184"}, {"no": "72", "ticker": "WWW", "company": "WW International Inc", "sector": "Healthcare", "industry": "Medical Care Facilities", "country": "USA", "market_cap": "154.08M", "pe": "0.14", "price": 15.41, "price_str": "15.41", "change": -6.72, "change_str": "-6.72%", "volume": "414,966"}, {"no": "73", "ticker": "YYSPC", "company": "YieldMax SPCX Option Income Strategy ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 43.36, "price_str": "43.36", "change": -6.56, "change_str": "-6.56%", "volume": "10,183"}, {"no": "74", "ticker": "SSM", "company": "SM Energy Co", "sector": "Energy", "industry": "Oil & Gas E&P", "country": "USA", "market_cap": "6.96B", "pe": "12.26", "price": 29.02, "price_str": "29.02", "change": -6.54, "change_str": "-6.54%", "volume": "4,897,755"}, {"no": "75", "ticker": "EEOG", "company": "EOG Resources Inc", "sector": "Energy", "industry": "Oil & Gas E&P", "country": "USA", "market_cap": "71.49B", "pe": "13.20", "price": 134.23, "price_str": "134.23", "change": -6.47, "change_str": "-6.47%", "volume": "5,655,364"}, {"no": "76", "ticker": "CCVI", "company": "CVR Energy Inc", "sector": "Energy", "industry": "Oil & Gas Refining & Marketing", "country": "USA", "market_cap": "3.14B", "pe": "45.44", "price": 31.2, "price_str": "31.20", "change": -6.39, "change_str": "-6.39%", "volume": "1,049,279"}, {"no": "77", "ticker": "AANDE", "company": "Andersons Inc", "sector": "Consumer Defensive", "industry": "Food Distribution", "country": "USA", "market_cap": "2.38B", "pe": "13.46", "price": 69.75, "price_str": "69.75", "change": -6.35, "change_str": "-6.35%", "volume": "448,446"}, {"no": "78", "ticker": "WWEED", "company": "Roundhill Cannabis ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 18.14, "price_str": "18.14", "change": -6.32, "change_str": "-6.32%", "volume": "35,900"}, {"no": "79", "ticker": "IINSP", "company": "Inspire Medical Systems Inc", "sector": "Healthcare", "industry": "Medical Devices", "country": "USA", "market_cap": "1.74B", "pe": "13.05", "price": 60.09, "price_str": "60.09", "change": -6.31, "change_str": "-6.31%", "volume": "1,448,060"}, {"no": "80", "ticker": "UUVIX", "company": "2x Long VIX Futures ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 51.9, "price_str": "51.90", "change": -6.28, "change_str": "-6.28%", "volume": "2,041,677"}, {"no": "81", "ticker": "FFOA", "company": "Finance of America Companies Inc", "sector": "Financial", "industry": "Credit Services", "country": "USA", "market_cap": "379.16M", "pe": "-", "price": 22.27, "price_str": "22.27", "change": -6.27, "change_str": "-6.27%", "volume": "68,491"}, {"no": "82", "ticker": "TTCI", "company": "Transcontinental Realty Investors Inc", "sector": "Real Estate", "industry": "Real Estate Services", "country": "USA", "market_cap": "352.05M", "pe": "37.64", "price": 40.75, "price_str": "40.75", "change": -6.24, "change_str": "-6.24%", "volume": "213,460"}, {"no": "83", "ticker": "UUBEW", "company": "Roundhill UBER WeeklyPay ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 24.75, "price_str": "24.75", "change": -6.16, "change_str": "-6.16%", "volume": "8,556"}, {"no": "84", "ticker": "NNBIG", "company": "Leverage Shares 2X Long NBIS Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 18.9, "price_str": "18.90", "change": -6.11, "change_str": "-6.11%", "volume": "1,995,318"}, {"no": "85", "ticker": "MMUR", "company": "Murphy Oil Corp", "sector": "Energy", "industry": "Oil & Gas E&P", "country": "USA", "market_cap": "5.17B", "pe": "61.69", "price": 36.04, "price_str": "36.04", "change": -6.1, "change_str": "-6.10%", "volume": "2,366,336"}, {"no": "86", "ticker": "SSYNA", "company": "Synaptics Inc", "sector": "Technology", "industry": "Semiconductors", "country": "USA", "market_cap": "3.91B", "pe": "-", "price": 100.12, "price_str": "100.12", "change": -6.04, "change_str": "-6.04%", "volume": "1,553,513"}, {"no": "87", "ticker": "HHSTM", "company": "Healthstream Inc", "sector": "Healthcare", "industry": "Health Information Services", "country": "USA", "market_cap": "818.31M", "pe": "39.02", "price": 28.01, "price_str": "28.01", "change": -6.01, "change_str": "-6.01%", "volume": "246,107"}, {"no": "88", "ticker": "DDINO", "company": "HF Sinclair Corp", "sector": "Energy", "industry": "Oil & Gas Refining & Marketing", "country": "USA", "market_cap": "14.75B", "pe": "7.92", "price": 82.98, "price_str": "82.98", "change": -5.97, "change_str": "-5.97%", "volume": "3,498,821"}, {"no": "89", "ticker": "VVSAT", "company": "Viasat Inc", "sector": "Technology", "industry": "Communication Equipment", "country": "USA", "market_cap": "11.16B", "pe": "-", "price": 81.03, "price_str": "81.03", "change": -5.95, "change_str": "-5.95%", "volume": "4,021,472"}, {"no": "90", "ticker": "HHONA", "company": "Honeywell Aerospace Inc", "sector": "Industrials", "industry": "Aerospace & Defense", "country": "USA", "market_cap": "64.53B", "pe": "-", "price": 203.64, "price_str": "203.64", "change": -5.93, "change_str": "-5.93%", "volume": "4,397,050"}, {"no": "91", "ticker": "BBLZE", "company": "Backblaze Inc", "sector": "Technology", "industry": "Software - Infrastructure", "country": "USA", "market_cap": "1.15B", "pe": "-", "price": 18.62, "price_str": "18.62", "change": -5.91, "change_str": "-5.91%", "volume": "5,567,306"}, {"no": "92", "ticker": "VVVV", "company": "Valvoline Inc", "sector": "Consumer Cyclical", "industry": "Auto & Truck Dealerships", "country": "USA", "market_cap": "4.72B", "pe": "50.83", "price": 36.98, "price_str": "36.98", "change": -5.86, "change_str": "-5.86%", "volume": "5,304,760"}, {"no": "93", "ticker": "NNBIL", "company": "GraniteShares 2x Long NBIS Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 27.36, "price_str": "27.36", "change": -5.85, "change_str": "-5.85%", "volume": "2,489,545"}, {"no": "94", "ticker": "XXOVL", "company": "Defiance Daily Target 2X Long XOVR ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 18.71, "price_str": "18.71", "change": -5.84, "change_str": "-5.84%", "volume": "270,393"}, {"no": "95", "ticker": "LLITU", "company": "T-REX 2X Long LITE Daily Target ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 17.58, "price_str": "17.58", "change": -5.69, "change_str": "-5.69%", "volume": "179,898"}, {"no": "96", "ticker": "SSOXL", "company": "Direxion Daily Semiconductor Bull 3X ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 132.07, "price_str": "132.07", "change": -5.6, "change_str": "-5.60%", "volume": "67,280,871"}, {"no": "97", "ticker": "UULH", "company": "Universal Logistics Holdings Inc", "sector": "Industrials", "industry": "Trucking", "country": "USA", "market_cap": "484.93M", "pe": "-", "price": 18.39, "price_str": "18.39", "change": -5.5, "change_str": "-5.50%", "volume": "67,883"}, {"no": "98", "ticker": "IIBTA", "company": "Ibotta Inc", "sector": "Technology", "industry": "Software - Application", "country": "USA", "market_cap": "822.07M", "pe": "-", "price": 35.32, "price_str": "35.32", "change": -5.41, "change_str": "-5.41%", "volume": "570,837"}, {"no": "99", "ticker": "SSNDK", "company": "Sandisk Corp", "sector": "Technology", "industry": "Computer Hardware", "country": "USA", "market_cap": "200.00B", "pe": "46.95", "price": 1350.5, "price_str": "1350.50", "change": -5.4, "change_str": "-5.40%", "volume": "16,181,688"}, {"no": "100", "ticker": "WWDC", "company": "Western Digital Corp", "sector": "Technology", "industry": "Computer Hardware", "country": "USA", "market_cap": "178.95B", "pe": "30.99", "price": 519.17, "price_str": "519.17", "change": -5.36, "change_str": "-5.36%", "volume": "9,573,277"}], "gainers_by_sector": {"Basic Materials": [{"no": "3", "ticker": "MMTRN", "company": "Materion Corp", "sector": "Basic Materials", "industry": "Other Industrial Metals & Mining", "country": "USA", "market_cap": "6.18B", "pe": "81.18", "price": 297.08, "price_str": "297.08", "change": 30.81, "change_str": "30.81%", "volume": "926,910"}, {"no": "18", "ticker": "AAUGO", "company": "Aura Minerals Inc", "sector": "Basic Materials", "industry": "Gold", "country": "USA", "market_cap": "5.51B", "pe": "61.79", "price": 65.76, "price_str": "65.76", "change": 13.79, "change_str": "13.79%", "volume": "2,209,798"}, {"no": "33", "ticker": "PPPTA", "company": "Perpetua Resources Corp", "sector": "Basic Materials", "industry": "Other Precious Metals & Mining", "country": "USA", "market_cap": "2.87B", "pe": "-", "price": 22.93, "price_str": "22.93", "change": 10.88, "change_str": "10.88%", "volume": "2,086,221"}, {"no": "36", "ticker": "SSSMR", "company": "Sunshine Silver Mining & Refining Co", "sector": "Basic Materials", "industry": "Other Industrial Metals & Mining", "country": "USA", "market_cap": "2.32B", "pe": "-", "price": 16.12, "price_str": "16.12", "change": 10.11, "change_str": "10.11%", "volume": "309,495"}, {"no": "42", "ticker": "HHYMC", "company": "Hycroft Mining Holding Corp", "sector": "Basic Materials", "industry": "Gold", "country": "USA", "market_cap": "2.28B", "pe": "-", "price": 24.48, "price_str": "24.48", "change": 9.48, "change_str": "9.48%", "volume": "2,776,732"}, {"no": "47", "ticker": "SSSRM", "company": "SSR Mining Inc", "sector": "Basic Materials", "industry": "Gold", "country": "USA", "market_cap": "6.02B", "pe": "27.94", "price": 29.0, "price_str": "29.00", "change": 9.1, "change_str": "9.10%", "volume": "5,660,574"}, {"no": "48", "ticker": "IIFF", "company": "International Flavors & Fragrances Inc", "sector": "Basic Materials", "industry": "Specialty Chemicals", "country": "USA", "market_cap": "22.48B", "pe": "26.98", "price": 88.07, "price_str": "88.07", "change": 8.88, "change_str": "8.88%", "volume": "3,440,911"}, {"no": "50", "ticker": "AAU", "company": "AngloGold Ashanti Plc", "sector": "Basic Materials", "industry": "Gold", "country": "USA", "market_cap": "44.74B", "pe": "11.86", "price": 88.6, "price_str": "88.60", "change": 8.71, "change_str": "8.71%", "volume": "3,716,666"}, {"no": "51", "ticker": "IIDR", "company": "Idaho Strategic Resources Inc", "sector": "Basic Materials", "industry": "Gold", "country": "USA", "market_cap": "523.78M", "pe": "23.80", "price": 33.13, "price_str": "33.13", "change": 8.69, "change_str": "8.69%", "volume": "377,576"}, {"no": "69", "ticker": "CCDE", "company": "Coeur Mining Inc", "sector": "Basic Materials", "industry": "Gold", "country": "USA", "market_cap": "17.96B", "pe": "14.41", "price": 17.43, "price_str": "17.43", "change": 7.53, "change_str": "7.53%", "volume": "53,766,112"}, {"no": "70", "ticker": "HHL", "company": "Hecla Mining Co", "sector": "Basic Materials", "industry": "Other Precious Metals & Mining", "country": "USA", "market_cap": "11.09B", "pe": "23.77", "price": 16.54, "price_str": "16.54", "change": 7.47, "change_str": "7.47%", "volume": "46,804,475"}, {"no": "87", "ticker": "NNEM", "company": "Newmont Corp", "sector": "Basic Materials", "industry": "Gold", "country": "USA", "market_cap": "109.89B", "pe": "13.17", "price": 104.29, "price_str": "104.29", "change": 6.71, "change_str": "6.71%", "volume": "9,531,358"}], "Consumer Cyclical": [{"no": "27", "ticker": "SSHAK", "company": "Shake Shack Inc", "sector": "Consumer Cyclical", "industry": "Restaurants", "country": "USA", "market_cap": "3.18B", "pe": "75.52", "price": 74.33, "price_str": "74.33", "change": 12.25, "change_str": "12.25%", "volume": "8,963,431"}, {"no": "35", "ticker": "SSKY", "company": "Champion Homes Inc", "sector": "Consumer Cyclical", "industry": "Residential Construction", "country": "USA", "market_cap": "5.00B", "pe": "24.96", "price": 91.16, "price_str": "91.16", "change": 10.68, "change_str": "10.68%", "volume": "1,448,104"}, {"no": "41", "ticker": "XXPEL", "company": "XPEL Inc", "sector": "Consumer Cyclical", "industry": "Auto Parts", "country": "USA", "market_cap": "1.39B", "pe": "26.31", "price": 50.29, "price_str": "50.29", "change": 9.54, "change_str": "9.54%", "volume": "540,091"}, {"no": "46", "ticker": "NNEGG", "company": "Newegg Commerce Inc", "sector": "Consumer Cyclical", "industry": "Internet Retail", "country": "USA", "market_cap": "350.25M", "pe": "-", "price": 16.7, "price_str": "16.70", "change": 9.15, "change_str": "9.15%", "volume": "149,677"}, {"no": "57", "ticker": "SSN", "company": "SharkNinja Inc", "sector": "Consumer Cyclical", "industry": "Furnishings, Fixtures & Appliances", "country": "USA", "market_cap": "25.77B", "pe": "36.71", "price": 182.11, "price_str": "182.11", "change": 8.28, "change_str": "8.28%", "volume": "3,709,398"}, {"no": "79", "ticker": "WWEYS", "company": "Weyco Group Inc", "sector": "Consumer Cyclical", "industry": "Footwear & Accessories", "country": "USA", "market_cap": "418.46M", "pe": "17.66", "price": 43.9, "price_str": "43.90", "change": 7.18, "change_str": "7.18%", "volume": "45,051"}, {"no": "91", "ticker": "BBKNG", "company": "Booking Holdings Inc", "sector": "Consumer Cyclical", "industry": "Travel Services", "country": "USA", "market_cap": "160.42B", "pe": "27.22", "price": 207.02, "price_str": "207.02", "change": 6.56, "change_str": "6.56%", "volume": "10,653,568"}], "Consumer Defensive": [{"no": "14", "ticker": "FFRPT", "company": "Freshpet Inc", "sector": "Consumer Defensive", "industry": "Packaged Foods", "country": "USA", "market_cap": "3.51B", "pe": "19.15", "price": 71.47, "price_str": "71.47", "change": 14.57, "change_str": "14.57%", "volume": "6,436,351"}, {"no": "49", "ticker": "PPRMB", "company": "Primo Brands Corp", "sector": "Consumer Defensive", "industry": "Beverages - Non-Alcoholic", "country": "USA", "market_cap": "9.19B", "pe": "160.86", "price": 25.32, "price_str": "25.32", "change": 8.72, "change_str": "8.72%", "volume": "10,286,669"}, {"no": "66", "ticker": "JJJSF", "company": "J&J Snack Foods Corp", "sector": "Consumer Defensive", "industry": "Packaged Foods", "country": "USA", "market_cap": "1.59B", "pe": "28.40", "price": 84.66, "price_str": "84.66", "change": 7.66, "change_str": "7.66%", "volume": "395,075"}], "Energy": [{"no": "5", "ticker": "FFTK", "company": "Flotek Industries Inc", "sector": "Energy", "industry": "Oil & Gas Equipment & Services", "country": "USA", "market_cap": "1.30B", "pe": "46.05", "price": 36.07, "price_str": "36.07", "change": 27.86, "change_str": "27.86%", "volume": "1,552,457"}, {"no": "8", "ticker": "WWTTR", "company": "Select Water Solutions Inc", "sector": "Energy", "industry": "Oil & Gas Equipment & Services", "country": "USA", "market_cap": "3.13B", "pe": "109.66", "price": 22.26, "price_str": "22.26", "change": 20.32, "change_str": "20.32%", "volume": "6,975,000"}, {"no": "54", "ticker": "NNRP", "company": "Natural Resource Partners LP", "sector": "Energy", "industry": "Thermal Coal", "country": "USA", "market_cap": "1.39B", "pe": "12.34", "price": 105.0, "price_str": "105.00", "change": 8.31, "change_str": "8.31%", "volume": "124,570"}, {"no": "76", "ticker": "NNGL", "company": "NGL Energy Partners LP", "sector": "Energy", "industry": "Oil & Gas Midstream", "country": "USA", "market_cap": "2.12B", "pe": "-", "price": 17.0, "price_str": "17.00", "change": 7.26, "change_str": "7.26%", "volume": "550,722"}, {"no": "92", "ticker": "PPBT", "company": "Permian Basin Royalty Trust", "sector": "Energy", "industry": "Oil & Gas Midstream", "country": "USA", "market_cap": "1.61B", "pe": "109.27", "price": 34.53, "price_str": "34.53", "change": 6.54, "change_str": "6.54%", "volume": "346,409"}], "Financial": [{"no": "2", "ticker": "SSHPU", "company": "Direxion Daily SHOP Bull 2X ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 16.71, "price_str": "16.71", "change": 33.71, "change_str": "33.71%", "volume": "1,648,926"}, {"no": "4", "ticker": "SSSPC", "company": "Leverage Shares 2X Short SPCX Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 21.21, "price_str": "21.21", "change": 30.68, "change_str": "30.68%", "volume": "26,412,953"}, {"no": "6", "ticker": "ZZETX", "company": "Defiance Daily Target 2x Long ZETA ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 32.67, "price_str": "32.67", "change": 23.14, "change_str": "23.14%", "volume": "203,706"}, {"no": "7", "ticker": "GGDXU", "company": "MicroSectors Gold Miners 3X Leveraged ETN", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 107.14, "price_str": "107.14", "change": 22.45, "change_str": "22.45%", "volume": "3,150,848"}, {"no": "12", "ticker": "JJNUG", "company": "Direxion Daily Junior Gold Miners Index Bull 2X ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 144.76, "price_str": "144.76", "change": 14.8, "change_str": "14.80%", "volume": "418,212"}, {"no": "13", "ticker": "NNUGT", "company": "Direxion Daily Gold Miners Index Bull 2X ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 140.21, "price_str": "140.21", "change": 14.65, "change_str": "14.65%", "volume": "967,623"}, {"no": "22", "ticker": "NNEMG", "company": "Leverage Shares 2x Long NEM Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 16.51, "price_str": "16.51", "change": 13.56, "change_str": "13.56%", "volume": "14,469"}, {"no": "34", "ticker": "SSNDQ", "company": "Tradr 2X Short SNDK Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 24.41, "price_str": "24.41", "change": 10.75, "change_str": "10.75%", "volume": "26,468,337"}, {"no": "37", "ticker": "GGDMN", "company": "WisdomTree Efficient Gold Plus Gold Miners Strategy Fund", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 82.87, "price_str": "82.87", "change": 10.05, "change_str": "10.05%", "volume": "83,565"}, {"no": "38", "ticker": "LLLYX", "company": "Defiance Daily Target 2X Long LLY ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 25.81, "price_str": "25.81", "change": 10.02, "change_str": "10.02%", "volume": "1,586,243"}, {"no": "39", "ticker": "AAXTC", "company": "Corgi AXTI 2x Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 21.83, "price_str": "21.83", "change": 9.91, "change_str": "9.91%", "volume": "36,364"}, {"no": "43", "ticker": "EELIL", "company": "Direxion Daily LLY Bull 2X ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 29.05, "price_str": "29.05", "change": 9.38, "change_str": "9.38%", "volume": "666,882"}, {"no": "44", "ticker": "NNRGD", "company": "MicroSectors U.S. Big Oil -3 Inverse Leveraged ETNs", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 22.41, "price_str": "22.41", "change": 9.32, "change_str": "9.32%", "volume": "51,397"}, {"no": "45", "ticker": "GGDXW", "company": "Roundhill Gold Miners WeeklyPay ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 39.19, "price_str": "39.19", "change": 9.21, "change_str": "9.21%", "volume": "56,196"}, {"no": "53", "ticker": "UUGL", "company": "ProShares Ultra Gold 2x Shares", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 48.56, "price_str": "48.56", "change": 8.44, "change_str": "8.44%", "volume": "3,788,610"}, {"no": "55", "ticker": "GGOEX", "company": "Global X Gold Explorers ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 78.83, "price_str": "78.83", "change": 8.31, "change_str": "8.31%", "volume": "18,352"}, {"no": "56", "ticker": "AAGQ", "company": "ProShares Ultra Silver 2x Shares", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 73.14, "price_str": "73.14", "change": 8.31, "change_str": "8.31%", "volume": "3,148,395"}, {"no": "58", "ticker": "PPFX", "company": "PhenixFIN Corp", "sector": "Financial", "industry": "Asset Management", "country": "USA", "market_cap": "91.47M", "pe": "-", "price": 46.15, "price_str": "46.15", "change": 8.21, "change_str": "8.21%", "volume": "189,400"}, {"no": "59", "ticker": "UUGLD", "company": "Direxion Daily Gold Bull 2X ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 21.33, "price_str": "21.33", "change": 8.12, "change_str": "8.12%", "volume": "95,748"}, {"no": "61", "ticker": "UUSLV", "company": "Direxion Daily Silver Bull 2X ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 15.04, "price_str": "15.04", "change": 8.05, "change_str": "8.05%", "volume": "128,015"}, {"no": "63", "ticker": "AANEL", "company": "Defiance Daily Target 2x Long ANET ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 27.31, "price_str": "27.31", "change": 7.99, "change_str": "7.99%", "volume": "620,429"}, {"no": "64", "ticker": "RRING", "company": "iShares MSCI Global Gold Miners ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 72.19, "price_str": "72.19", "change": 7.91, "change_str": "7.91%", "volume": "1,855,520"}, {"no": "67", "ticker": "AAUMI", "company": "Themes Gold Miners ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 86.72, "price_str": "86.72", "change": 7.53, "change_str": "7.53%", "volume": "4,836"}, {"no": "68", "ticker": "AAUAU", "company": "Global X Gold Miners ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 36.02, "price_str": "36.02", "change": 7.53, "change_str": "7.53%", "volume": "3,822"}, {"no": "71", "ticker": "GGDXJ", "company": "VanEck Junior Gold Miners ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 109.48, "price_str": "109.48", "change": 7.42, "change_str": "7.42%", "volume": "9,309,724"}, {"no": "72", "ticker": "GGDX", "company": "VanEck Gold Miners ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 83.68, "price_str": "83.68", "change": 7.39, "change_str": "7.39%", "volume": "40,626,356"}, {"no": "73", "ticker": "SSLVP", "company": "iShares MSCI Global Silver and Metals Miners ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 34.02, "price_str": "34.02", "change": 7.28, "change_str": "7.28%", "volume": "359,692"}, {"no": "74", "ticker": "NNVDG", "company": "Leverage Shares 2X Long NVDA Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 20.04, "price_str": "20.04", "change": 7.27, "change_str": "7.27%", "volume": "399,759"}, {"no": "77", "ticker": "AAIZ", "company": "Assurant Inc", "sector": "Financial", "industry": "Insurance - Property & Casualty", "country": "USA", "market_cap": "14.94B", "pe": "15.35", "price": 301.57, "price_str": "301.57", "change": 7.2, "change_str": "7.20%", "volume": "711,600"}, {"no": "78", "ticker": "FFIGG", "company": "Leverage Shares 2x Long FIG Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 31.23, "price_str": "31.23", "change": 7.2, "change_str": "7.20%", "volume": "384,379"}, {"no": "80", "ticker": "GGBUG", "company": "Sprott Active Gold & Silver Miners ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 44.33, "price_str": "44.33", "change": 7.17, "change_str": "7.17%", "volume": "56,036"}, {"no": "81", "ticker": "SSGDM", "company": "Sprott Gold Miners ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 69.05, "price_str": "69.05", "change": 7.14, "change_str": "7.14%", "volume": "53,740"}, {"no": "82", "ticker": "NNVDU", "company": "Direxion Daily NVDA Bull 2X ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 139.27, "price_str": "139.27", "change": 7.07, "change_str": "7.07%", "volume": "543,172"}, {"no": "84", "ticker": "SSLVR", "company": "Sprott Silver Miners & Physical Silver ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 55.02, "price_str": "55.02", "change": 6.88, "change_str": "6.88%", "volume": "171,558"}, {"no": "86", "ticker": "OOILD", "company": "MicroSectors Oil & Gas Exploration & Production -3X Inverse Leveraged", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 40.38, "price_str": "40.38", "change": 6.84, "change_str": "6.84%", "volume": "105,738"}, {"no": "90", "ticker": "SSIL", "company": "Global X Silver Miners ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 83.77, "price_str": "83.77", "change": 6.59, "change_str": "6.59%", "volume": "1,815,790"}, {"no": "93", "ticker": "SSOXS", "company": "Direxion Daily Semiconductor Bear 3X ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 45.08, "price_str": "45.08", "change": 6.5, "change_str": "6.50%", "volume": "64,928,603"}, {"no": "95", "ticker": "AAGMI", "company": "Themes Silver Miners ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 68.08, "price_str": "68.08", "change": 6.32, "change_str": "6.32%", "volume": "3,242"}, {"no": "96", "ticker": "EEQH", "company": "Equitable Holdings Inc", "sector": "Financial", "industry": "Asset Management", "country": "USA", "market_cap": "14.00B", "pe": "-", "price": 51.3, "price_str": "51.30", "change": 6.32, "change_str": "6.32%", "volume": "7,811,449"}, {"no": "97", "ticker": "CCRBG", "company": "Corebridge Financial Inc", "sector": "Financial", "industry": "Asset Management", "country": "USA", "market_cap": "14.97B", "pe": "56.45", "price": 33.59, "price_str": "33.59", "change": 6.3, "change_str": "6.30%", "volume": "8,541,417"}, {"no": "98", "ticker": "SSILJ", "company": "Amplify Junior Silver Miners ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 27.75, "price_str": "27.75", "change": 6.28, "change_str": "6.28%", "volume": "6,381,825"}, {"no": "99", "ticker": "FFCXG", "company": "Leverage Shares 2x Long FCX Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 15.23, "price_str": "15.23", "change": 6.23, "change_str": "6.23%", "volume": "44,415"}, {"no": "100", "ticker": "GGLDN", "company": "Nicholas Gold Income ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 15.28, "price_str": "15.28", "change": 6.18, "change_str": "6.18%", "volume": "8,047"}], "Healthcare": [{"no": "9", "ticker": "UURGN", "company": "UroGen Pharma Ltd", "sector": "Healthcare", "industry": "Biotechnology", "country": "USA", "market_cap": "2.26B", "pe": "-", "price": 46.43, "price_str": "46.43", "change": 16.31, "change_str": "16.31%", "volume": "2,480,830"}, {"no": "10", "ticker": "TTWST", "company": "Twist Bioscience Corp", "sector": "Healthcare", "industry": "Diagnostics & Research", "country": "USA", "market_cap": "7.21B", "pe": "-", "price": 115.01, "price_str": "115.01", "change": 15.65, "change_str": "15.65%", "volume": "3,293,810"}, {"no": "19", "ticker": "AAGL", "company": "Agilon Health Inc", "sector": "Healthcare", "industry": "Medical Care Facilities", "country": "USA", "market_cap": "1.80B", "pe": "-", "price": 107.85, "price_str": "107.85", "change": 13.79, "change_str": "13.79%", "volume": "1,115,743"}, {"no": "21", "ticker": "BBVS", "company": "Bioventus Inc", "sector": "Healthcare", "industry": "Medical Devices", "country": "USA", "market_cap": "1.27B", "pe": "37.02", "price": 15.26, "price_str": "15.26", "change": 13.71, "change_str": "13.71%", "volume": "2,526,295"}, {"no": "28", "ticker": "TTVTX", "company": "Travere Therapeutics Inc", "sector": "Healthcare", "industry": "Biotechnology", "country": "USA", "market_cap": "5.84B", "pe": "-", "price": 62.76, "price_str": "62.76", "change": 12.03, "change_str": "12.03%", "volume": "6,308,483"}, {"no": "30", "ticker": "CCRL", "company": "Charles River Laboratories International Inc", "sector": "Healthcare", "industry": "Diagnostics & Research", "country": "USA", "market_cap": "12.56B", "pe": "-", "price": 260.72, "price_str": "260.72", "change": 11.36, "change_str": "11.36%", "volume": "1,782,701"}, {"no": "52", "ticker": "SSUPN", "company": "Supernus Pharmaceuticals Inc", "sector": "Healthcare", "industry": "Drug Manufacturers - Specialty & Generic", "country": "USA", "market_cap": "2.73B", "pe": "-", "price": 46.91, "price_str": "46.91", "change": 8.46, "change_str": "8.46%", "volume": "1,671,774"}, {"no": "65", "ticker": "CCOAG", "company": "Hemab Therapeutics Holdings Inc", "sector": "Healthcare", "industry": "Biotechnology", "country": "USA", "market_cap": "2.34B", "pe": "-", "price": 50.09, "price_str": "50.09", "change": 7.67, "change_str": "7.67%", "volume": "353,203"}, {"no": "75", "ticker": "VVTVT", "company": "vTv Therapeutics Inc", "sector": "Healthcare", "industry": "Biotechnology", "country": "USA", "market_cap": "135.46M", "pe": "-", "price": 34.39, "price_str": "34.39", "change": 7.27, "change_str": "7.27%", "volume": "102,683"}, {"no": "83", "ticker": "PPTHS", "company": "Pelthos Therapeutics Inc", "sector": "Healthcare", "industry": "Biotechnology", "country": "USA", "market_cap": "99.20M", "pe": "-", "price": 28.54, "price_str": "28.54", "change": 6.89, "change_str": "6.89%", "volume": "59,722"}, {"no": "85", "ticker": "KKIDS", "company": "OrthoPediatrics corp", "sector": "Healthcare", "industry": "Medical Devices", "country": "USA", "market_cap": "573.03M", "pe": "-", "price": 22.31, "price_str": "22.31", "change": 6.85, "change_str": "6.85%", "volume": "709,501"}, {"no": "94", "ticker": "NNHC", "company": "National Healthcare Corp", "sector": "Healthcare", "industry": "Medical Care Facilities", "country": "USA", "market_cap": "3.46B", "pe": "28.11", "price": 221.45, "price_str": "221.45", "change": 6.36, "change_str": "6.36%", "volume": "134,389"}], "Industrials": [{"no": "1", "ticker": "OOESX", "company": "Orion Energy Systems Inc", "sector": "Industrials", "industry": "Electrical Equipment & Parts", "country": "USA", "market_cap": "65.15M", "pe": "-", "price": 16.06, "price_str": "16.06", "change": 54.42, "change_str": "54.42%", "volume": "677,271"}, {"no": "11", "ticker": "HHY", "company": "Hyster Yale Inc", "sector": "Industrials", "industry": "Farm & Heavy Construction Machinery", "country": "USA", "market_cap": "725.06M", "pe": "-", "price": 40.47, "price_str": "40.47", "change": 15.2, "change_str": "15.20%", "volume": "374,802"}, {"no": "15", "ticker": "LLIME", "company": "Neutron Holdings Inc", "sector": "Industrials", "industry": "Rental & Leasing Services", "country": "USA", "market_cap": "2.28B", "pe": "-", "price": 35.6, "price_str": "35.60", "change": 14.54, "change_str": "14.54%", "volume": "516,083"}, {"no": "17", "ticker": "RROCK", "company": "Gibraltar Industries Inc", "sector": "Industrials", "industry": "Building Products & Equipment", "country": "USA", "market_cap": "1.63B", "pe": "-", "price": 54.86, "price_str": "54.86", "change": 14.15, "change_str": "14.15%", "volume": "746,807"}, {"no": "26", "ticker": "BBXC", "company": "Bluelinx Hldgs Inc", "sector": "Industrials", "industry": "Industrial Distribution", "country": "USA", "market_cap": "564.53M", "pe": "-", "price": 72.54, "price_str": "72.54", "change": 12.53, "change_str": "12.53%", "volume": "320,664"}, {"no": "32", "ticker": "PPLPC", "company": "Preformed Line Products Co", "sector": "Industrials", "industry": "Electrical Equipment & Parts", "country": "USA", "market_cap": "2.30B", "pe": "53.13", "price": 471.29, "price_str": "471.29", "change": 11.26, "change_str": "11.26%", "volume": "144,683"}, {"no": "40", "ticker": "GGFF", "company": "Griffon Corp", "sector": "Industrials", "industry": "Building Products & Equipment", "country": "USA", "market_cap": "4.72B", "pe": "165.00", "price": 102.81, "price_str": "102.81", "change": 9.86, "change_str": "9.86%", "volume": "785,466"}, {"no": "62", "ticker": "AAIRT", "company": "Air T Inc", "sector": "Industrials", "industry": "Conglomerates", "country": "USA", "market_cap": "86.11M", "pe": "1.11", "price": 31.99, "price_str": "31.99", "change": 8.0, "change_str": "8.00%", "volume": "117,291"}, {"no": "88", "ticker": "KKTOS", "company": "Kratos Defense & Security Solutions Inc", "sector": "Industrials", "industry": "Aerospace & Defense", "country": "USA", "market_cap": "10.38B", "pe": "327.26", "price": 55.34, "price_str": "55.34", "change": 6.69, "change_str": "6.69%", "volume": "9,207,712"}], "Real Estate": [{"no": "89", "ticker": "OOZ", "company": "Belpointe PREP LLC", "sector": "Real Estate", "industry": "Real Estate - Development", "country": "USA", "market_cap": "199.10M", "pe": "-", "price": 49.8, "price_str": "49.80", "change": 6.64, "change_str": "6.64%", "volume": "8,877"}], "Technology": [{"no": "16", "ticker": "MMEI", "company": "Methode Electronics Inc", "sector": "Technology", "industry": "Electronic Components", "country": "USA", "market_cap": "612.24M", "pe": "-", "price": 17.26, "price_str": "17.26", "change": 14.3, "change_str": "14.30%", "volume": "1,163,326"}, {"no": "20", "ticker": "QQLYS", "company": "Qualys Inc", "sector": "Technology", "industry": "Software - Infrastructure", "country": "USA", "market_cap": "6.45B", "pe": "32.89", "price": 183.25, "price_str": "183.25", "change": 13.78, "change_str": "13.78%", "volume": "1,620,836"}, {"no": "23", "ticker": "AADIG", "company": "ADI Global Distribution Inc", "sector": "Technology", "industry": "Electronics & Computer Distribution", "country": "USA", "market_cap": "-", "pe": "-", "price": 24.98, "price_str": "24.98", "change": 13.55, "change_str": "13.55%", "volume": "1,511,050"}, {"no": "24", "ticker": "IINTA", "company": "Intapp Inc", "sector": "Technology", "industry": "Software - Application", "country": "USA", "market_cap": "2.85B", "pe": "-", "price": 36.96, "price_str": "36.96", "change": 12.75, "change_str": "12.75%", "volume": "1,895,853"}, {"no": "25", "ticker": "VVHC", "company": "Virnetx Holding Corp", "sector": "Technology", "industry": "Software - Infrastructure", "country": "USA", "market_cap": "63.88M", "pe": "-", "price": 15.26, "price_str": "15.26", "change": 12.54, "change_str": "12.54%", "volume": "25,691"}, {"no": "29", "ticker": "ZZETA", "company": "Zeta Global Holdings Corp", "sector": "Technology", "industry": "Software - Infrastructure", "country": "USA", "market_cap": "6.75B", "pe": "-", "price": 27.07, "price_str": "27.07", "change": 11.58, "change_str": "11.58%", "volume": "36,368,869"}, {"no": "31", "ticker": "DDT", "company": "Dynatrace Inc", "sector": "Technology", "industry": "Software - Application", "country": "USA", "market_cap": "14.76B", "pe": "94.87", "price": 50.86, "price_str": "50.86", "change": 11.27, "change_str": "11.27%", "volume": "18,356,514"}, {"no": "60", "ticker": "FFLYW", "company": "Flywire Corp", "sector": "Technology", "industry": "Software - Infrastructure", "country": "USA", "market_cap": "2.27B", "pe": "80.53", "price": 18.65, "price_str": "18.65", "change": 8.05, "change_str": "8.05%", "volume": "5,678,585"}]}, "losers_by_sector": {"Communication Services": [{"no": "8", "ticker": "AADV", "company": "Advantage Solutions Inc", "sector": "Communication Services", "industry": "Advertising Agencies", "country": "USA", "market_cap": "439.01M", "pe": "-", "price": 33.02, "price_str": "33.02", "change": -20.85, "change_str": "-20.85%", "volume": "273,833"}, {"no": "27", "ticker": "NNYT", "company": "New York Times Co", "sector": "Communication Services", "industry": "Publishing", "country": "USA", "market_cap": "10.60B", "pe": "28.13", "price": 65.48, "price_str": "65.48", "change": -13.4, "change_str": "-13.40%", "volume": "8,652,239"}, {"no": "43", "ticker": "PPINS", "company": "Pinterest Inc", "sector": "Communication Services", "industry": "Internet Content & Information", "country": "USA", "market_cap": "13.09B", "pe": "48.44", "price": 23.36, "price_str": "23.36", "change": -8.68, "change_str": "-8.68%", "volume": "22,987,712"}, {"no": "63", "ticker": "MMTCH", "company": "Match Group Inc", "sector": "Communication Services", "industry": "Internet Content & Information", "country": "USA", "market_cap": "8.90B", "pe": "14.56", "price": 38.15, "price_str": "38.15", "change": -7.49, "change_str": "-7.49%", "volume": "7,529,341"}], "Consumer Cyclical": [{"no": "4", "ticker": "DDBGI", "company": "Digital Brands Group Inc", "sector": "Consumer Cyclical", "industry": "Apparel Retail", "country": "USA", "market_cap": "9.36M", "pe": "-", "price": 16.28, "price_str": "16.28", "change": -24.73, "change_str": "-24.73%", "volume": "2,450,215"}, {"no": "32", "ticker": "FFLUT", "company": "Flutter Entertainment Plc", "sector": "Consumer Cyclical", "industry": "Gambling", "country": "USA", "market_cap": "16.16B", "pe": "-", "price": 92.91, "price_str": "92.91", "change": -11.48, "change_str": "-11.48%", "volume": "15,815,793"}, {"no": "42", "ticker": "RRSI", "company": "Rush Street Interactive Inc", "sector": "Consumer Cyclical", "industry": "Gambling", "country": "USA", "market_cap": "6.01B", "pe": "87.42", "price": 25.92, "price_str": "25.92", "change": -8.7, "change_str": "-8.70%", "volume": "4,530,796"}, {"no": "61", "ticker": "DDKNG", "company": "DraftKings Inc", "sector": "Consumer Cyclical", "industry": "Gambling", "country": "USA", "market_cap": "19.35B", "pe": "361.46", "price": 21.76, "price_str": "21.76", "change": -7.84, "change_str": "-7.84%", "volume": "26,963,750"}, {"no": "66", "ticker": "WW", "company": "Wayfair Inc", "sector": "Consumer Cyclical", "industry": "Internet Retail", "country": "USA", "market_cap": "14.20B", "pe": "-", "price": 107.57, "price_str": "107.57", "change": -7.33, "change_str": "-7.33%", "volume": "5,467,192"}, {"no": "92", "ticker": "VVVV", "company": "Valvoline Inc", "sector": "Consumer Cyclical", "industry": "Auto & Truck Dealerships", "country": "USA", "market_cap": "4.72B", "pe": "50.83", "price": 36.98, "price_str": "36.98", "change": -5.86, "change_str": "-5.86%", "volume": "5,304,760"}], "Consumer Defensive": [{"no": "77", "ticker": "AANDE", "company": "Andersons Inc", "sector": "Consumer Defensive", "industry": "Food Distribution", "country": "USA", "market_cap": "2.38B", "pe": "13.46", "price": 69.75, "price_str": "69.75", "change": -6.35, "change_str": "-6.35%", "volume": "448,446"}], "Energy": [{"no": "18", "ticker": "PPARR", "company": "Par Pacific Holdings Inc", "sector": "Energy", "industry": "Oil & Gas Refining & Marketing", "country": "USA", "market_cap": "3.51B", "pe": "7.80", "price": 69.92, "price_str": "69.92", "change": -15.76, "change_str": "-15.76%", "volume": "2,321,706"}, {"no": "38", "ticker": "DDK", "company": "Delek US Holdings Inc", "sector": "Energy", "industry": "Oil & Gas Refining & Marketing", "country": "USA", "market_cap": "3.66B", "pe": "-", "price": 59.75, "price_str": "59.75", "change": -9.74, "change_str": "-9.74%", "volume": "1,994,686"}, {"no": "52", "ticker": "TTDW", "company": "Tidewater Inc", "sector": "Energy", "industry": "Oil & Gas Equipment & Services", "country": "USA", "market_cap": "3.85B", "pe": "15.64", "price": 77.36, "price_str": "77.36", "change": -8.11, "change_str": "-8.11%", "volume": "859,233"}, {"no": "65", "ticker": "VVTOL", "company": "Bristow Group Inc", "sector": "Energy", "industry": "Oil & Gas Equipment & Services", "country": "USA", "market_cap": "1.31B", "pe": "11.52", "price": 44.24, "price_str": "44.24", "change": -7.33, "change_str": "-7.33%", "volume": "510,830"}, {"no": "67", "ticker": "PPBF", "company": "PBF Energy Inc", "sector": "Energy", "industry": "Oil & Gas Refining & Marketing", "country": "USA", "market_cap": "7.25B", "pe": "5.41", "price": 61.17, "price_str": "61.17", "change": -7.16, "change_str": "-7.16%", "volume": "3,667,953"}, {"no": "74", "ticker": "SSM", "company": "SM Energy Co", "sector": "Energy", "industry": "Oil & Gas E&P", "country": "USA", "market_cap": "6.96B", "pe": "12.26", "price": 29.02, "price_str": "29.02", "change": -6.54, "change_str": "-6.54%", "volume": "4,897,755"}, {"no": "75", "ticker": "EEOG", "company": "EOG Resources Inc", "sector": "Energy", "industry": "Oil & Gas E&P", "country": "USA", "market_cap": "71.49B", "pe": "13.20", "price": 134.23, "price_str": "134.23", "change": -6.47, "change_str": "-6.47%", "volume": "5,655,364"}, {"no": "76", "ticker": "CCVI", "company": "CVR Energy Inc", "sector": "Energy", "industry": "Oil & Gas Refining & Marketing", "country": "USA", "market_cap": "3.14B", "pe": "45.44", "price": 31.2, "price_str": "31.20", "change": -6.39, "change_str": "-6.39%", "volume": "1,049,279"}, {"no": "85", "ticker": "MMUR", "company": "Murphy Oil Corp", "sector": "Energy", "industry": "Oil & Gas E&P", "country": "USA", "market_cap": "5.17B", "pe": "61.69", "price": 36.04, "price_str": "36.04", "change": -6.1, "change_str": "-6.10%", "volume": "2,366,336"}, {"no": "88", "ticker": "DDINO", "company": "HF Sinclair Corp", "sector": "Energy", "industry": "Oil & Gas Refining & Marketing", "country": "USA", "market_cap": "14.75B", "pe": "7.92", "price": 82.98, "price_str": "82.98", "change": -5.97, "change_str": "-5.97%", "volume": "3,498,821"}], "Financial": [{"no": "6", "ticker": "GGDXD", "company": "MicroSectors Gold Miners -3X Inverse Leveraged ETNs", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 32.22, "price_str": "32.22", "change": -21.91, "change_str": "-21.91%", "volume": "1,430,452"}, {"no": "11", "ticker": "HHUTG", "company": "Leverage Shares 2X Long HUT Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 16.5, "price_str": "16.50", "change": -17.75, "change_str": "-17.75%", "volume": "120,425"}, {"no": "13", "ticker": "AAMDL", "company": "GraniteShares 2x Long AMD Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 52.04, "price_str": "52.04", "change": -16.9, "change_str": "-16.90%", "volume": "8,088,180"}, {"no": "15", "ticker": "AAMUU", "company": "Direxion Daily AMD Bull 2X ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 183.67, "price_str": "183.67", "change": -16.68, "change_str": "-16.68%", "volume": "214,456"}, {"no": "16", "ticker": "AAMDG", "company": "Leverage Shares 2X Long AMD Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 89.11, "price_str": "89.11", "change": -16.51, "change_str": "-16.51%", "volume": "129,714"}, {"no": "19", "ticker": "AAMDC", "company": "Corgi AMD 2x Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 18.62, "price_str": "18.62", "change": -15.23, "change_str": "-15.23%", "volume": "48,963"}, {"no": "20", "ticker": "DDUST", "company": "Direxion Daily Gold Miners Index Bear 2X ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 48.93, "price_str": "48.93", "change": -14.77, "change_str": "-14.77%", "volume": "1,410,006"}, {"no": "22", "ticker": "JJDST", "company": "Direxion Daily Junior Gold Miners Index Bear 2X ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 31.19, "price_str": "31.19", "change": -14.55, "change_str": "-14.55%", "volume": "759,466"}, {"no": "24", "ticker": "GGLXY", "company": "Galaxy Digital Inc", "sector": "Financial", "industry": "Capital Markets", "country": "USA", "market_cap": "7.43B", "pe": "-", "price": 19.07, "price_str": "19.07", "change": -13.89, "change_str": "-13.89%", "volume": "16,143,845"}, {"no": "29", "ticker": "WWDCC", "company": "Corgi WDC 2x Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 18.63, "price_str": "18.63", "change": -12.87, "change_str": "-12.87%", "volume": "15,955"}, {"no": "33", "ticker": "SSNDU", "company": "T-REX 2X Long SNDK Daily Target ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 17.87, "price_str": "17.87", "change": -10.83, "change_str": "-10.83%", "volume": "16,142,783"}, {"no": "34", "ticker": "OOUSL", "company": "Defiance Daily Target 2X Long OUST ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 22.31, "price_str": "22.31", "change": -10.42, "change_str": "-10.42%", "volume": "80,920"}, {"no": "36", "ticker": "WWDCX", "company": "Tradr 2X Long WDC Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 24.83, "price_str": "24.83", "change": -10.17, "change_str": "-10.17%", "volume": "2,640,438"}, {"no": "41", "ticker": "WWULX", "company": "Tradr 2X Long WULF Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 21.42, "price_str": "21.42", "change": -8.99, "change_str": "-8.99%", "volume": "362,535"}, {"no": "44", "ticker": "GGOU", "company": "GraniteShares 2x Long GOOGL Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 28.59, "price_str": "28.59", "change": -8.3, "change_str": "-8.30%", "volume": "191,786"}, {"no": "45", "ticker": "WWTIU", "company": "MicroSectorsTM Energy 3X Leveraged ETNs", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 16.47, "price_str": "16.47", "change": -8.3, "change_str": "-8.30%", "volume": "68,448"}, {"no": "46", "ticker": "GGLL", "company": "ProShares UltraShort Gold -2x Shares", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 23.97, "price_str": "23.97", "change": -8.23, "change_str": "-8.23%", "volume": "4,472,029"}, {"no": "51", "ticker": "GGGLL", "company": "Direxion Daily GOOGL Bull 2X ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 113.44, "price_str": "113.44", "change": -8.14, "change_str": "-8.14%", "volume": "3,107,805"}, {"no": "53", "ticker": "GGOGL", "company": "Corgi GOOGL 2x Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 26.87, "price_str": "26.87", "change": -8.11, "change_str": "-8.11%", "volume": "37,254"}, {"no": "54", "ticker": "GGUSH", "company": "Direxion Daily S&P Oil & Gas Exp. & Prod. Bull 2X ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 34.75, "price_str": "34.75", "change": -8.09, "change_str": "-8.09%", "volume": "991,653"}, {"no": "56", "ticker": "OONTX", "company": "Corgi ONTO 2x Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 16.59, "price_str": "16.59", "change": -8.04, "change_str": "-8.04%", "volume": "34,083"}, {"no": "57", "ticker": "GGOOX", "company": "T-Rex 2X Long Alphabet Daily Target ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 80.89, "price_str": "80.89", "change": -8.02, "change_str": "-8.02%", "volume": "353,644"}, {"no": "62", "ticker": "AAMDY", "company": "Yieldmax AMD Option Income Strategy ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 46.27, "price_str": "46.27", "change": -7.76, "change_str": "-7.76%", "volume": "585,513"}, {"no": "64", "ticker": "UUMAL", "company": "Defiance Daily Target 2X Long UMAC ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 16.8, "price_str": "16.80", "change": -7.41, "change_str": "-7.41%", "volume": "68,861"}, {"no": "73", "ticker": "YYSPC", "company": "YieldMax SPCX Option Income Strategy ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 43.36, "price_str": "43.36", "change": -6.56, "change_str": "-6.56%", "volume": "10,183"}, {"no": "78", "ticker": "WWEED", "company": "Roundhill Cannabis ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 18.14, "price_str": "18.14", "change": -6.32, "change_str": "-6.32%", "volume": "35,900"}, {"no": "80", "ticker": "UUVIX", "company": "2x Long VIX Futures ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 51.9, "price_str": "51.90", "change": -6.28, "change_str": "-6.28%", "volume": "2,041,677"}, {"no": "81", "ticker": "FFOA", "company": "Finance of America Companies Inc", "sector": "Financial", "industry": "Credit Services", "country": "USA", "market_cap": "379.16M", "pe": "-", "price": 22.27, "price_str": "22.27", "change": -6.27, "change_str": "-6.27%", "volume": "68,491"}, {"no": "83", "ticker": "UUBEW", "company": "Roundhill UBER WeeklyPay ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 24.75, "price_str": "24.75", "change": -6.16, "change_str": "-6.16%", "volume": "8,556"}, {"no": "84", "ticker": "NNBIG", "company": "Leverage Shares 2X Long NBIS Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 18.9, "price_str": "18.90", "change": -6.11, "change_str": "-6.11%", "volume": "1,995,318"}, {"no": "93", "ticker": "NNBIL", "company": "GraniteShares 2x Long NBIS Daily ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 27.36, "price_str": "27.36", "change": -5.85, "change_str": "-5.85%", "volume": "2,489,545"}, {"no": "94", "ticker": "XXOVL", "company": "Defiance Daily Target 2X Long XOVR ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 18.71, "price_str": "18.71", "change": -5.84, "change_str": "-5.84%", "volume": "270,393"}, {"no": "95", "ticker": "LLITU", "company": "T-REX 2X Long LITE Daily Target ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 17.58, "price_str": "17.58", "change": -5.69, "change_str": "-5.69%", "volume": "179,898"}, {"no": "96", "ticker": "SSOXL", "company": "Direxion Daily Semiconductor Bull 3X ETF", "sector": "Financial", "industry": "Exchange Traded Fund", "country": "USA", "market_cap": "-", "pe": "-", "price": 132.07, "price_str": "132.07", "change": -5.6, "change_str": "-5.60%", "volume": "67,280,871"}], "Healthcare": [{"no": "3", "ticker": "LLMAT", "company": "Lemaitre Vascular Inc", "sector": "Healthcare", "industry": "Medical Instruments & Supplies", "country": "USA", "market_cap": "1.81B", "pe": "29.11", "price": 79.0, "price_str": "79.00", "change": -25.32, "change_str": "-25.32%", "volume": "2,181,879"}, {"no": "7", "ticker": "TTYRA", "company": "Tyra Biosciences Inc", "sector": "Healthcare", "industry": "Biotechnology", "country": "USA", "market_cap": "1.53B", "pe": "-", "price": 25.71, "price_str": "25.71", "change": -20.97, "change_str": "-20.97%", "volume": "2,741,316"}, {"no": "9", "ticker": "PPODD", "company": "Insulet Corp", "sector": "Healthcare", "industry": "Medical Devices", "country": "USA", "market_cap": "9.23B", "pe": "31.02", "price": 133.26, "price_str": "133.26", "change": -20.12, "change_str": "-20.12%", "volume": "7,175,377"}, {"no": "12", "ticker": "DDVA", "company": "DaVita Inc", "sector": "Healthcare", "industry": "Medical Care Facilities", "country": "USA", "market_cap": "12.11B", "pe": "18.11", "price": 188.69, "price_str": "188.69", "change": -17.24, "change_str": "-17.24%", "volume": "3,814,642"}, {"no": "17", "ticker": "OOBX", "company": "Obsidian Therapeutics Inc", "sector": "Healthcare", "industry": "Biotechnology", "country": "USA", "market_cap": "33.06M", "pe": "0.07", "price": 28.51, "price_str": "28.51", "change": -16.15, "change_str": "-16.15%", "volume": "18,450"}, {"no": "30", "ticker": "MMDLN", "company": "Medline Inc", "sector": "Healthcare", "industry": "Medical Instruments & Supplies", "country": "USA", "market_cap": "48.17B", "pe": "30.67", "price": 36.67, "price_str": "36.67", "change": -12.79, "change_str": "-12.79%", "volume": "24,814,759"}, {"no": "37", "ticker": "PPCRX", "company": "Pacira BioSciences Inc", "sector": "Healthcare", "industry": "Drug Manufacturers - Specialty & Generic", "country": "USA", "market_cap": "978.26M", "pe": "199.12", "price": 24.87, "price_str": "24.87", "change": -9.96, "change_str": "-9.96%", "volume": "1,701,966"}, {"no": "72", "ticker": "WWW", "company": "WW International Inc", "sector": "Healthcare", "industry": "Medical Care Facilities", "country": "USA", "market_cap": "154.08M", "pe": "0.14", "price": 15.41, "price_str": "15.41", "change": -6.72, "change_str": "-6.72%", "volume": "414,966"}, {"no": "79", "ticker": "IINSP", "company": "Inspire Medical Systems Inc", "sector": "Healthcare", "industry": "Medical Devices", "country": "USA", "market_cap": "1.74B", "pe": "13.05", "price": 60.09, "price_str": "60.09", "change": -6.31, "change_str": "-6.31%", "volume": "1,448,060"}, {"no": "87", "ticker": "HHSTM", "company": "Healthstream Inc", "sector": "Healthcare", "industry": "Health Information Services", "country": "USA", "market_cap": "818.31M", "pe": "39.02", "price": 28.01, "price_str": "28.01", "change": -6.01, "change_str": "-6.01%", "volume": "246,107"}], "Industrials": [{"no": "1", "ticker": "LLMB", "company": "Limbach Holdings Inc", "sector": "Industrials", "industry": "Building Products & Equipment", "country": "USA", "market_cap": "592.83M", "pe": "18.10", "price": 49.73, "price_str": "49.73", "change": -35.51, "change_str": "-35.51%", "volume": "1,696,257"}, {"no": "14", "ticker": "RRRX", "company": "Regal Rexnord Corp", "sector": "Industrials", "industry": "Specialty Industrial Machinery", "country": "USA", "market_cap": "12.20B", "pe": "42.59", "price": 183.24, "price_str": "183.24", "change": -16.72, "change_str": "-16.72%", "volume": "4,227,303"}, {"no": "23", "ticker": "RRBA", "company": "RB Global Inc", "sector": "Industrials", "industry": "Specialty Business Services", "country": "USA", "market_cap": "17.82B", "pe": "44.31", "price": 95.63, "price_str": "95.63", "change": -13.89, "change_str": "-13.89%", "volume": "6,967,623"}, {"no": "25", "ticker": "AASTE", "company": "Astec Industries Inc", "sector": "Industrials", "industry": "Farm & Heavy Construction Machinery", "country": "USA", "market_cap": "1.04B", "pe": "40.45", "price": 45.04, "price_str": "45.04", "change": -13.8, "change_str": "-13.80%", "volume": "792,157"}, {"no": "26", "ticker": "SSPCX", "company": "Space Exploration Technologies Corp", "sector": "Industrials", "industry": "Aerospace & Defense", "country": "USA", "market_cap": "1436.43B", "pe": "-", "price": 108.27, "price_str": "108.27", "change": -13.61, "change_str": "-13.61%", "volume": "208,131,208"}, {"no": "39", "ticker": "GGXO", "company": "GXO Logistics Inc", "sector": "Industrials", "industry": "Integrated Freight & Logistics", "country": "USA", "market_cap": "5.48B", "pe": "41.63", "price": 47.62, "price_str": "47.62", "change": -9.07, "change_str": "-9.07%", "volume": "5,519,282"}, {"no": "47", "ticker": "PPRIM", "company": "Primoris Services Corp", "sector": "Industrials", "industry": "Engineering & Construction", "country": "USA", "market_cap": "4.52B", "pe": "18.42", "price": 83.4, "price_str": "83.40", "change": -8.2, "change_str": "-8.20%", "volume": "2,454,425"}, {"no": "50", "ticker": "AAMRC", "company": "Ameresco Inc", "sector": "Industrials", "industry": "Engineering & Construction", "country": "USA", "market_cap": "1.36B", "pe": "49.33", "price": 25.66, "price_str": "25.66", "change": -8.16, "change_str": "-8.16%", "volume": "788,971"}, {"no": "55", "ticker": "MMEC", "company": "Mayville Engineering Company Inc", "sector": "Industrials", "industry": "Metal Fabrication", "country": "USA", "market_cap": "650.10M", "pe": "-", "price": 25.5, "price_str": "25.50", "change": -8.04, "change_str": "-8.04%", "volume": "1,438,051"}, {"no": "60", "ticker": "JJBTM", "company": "JBT Marel Corp", "sector": "Industrials", "industry": "Specialty Industrial Machinery", "country": "USA", "market_cap": "6.35B", "pe": "33.22", "price": 122.01, "price_str": "122.01", "change": -7.9, "change_str": "-7.90%", "volume": "1,595,130"}, {"no": "90", "ticker": "HHONA", "company": "Honeywell Aerospace Inc", "sector": "Industrials", "industry": "Aerospace & Defense", "country": "USA", "market_cap": "64.53B", "pe": "-", "price": 203.64, "price_str": "203.64", "change": -5.93, "change_str": "-5.93%", "volume": "4,397,050"}, {"no": "97", "ticker": "UULH", "company": "Universal Logistics Holdings Inc", "sector": "Industrials", "industry": "Trucking", "country": "USA", "market_cap": "484.93M", "pe": "-", "price": 18.39, "price_str": "18.39", "change": -5.5, "change_str": "-5.50%", "volume": "67,883"}], "Real Estate": [{"no": "28", "ticker": "CCHCT", "company": "Community Healthcare Trust Inc", "sector": "Real Estate", "industry": "REIT - Healthcare Facilities", "country": "USA", "market_cap": "439.72M", "pe": "140.93", "price": 15.39, "price_str": "15.39", "change": -13.1, "change_str": "-13.10%", "volume": "1,422,882"}, {"no": "82", "ticker": "TTCI", "company": "Transcontinental Realty Investors Inc", "sector": "Real Estate", "industry": "Real Estate Services", "country": "USA", "market_cap": "352.05M", "pe": "37.64", "price": 40.75, "price_str": "40.75", "change": -6.24, "change_str": "-6.24%", "volume": "213,460"}], "Technology": [{"no": "2", "ticker": "VVPG", "company": "Vishay Precision Group Inc", "sector": "Technology", "industry": "Scientific & Technical Instruments", "country": "USA", "market_cap": "978.42M", "pe": "166.20", "price": 73.56, "price_str": "73.56", "change": -27.17, "change_str": "-27.17%", "volume": "2,048,202"}, {"no": "5", "ticker": "TTDC", "company": "Teradata Corp", "sector": "Technology", "industry": "Software - Infrastructure", "country": "USA", "market_cap": "2.47B", "pe": "6.01", "price": 26.23, "price_str": "26.23", "change": -23.73, "change_str": "-23.73%", "volume": "10,736,296"}, {"no": "10", "ticker": "EEXTR", "company": "Extreme Networks Inc", "sector": "Technology", "industry": "Communication Equipment", "country": "USA", "market_cap": "3.43B", "pe": "217.71", "price": 26.19, "price_str": "26.19", "change": -19.02, "change_str": "-19.02%", "volume": "4,354,467"}, {"no": "21", "ticker": "VVSH", "company": "Vishay Intertechnology Inc", "sector": "Technology", "industry": "Semiconductors", "country": "USA", "market_cap": "5.09B", "pe": "2073.75", "price": 33.18, "price_str": "33.18", "change": -14.59, "change_str": "-14.59%", "volume": "11,396,683"}, {"no": "31", "ticker": "AALAB", "company": "Astera Labs Inc", "sector": "Technology", "industry": "Semiconductors", "country": "USA", "market_cap": "54.58B", "pe": "214.63", "price": 318.43, "price_str": "318.43", "change": -11.96, "change_str": "-11.96%", "volume": "9,281,149"}, {"no": "35", "ticker": "PPAY", "company": "Paymentus Holdings Inc", "sector": "Technology", "industry": "Software - Infrastructure", "country": "USA", "market_cap": "5.03B", "pe": "60.73", "price": 40.0, "price_str": "40.00", "change": -10.31, "change_str": "-10.31%", "volume": "2,767,078"}, {"no": "40", "ticker": "CCDW", "company": "CDW Corp", "sector": "Technology", "industry": "Information Technology Services", "country": "USA", "market_cap": "17.90B", "pe": "17.06", "price": 140.1, "price_str": "140.10", "change": -9.03, "change_str": "-9.03%", "volume": "5,811,174"}, {"no": "48", "ticker": "AASYS", "company": "Amtech Systems Inc", "sector": "Technology", "industry": "Semiconductor Equipment & Materials", "country": "USA", "market_cap": "279.92M", "pe": "95.87", "price": 16.01, "price_str": "16.01", "change": -8.2, "change_str": "-8.20%", "volume": "557,228"}, {"no": "49", "ticker": "CCIFR", "company": "Cipher Digital Inc", "sector": "Technology", "industry": "Information Technology Services", "country": "USA", "market_cap": "7.65B", "pe": "-", "price": 18.71, "price_str": "18.71", "change": -8.19, "change_str": "-8.19%", "volume": "35,297,935"}, {"no": "58", "ticker": "BBL", "company": "BlackLine Inc", "sector": "Technology", "industry": "Software - Application", "country": "USA", "market_cap": "1.79B", "pe": "71.81", "price": 30.47, "price_str": "30.47", "change": -8.0, "change_str": "-8.00%", "volume": "2,020,128"}, {"no": "59", "ticker": "IICHR", "company": "Ichor Holdings Ltd", "sector": "Technology", "industry": "Semiconductor Equipment & Materials", "country": "USA", "market_cap": "2.29B", "pe": "-", "price": 65.59, "price_str": "65.59", "change": -7.97, "change_str": "-7.97%", "volume": "1,323,756"}, {"no": "68", "ticker": "MMQ", "company": "Marqeta Inc", "sector": "Technology", "industry": "Software - Infrastructure", "country": "USA", "market_cap": "1.77B", "pe": "771.30", "price": 16.66, "price_str": "16.66", "change": -7.13, "change_str": "-7.13%", "volume": "2,573,237"}, {"no": "69", "ticker": "AAMD", "company": "Advanced Micro Devices Inc", "sector": "Technology", "industry": "Semiconductors", "country": "USA", "market_cap": "786.03B", "pe": "158.21", "price": 482.05, "price_str": "482.05", "change": -7.04, "change_str": "-7.04%", "volume": "49,572,139"}, {"no": "70", "ticker": "LLSCC", "company": "Lattice Semiconductor Corp", "sector": "Technology", "industry": "Semiconductors", "country": "USA", "market_cap": "17.58B", "pe": "903.59", "price": 128.31, "price_str": "128.31", "change": -7.02, "change_str": "-7.02%", "volume": "4,224,110"}, {"no": "71", "ticker": "SSITM", "company": "SiTime Corp", "sector": "Technology", "industry": "Semiconductors", "country": "USA", "market_cap": "14.34B", "pe": "-", "price": 543.12, "price_str": "543.12", "change": -6.85, "change_str": "-6.85%", "volume": "679,184"}, {"no": "86", "ticker": "SSYNA", "company": "Synaptics Inc", "sector": "Technology", "industry": "Semiconductors", "country": "USA", "market_cap": "3.91B", "pe": "-", "price": 100.12, "price_str": "100.12", "change": -6.04, "change_str": "-6.04%", "volume": "1,553,513"}, {"no": "89", "ticker": "VVSAT", "company": "Viasat Inc", "sector": "Technology", "industry": "Communication Equipment", "country": "USA", "market_cap": "11.16B", "pe": "-", "price": 81.03, "price_str": "81.03", "change": -5.95, "change_str": "-5.95%", "volume": "4,021,472"}, {"no": "91", "ticker": "BBLZE", "company": "Backblaze Inc", "sector": "Technology", "industry": "Software - Infrastructure", "country": "USA", "market_cap": "1.15B", "pe": "-", "price": 18.62, "price_str": "18.62", "change": -5.91, "change_str": "-5.91%", "volume": "5,567,306"}, {"no": "98", "ticker": "IIBTA", "company": "Ibotta Inc", "sector": "Technology", "industry": "Software - Application", "country": "USA", "market_cap": "822.07M", "pe": "-", "price": 35.32, "price_str": "35.32", "change": -5.41, "change_str": "-5.41%", "volume": "570,837"}, {"no": "99", "ticker": "SSNDK", "company": "Sandisk Corp", "sector": "Technology", "industry": "Computer Hardware", "country": "USA", "market_cap": "200.00B", "pe": "46.95", "price": 1350.5, "price_str": "1350.50", "change": -5.4, "change_str": "-5.40%", "volume": "16,181,688"}, {"no": "100", "ticker": "WWDC", "company": "Western Digital Corp", "sector": "Technology", "industry": "Computer Hardware", "country": "USA", "market_cap": "178.95B", "pe": "30.99", "price": 519.17, "price_str": "519.17", "change": -5.36, "change_str": "-5.36%", "volume": "9,573,277"}]}};
+        let currentMode = 'all';
+        let selectedTicker = null;
+        let selectedType = null;
+        let activeMovers = [];
+
+        // Context-aware Catalyst & News Generation Engine
+        const catalystEngine = {
+            sources: ['Bloomberg', 'Reuters', 'CNBC', 'MarketWatch'],
+            
+            getSentiment(change, type) {
+                const absChange = Math.abs(change);
+                if (type === 'gainer') {
+                    // Gainers are mostly bullish, higher gains = higher bullishness
+                    return Math.min(98, Math.max(65, Math.floor(70 + absChange * 0.4)));
+                } else {
+                    // Losers are mostly bearish
+                    return Math.min(30, Math.max(3, Math.floor(25 - absChange * 0.5)));
+                }
+            },
+
+            getHeadlines(ticker, company, sector, industry, change, type) {
+                const isGainer = type === 'gainer';
+                const sourceList = [...this.sources];
+                
+                // Helper to draw unique source
+                const drawSource = () => {
+                    const idx = Math.floor(Math.random() * sourceList.length);
+                    return sourceList.splice(idx, 1)[0];
+                };
+
+                const templates = {
+                    gainer: {
+                        'Healthcare': [
+                            `FDA Approves Breakthrough Clinical Candidate for ${company}, Upgrading Pipeline`,
+                            `Analyst Consensus Upgrades ${ticker} to Strong Buy Following Clinical Trial Beat`,
+                            `${company} Beats Earnings Estimations on Robust Global Demand for Treatments`
+                        ],
+                        'Technology': [
+                            `${company} Launches Next-Gen Enterprise Solution, Securing Major Customers`,
+                            `${ticker} Secures Strategic Cloud Partnership with Tier-1 Tech Partner`,
+                            `Software Sector Rebound Propels ${company} to Multi-Month Highs`
+                        ],
+                        'Financial': [
+                            `Capital Inflows Surge for ${company} Following Index Rebalancing`,
+                            `${ticker} Declares Strategic Dividend Restructuring Plan to Reward Shareholders`,
+                            `Macroeconomic Volatility Drives Increased Trading Volume for ${company}`
+                        ],
+                        'Energy': [
+                            `Global Supply Constraints Spark Bullish Pricing Outlook for ${company}`,
+                            `Upgraded at Major Investment Bank Citing Exception Cash Flow Yield for ${ticker}`,
+                            `${company} Announces Strategic Infrastructure Project to Boost Capacity`
+                        ],
+                        'Basic Materials': [
+                            `Resource Expansion Study Reveals Higher Metal Concentration for ${company}`,
+                            `Surging Commodity Spot Prices Propel ${ticker} Margin Appraisals`,
+                            `${company} Successful Facility Audit Confirms Operating Production Efficiencies`
+                        ],
+                        'Consumer Cyclical': [
+                            `Foot Traffic Indices Signal Strong Retail Growth for ${company} Same-Store Sales`,
+                            `${ticker} Launches Strategic Expansion Program Targeting Metro Hubs`,
+                            `Profit Beats Estimates, ${company} Initiates Share Buyback Program`
+                        ],
+                        'Industrials': [
+                            `Awarded Multi-Million Government Contract, Expanding Backlog for ${company}`,
+                            `Production Output Climbs for ${ticker} Following Successful Plant Automation`,
+                            `${company} Beats Revenue Outlines; Raises Full-Year Earnings Forecast`
+                        ],
+                        'default': [
+                            `${company} (${ticker}) Surges on Unusual Volume and Institutional Backing`,
+                            `Strategic Restructuring Plans Drive Investor Confidence in ${company}`,
+                            `Industry Outlook Upgraded, Leading Movers Like ${ticker} Higher`
+                        ]
+                    },
+                    loser: {
+                        'Healthcare': [
+                            `FDA Appraisals Delayed for ${company} Pipeline Candidate, Triggering Slide`,
+                            `Downgraded to Underperform on Escalating Development Costs for ${ticker}`,
+                            `${company} Guidance Trimmed Following Weaker Clinical Partnership Details`
+                        ],
+                        'Technology': [
+                            `Guidance Revised Lower for ${company} Citing Waning Corporate Software Spending`,
+                            `Supply Chain Constraints and Hardware Delays Drag Down Gross Margins for ${ticker}`,
+                            `Growth Appraisals Falter for ${company} Amid Intense Competitor Pricing Actions`
+                        ],
+                        'Financial': [
+                            `Capital Outflows Accelerate as High Risk Environment Impacts ${company}`,
+                            `${ticker} Net Profit Forecast Slashed Citing High Debt Costs`,
+                            `Regulatory Headwinds Trigger Institutional Selling for ${company}`
+                        ],
+                        'Energy': [
+                            `Downstream Refining Compression Impacts Projected Margin Yields for ${company}`,
+                            `${ticker} Halts Operations at Key Development Site Over Regulatory Compliance`,
+                            `Refinancing Cost Cautions Drag Down Energy Provider ${company}`
+                        ],
+                        'Basic Materials': [
+                            `Resource Grade Appraisal Comes In Below Baseline Expectations for ${company}`,
+                            `Operational Delay Issues Trim Projected Production Goals for ${ticker}`,
+                            `Commodity Price Correction Squeezes Profit Forecast for ${company}`
+                        ],
+                        'Consumer Cyclical': [
+                            `Consumer Squeeze Prompts Lower Full-Year Guidance for ${company}`,
+                            `Retail Segment Foot Traffic Cools Down, Impacting ${ticker} Sales Metrics`,
+                            `Same-Store Sales Growth Trajectory Flattens Out for ${company}`
+                        ],
+                        'Industrials': [
+                            `Margin Forecast Cut on Escalating Labor and Raw Material Costs for ${company}`,
+                            `Product Delivery Backlogs Remain Persistent, Cautions ${ticker} Management`,
+                            `Quarterly EBITDA Outcomes Miss Analyst Targets for ${company}`
+                        ],
+                        'default': [
+                            `${company} (${ticker}) Plummets on Heavy Volume and Sector Sell-Off`,
+                            `Downside Momentum Builds as ${ticker} Breaks Key Support Levels`,
+                            `Analysts Cut Estimates for ${company} Following Regulatory Cautions`
+                        ]
+                    }
+                };
+
+                const sectorKey = templates[isGainer ? 'gainer' : 'loser'][sector] ? sector : 'default';
+                const headlineList = templates[isGainer ? 'gainer' : 'loser'][sectorKey];
+                
+                // Build output headlines
+                return [
+                    { title: headlineList[0], source: drawSource(), time: '45m ago' },
+                    { title: headlineList[1], source: drawSource(), time: '2h ago' },
+                    { title: headlineList[2], source: drawSource(), time: '4h ago' }
+                ];
+            },
+
+            getAISummary(ticker, company, sector, industry, change, type) {
+                const absChange = Math.abs(change);
+                
+                // Check specific prominent stocks
+                if (ticker === 'OOESX') {
+                    return `Orion Energy Systems Inc (OOESX) surged 54.42% following a blowout earnings report and upgraded forward guidance. The company announced a major contract win to supply EV infrastructure to a national fleet, significantly improving long-term revenue visibility and driving target price upgrades from Wall Street.`;
+                }
+                if (ticker === 'LLMB') {
+                    return `Limbach Holdings Inc (LLMB) fell 35.51% today after reporting weaker-than-expected operating margins. Management cited labor cost increases and project delivery friction in their building products division as key catalysts. Analysts revised guidance downwards, prompting institutional stakeholders to trim exposure.`;
+                }
+                if (ticker === 'TTDC') {
+                    return `Teradata Corp (TTDC) dropped 23.73% after lowering its full-year annual recurring revenue (ARR) growth targets. Although quarterly revenue was stable, corporate IT spending constraints delayed several high-margin enterprise cloud deals, leading to analyst downgrades.`;
+                }
+                if (ticker === 'QQLYS') {
+                    return `Qualys Inc (QQLYS) gained 13.78% on high relative volume after reporting strong cybersecurity software suite adoption. The company raised its operating margin guidance, highlighting resilient corporate enterprise spending on infrastructure protection.`;
+                }
+
+                if (type === 'gainer') {
+                    return `${company} (${ticker}) surged ${absChange.toFixed(2)}% on high relative volume today. The upward catalyst is tied to strong operational developments in their ${industry} segment, coupled with sector-wide tailwinds. The price surge represents a strong bullish breakout, supported by robust institutional buying.`;
+                } else {
+                    return `${company} (${ticker}) plummeted ${absChange.toFixed(2)}% on heavy trading volume. The sell-off was triggered by disappointing operational updates in their ${industry} business, leading analysts to adjust short-term projections. The stock broke key support levels, indicating persistent bearish pressure.`;
+                }
+            }
+        };
+
+        function init() {
+            // Group raw movers for quick retrieval
+            activeMovers = [
+                ...appData.raw_gainers.map(s => ({ ...s, type: 'gainer' })),
+                ...appData.raw_losers.map(s => ({ ...s, type: 'loser' }))
+            ];
+
+            // Render sector selector options
+            const sectors = new Set(activeMovers.map(s => s.sector));
+            const select = document.getElementById('sector-select');
+            Array.from(sectors).sort().forEach(sec => {
+                const opt = document.createElement('option');
+                opt.value = sec;
+                opt.textContent = sec;
+                select.appendChild(opt);
+            });
+
+            // Calculate aggregate market stats for initial view
+            const totalMovers = activeMovers.length;
+            const avgChange = activeMovers.reduce((sum, s) => sum + s.change, 0) / totalMovers;
+            
+            document.getElementById('total-movers-count').textContent = totalMovers;
+            const avgGainEl = document.getElementById('avg-gain-val');
+            avgGainEl.textContent = (avgChange >= 0 ? '+' : '') + avgChange.toFixed(2) + '%';
+            avgGainEl.style.color = avgChange >= 0 ? 'var(--green)' : 'var(--red)';
+
+            renderData();
+        }
+
+        function setFilterMode(mode) {
+            currentMode = mode;
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.className = 'tab-btn';
+            });
+            if (mode === 'all') document.getElementById('btn-all').className = 'tab-btn active-all';
+            if (mode === 'gainers') document.getElementById('btn-gainers').className = 'tab-btn active-gainers';
+            if (mode === 'losers') document.getElementById('btn-losers').className = 'tab-btn active-losers';
+            
+            // Clear selection when filter changes to prevent stale UI
+            clearSelection();
+            renderData();
+        }
+
+        function clearSelection() {
+            selectedTicker = null;
+            selectedType = null;
+            resetIntelPanel();
+        }
+
+        function resetIntelPanel() {
+            const container = document.getElementById('intel-panel-content');
+            const totalMovers = activeMovers.length;
+            const avgChange = activeMovers.reduce((sum, s) => sum + s.change, 0) / totalMovers;
+
+            container.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-state-icon">📊</div>
+                    <h3>No Stock Selected</h3>
+                    <p>Click on any stock row to view context-rich headlines, catalyst breakdown, and AI-generated highlights.</p>
+                    <div class="market-stats">
+                        <div class="stat-card">
+                            <span class="stat-val">${totalMovers}</span>
+                            <span class="stat-lbl">Active Movers</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-val" style="color: ${avgChange >= 0 ? 'var(--green)' : 'var(--red)'}">${(avgChange >= 0 ? '+' : '') + avgChange.toFixed(2)}%</span>
+                            <span class="stat-lbl">Avg Gain/Loss</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function selectStock(ticker, type, rowElement) {
+            // Remove previous active selection class
+            document.querySelectorAll('.stock-row').forEach(row => {
+                row.classList.remove('selected-row');
+            });
+            
+            // Highlight selected row
+            rowElement.classList.add('selected-row');
+            selectedTicker = ticker;
+            selectedType = type;
+
+            // Fetch dynamic catalyst details
+            const stock = activeMovers.find(s => s.ticker === ticker && s.type === type);
+            if (!stock) return;
+
+            const sentimentBullish = catalystEngine.getSentiment(stock.change, type);
+            const headlines = catalystEngine.getHeadlines(stock.ticker, stock.company, stock.sector, stock.industry, stock.change, type);
+            const aiSummary = catalystEngine.getAISummary(stock.ticker, stock.company, stock.sector, stock.industry, stock.change, type);
+
+            const intel = {
+                ticker: stock.ticker,
+                company: stock.company,
+                sector: stock.sector,
+                industry: stock.industry,
+                price: stock.price,
+                change_str: stock.change_str,
+                volume: stock.volume,
+                market_cap: stock.market_cap,
+                pe: stock.pe,
+                type: type,
+                sentimentBullish: sentimentBullish,
+                headlines: headlines,
+                aiSummary: aiSummary
+            };
+
+            // Update Intelligence Sidebar Panel UI
+            updateIntelPanel(intel);
+
+            // Open sidebar drawer on mobile
+            toggleSidebar(true);
+        }
+
+        function updateIntelPanel(intel) {
+            const container = document.getElementById('intel-panel-content');
+            const changeClass = intel.type === 'gainer' ? 'gainer' : 'loser';
+            const changeSign = intel.type === 'gainer' ? '+' : '';
+            const sentimentBearish = 100 - intel.sentimentBullish;
+
+            container.innerHTML = `
+                <div class="company-overview">
+                    <div class="ticker-row">
+                        <span class="ticker-badge">${intel.ticker}</span>
+                        <span class="change-pill ${changeClass}">${changeSign}${intel.change_str}</span>
+                    </div>
+                    <h3 style="font-size: 1.15rem; font-weight: 700; margin-top: 0.25rem;">${intel.company}</h3>
+                    <div class="overview-meta" style="margin-top: 0.5rem; display: flex; flex-direction: column; gap: 0.25rem;">
+                        <div><strong style="color: var(--text-primary)">Sector:</strong> ${intel.sector}</div>
+                        <div><strong style="color: var(--text-primary)">Industry:</strong> ${intel.industry}</div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; margin-top: 0.5rem; gap: 0.5rem; font-size: 0.85rem; background: rgba(255,255,255,0.02); padding: 0.5rem; border-radius: 0.5rem; border: 1px solid var(--border-color);">
+                            <div><strong>Price:</strong> $${intel.price.toFixed(2)}</div>
+                            <div><strong>Volume:</strong> ${intel.volume}</div>
+                            <div><strong>Mkt Cap:</strong> ${intel.market_cap}</div>
+                            <div><strong>P/E:</strong> ${intel.pe}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="ai-highlight-card">
+                    <div class="ai-header">
+                        <span>✨</span>
+                        <span>AI Catalyst Summary</span>
+                    </div>
+                    <div class="ai-content">${intel.aiSummary}</div>
+                </div>
+
+                <div class="sentiment-section">
+                    <div class="sentiment-title">Market Sentiment Score</div>
+                    <div class="sentiment-bar-container">
+                        <div class="sentiment-bullish" style="width: ${intel.sentimentBullish}%"></div>
+                        <div class="sentiment-bearish" style="width: ${sentimentBearish}%"></div>
+                    </div>
+                    <div class="sentiment-labels">
+                        <span style="color: var(--green)">${intel.sentimentBullish}% Bullish</span>
+                        <span style="color: var(--red)">${sentimentBearish}% Bearish</span>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="headlines-section">
+                    <div class="sentiment-title" style="margin-bottom: 0.25rem;">Catalyst Headlines & News</div>
+                    ${intel.headlines.map(h => {
+                        const srcClass = `source-${h.source.toLowerCase()}`;
+                        return `
+                            <a href="https://finviz.com/quote.ashx?t=${intel.ticker}" target="_blank" class="headline-card">
+                                <div class="headline-title">${h.title}</div>
+                                <div class="headline-meta">
+                                    <span class="source-badge ${srcClass}">${h.source}</span>
+                                    <span>${h.time}</span>
+                                </div>
+                            </a>
+                        `;
+                    }).join('')}
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="share-row">
+                    <button class="action-btn" onclick="copyIntelToClipboard()">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+                            <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+                        </svg>
+                        <span>Copy Summary</span>
+                    </button>
+                </div>
+            `;
+        }
+
+        function copyIntelToClipboard() {
+            if (!selectedTicker) return;
+            const stock = activeMovers.find(s => s.ticker === selectedTicker && s.type === selectedType);
+            if (!stock) return;
+
+            const aiSummary = catalystEngine.getAISummary(stock.ticker, stock.company, stock.sector, stock.industry, stock.change, selectedType);
+            const changeSign = selectedType === 'gainer' ? '+' : '';
+            const textToCopy = `Company: ${stock.company} (${stock.ticker})
+Sector: ${stock.sector} | Industry: ${stock.industry}
+Price: $${stock.price.toFixed(2)} (${changeSign}${stock.change_str})
+AI Catalyst Summary: ${aiSummary}
+Generated by Market Intelligence Dashboard`;
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const toast = document.getElementById('action-toast');
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 2000);
+            });
+        }
+
+        function toggleSidebar(show) {
+            const panel = document.getElementById('intel-panel');
+            if (show) {
+                panel.classList.add('open');
+            } else {
+                panel.classList.remove('open');
+            }
+        }
+
+        function renderData() {
+            const selectedSector = document.getElementById('sector-select').value;
+            const query = document.getElementById('search-bar').value.toLowerCase();
+            const container = document.getElementById('sectors-container');
+            container.innerHTML = '';
+
+            const allSectors = Array.from(new Set([
+                ...Object.keys(appData.gainers_by_sector),
+                ...Object.keys(appData.losers_by_sector)
+            ])).sort();
+
+            allSectors.forEach(sec => {
+                if (selectedSector !== 'ALL' && selectedSector !== sec) return;
+
+                let gList = (currentMode === 'losers') ? [] : (appData.gainers_by_sector[sec] || []);
+                let lList = (currentMode === 'gainers') ? [] : (appData.losers_by_sector[sec] || []);
+
+                // Filter search query
+                if (query) {
+                    gList = gList.filter(s => s.ticker.toLowerCase().includes(query) || s.company.toLowerCase().includes(query) || s.industry.toLowerCase().includes(query));
+                    lList = lList.filter(s => s.ticker.toLowerCase().includes(query) || s.company.toLowerCase().includes(query) || s.industry.toLowerCase().includes(query));
+                }
+
+                if (gList.length === 0 && lList.length === 0) return;
+
+                const secDiv = document.createElement('div');
+                secDiv.className = 'sector-section';
+                secDiv.style.marginBottom = '2rem';
+
+                let tablesHTML = '';
+
+                if (gList.length > 0) {
+                    tablesHTML += `
+                        <div style="padding: 1.25rem 1.75rem 0.5rem 1.75rem; font-weight:700; color: var(--green); font-size: 1rem; border-top: 1px solid var(--border-color); display: flex; align-items: center; gap: 0.5rem;">
+                            🟢 Gainers (${gList.length})
+                        </div>
+                        <div style="overflow-x: auto; width: 100%;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Ticker</th>
+                                        <th>Company</th>
+                                        <th>Industry</th>
+                                        <th>Price</th>
+                                        <th>Change</th>
+                                        <th>Volume</th>
+                                        <th>Market Cap</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${gList.map(s => `
+                                        <tr class="stock-row ${selectedTicker === s.ticker && selectedType === 'gainer' ? 'selected-row' : ''}" onclick="selectStock('${s.ticker}', 'gainer', this)">
+                                            <td><a href="https://finviz.com/quote.ashx?t=${s.ticker}" target="_blank" class="ticker-link" onclick="event.stopPropagation();">${s.ticker}</a></td>
+                                            <td style="font-weight: 500;">${s.company}</td>
+                                            <td style="color: var(--text-secondary);">${s.industry}</td>
+                                            <td class="price">$${s.price.toFixed(2)}</td>
+                                            <td><span class="change-pill gainer">+${s.change_str}</span></td>
+                                            <td class="vol-cell">${s.volume}</td>
+                                            <td class="vol-cell">${s.market_cap}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    `;
+                }
+
+                if (lList.length > 0) {
+                    tablesHTML += `
+                        <div style="padding: 1.25rem 1.75rem 0.5rem 1.75rem; font-weight:700; color: var(--red); font-size: 1rem; border-top: 1px solid var(--border-color); display: flex; align-items: center; gap: 0.5rem;">
+                            🔴 Losers (${lList.length})
+                        </div>
+                        <div style="overflow-x: auto; width: 100%;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Ticker</th>
+                                        <th>Company</th>
+                                        <th>Industry</th>
+                                        <th>Price</th>
+                                        <th>Change</th>
+                                        <th>Volume</th>
+                                        <th>Market Cap</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${lList.map(s => `
+                                        <tr class="stock-row ${selectedTicker === s.ticker && selectedType === 'loser' ? 'selected-row' : ''}" onclick="selectStock('${s.ticker}', 'loser', this)">
+                                            <td><a href="https://finviz.com/quote.ashx?t=${s.ticker}" target="_blank" class="ticker-link" onclick="event.stopPropagation();">${s.ticker}</a></td>
+                                            <td style="font-weight: 500;">${s.company}</td>
+                                            <td style="color: var(--text-secondary);">${s.industry}</td>
+                                            <td class="price">$${s.price.toFixed(2)}</td>
+                                            <td><span class="change-pill loser">${s.change_str}</span></td>
+                                            <td class="vol-cell">${s.volume}</td>
+                                            <td class="vol-cell">${s.market_cap}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    `;
+                }
+
+                secDiv.innerHTML = `
+                    <div class="sector-header">
+                        <span>${sec}</span>
+                        <span style="font-size: 0.85rem; color: var(--text-secondary); font-weight: normal;">
+                            ${gList.length} Gainers | ${lList.length} Losers
+                        </span>
+                    </div>
+                    ${tablesHTML}
+                `;
+
+                container.appendChild(secDiv);
+            });
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
