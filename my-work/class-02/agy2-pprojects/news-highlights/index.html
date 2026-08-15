@@ -1,0 +1,2190 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="nordic">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nordic Intelligence | Market News Dashboard</title>
+  <meta name="description" content="A premium market tracker integrating real-time headlines, sentiment analytics, and interactive asset implications.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ==========================================================================
+       1. Design System & CSS Custom Properties
+       ========================================================================== */
+    :root {
+      /* Shared Tokens */
+      --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-full: 9999px;
+      
+      --transition-fast: 0.15s ease;
+      --transition-smooth: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.2);
+      --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.35);
+      
+      /* Theme 1: Nordic Aurora (Default) */
+      --bg-color: #07090e;
+      --bg-gradient: radial-gradient(circle at 50% 10%, #0d1627 0%, #05070a 100%);
+      
+      --surface-glass: rgba(13, 20, 35, 0.45);
+      --surface-glass-hover: rgba(18, 28, 48, 0.6);
+      --surface-glass-border: rgba(255, 255, 255, 0.06);
+      --surface-card: rgba(10, 15, 26, 0.7);
+      
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #475569;
+      
+      --accent-primary: #818cf8; /* Indigo */
+      --accent-secondary: #34d399; /* Emerald Green */
+      --accent-glow: rgba(129, 140, 248, 0.25);
+      --accent-hover: #a5b4fc;
+      
+      --sentiment-pos: #10b981;
+      --sentiment-neg: #ef4444;
+      --sentiment-neu: #f59e0b;
+      --sentiment-vol: #ec4899;
+    }
+
+    /* Theme 2: Cyber Abyss */
+    html[data-theme="abyss"] {
+      --bg-color: #050505;
+      --bg-gradient: radial-gradient(circle at 50% 10%, #15091e 0%, #020202 100%);
+      
+      --surface-glass: rgba(16, 10, 24, 0.5);
+      --surface-glass-hover: rgba(24, 15, 36, 0.65);
+      --surface-glass-border: rgba(255, 255, 255, 0.05);
+      --surface-card: rgba(12, 7, 18, 0.8);
+      
+      --text-primary: #fafafa;
+      --text-secondary: #a1a1aa;
+      --text-muted: #52525b;
+      
+      --accent-primary: #d946ef; /* Magenta */
+      --accent-secondary: #06b6d4; /* Cyan */
+      --accent-glow: rgba(217, 70, 239, 0.25);
+      --accent-hover: #f472b6;
+      
+      --sentiment-pos: #06b6d4;
+      --sentiment-neg: #f43f5e;
+      --sentiment-neu: #eab308;
+      --sentiment-vol: #d946ef;
+    }
+
+    /* ==========================================================================
+       2. Reset & Base Styles
+       ========================================================================== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg-color);
+      background-image: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: background var(--transition-smooth), color var(--transition-smooth);
+      position: relative;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.2);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--surface-glass-border);
+      border-radius: var(--radius-full);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--text-muted);
+    }
+
+    /* ==========================================================================
+       3. Layout & Aurora Animations
+       ========================================================================== */
+    .aurora-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .aurora-glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(140px);
+      opacity: 0.12;
+      mix-blend-mode: screen;
+      animation: float 25s infinite alternate ease-in-out;
+      transition: background var(--transition-smooth);
+    }
+
+    .glow-1 {
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--accent-primary) 0%, transparent 80%);
+      top: -200px;
+      left: -150px;
+    }
+
+    .glow-2 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, var(--accent-secondary) 0%, transparent 80%);
+      bottom: -150px;
+      right: -100px;
+      animation-delay: -5s;
+    }
+
+    .glow-3 {
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle, var(--accent-hover) 0%, transparent 80%);
+      top: 25%;
+      right: 15%;
+      animation-delay: -10s;
+    }
+
+    @keyframes float {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(60px, 40px) scale(1.1); }
+      100% { transform: translate(-40px, -30px) scale(0.9); }
+    }
+
+    /* Live Ticker */
+    .ticker-wrap {
+      width: 100%;
+      overflow: hidden;
+      background: rgba(0, 0, 0, 0.3);
+      border-bottom: 1px solid var(--surface-glass-border);
+      backdrop-filter: blur(10px);
+      position: relative;
+      z-index: 10;
+      height: 36px;
+      display: flex;
+      align-items: center;
+    }
+
+    .ticker {
+      display: inline-flex;
+      white-space: nowrap;
+      padding-right: 100%;
+      animation: ticker 40s linear infinite;
+    }
+
+    .ticker:hover {
+      animation-play-state: paused;
+    }
+
+    .ticker-item {
+      display: inline-flex;
+      align-items: center;
+      padding: 0 30px;
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .ticker-asset {
+      color: var(--text-primary);
+      font-weight: 600;
+      margin-right: 8px;
+    }
+
+    .ticker-value {
+      margin-right: 6px;
+    }
+
+    .ticker-change {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      font-weight: 600;
+    }
+
+    .ticker-change.pos { color: var(--sentiment-pos); }
+    .ticker-change.neg { color: var(--sentiment-neg); }
+    .ticker-change.neu { color: var(--sentiment-neu); }
+
+    @keyframes ticker {
+      0% { transform: translate3d(0, 0, 0); }
+      100% { transform: translate3d(-100%, 0, 0); }
+    }
+
+    /* Main Container */
+    .app-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 24px;
+      min-height: calc(100vh - 36px);
+      position: relative;
+      z-index: 5;
+    }
+
+    @media (max-width: 1024px) {
+      .app-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Glass Panels */
+    .glass-panel {
+      background: var(--surface-glass);
+      border: 1px solid var(--surface-glass-border);
+      border-radius: var(--radius-lg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 28px;
+      box-shadow: var(--shadow-sm);
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    }
+
+    .glass-panel:hover {
+      border-color: rgba(255, 255, 255, 0.12);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* ==========================================================================
+       4. Navigation / Header Component
+       ========================================================================== */
+    .dashboard-header {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 28px;
+    }
+
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-md);
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 800;
+      box-shadow: 0 0 16px var(--accent-glow);
+    }
+
+    .brand-info h1 {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+
+    .brand-info p {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+    }
+
+    .search-wrapper {
+      position: relative;
+      flex: 1;
+      max-width: 460px;
+      margin: 0 40px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 11px 16px 11px 44px;
+      border-radius: var(--radius-md);
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--surface-glass-border);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      outline: none;
+      transition: all var(--transition-fast);
+    }
+
+    .search-input:focus {
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.15);
+      background: rgba(0, 0, 0, 0.4);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+      pointer-events: none;
+      width: 18px;
+      height: 18px;
+    }
+
+    .keyboard-shortcut {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.05);
+      padding: 3px 6px;
+      border-radius: 4px;
+      pointer-events: none;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .clock-widget {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      text-align: right;
+      line-height: 1.3;
+      border-right: 1px solid var(--surface-glass-border);
+      padding-right: 16px;
+    }
+
+    .clock-time {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .action-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid var(--surface-glass-border);
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      transition: all var(--transition-fast);
+      outline: none;
+    }
+
+    .action-btn:hover {
+      color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.07);
+      transform: translateY(-1.5px);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .action-btn:active {
+      transform: translateY(0);
+    }
+
+    .action-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .action-btn .badge {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      background: var(--accent-primary);
+      color: #fff;
+      font-size: 0.65rem;
+      font-weight: 700;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 6px var(--accent-glow);
+    }
+
+    /* ==========================================================================
+       5. Sidebar Component (Stats & Filters & Form)
+       ========================================================================== */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .sidebar-section-title {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Filter Buttons */
+    .filter-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .filter-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border-radius: var(--radius-md);
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      background: transparent;
+      border: none;
+      text-align: left;
+      width: 100%;
+    }
+
+    .filter-item:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-primary);
+    }
+
+    .filter-item.active {
+      background: rgba(129, 140, 248, 0.08);
+      color: var(--accent-primary);
+      font-weight: 600;
+      border-left: 3px solid var(--accent-primary);
+      padding-left: 11px;
+    }
+
+    .filter-count {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      color: var(--text-muted);
+    }
+
+    .filter-item.active .filter-count {
+      background: rgba(129, 140, 248, 0.15);
+      color: var(--accent-primary);
+    }
+
+    /* Sentiment Meter Widget */
+    .sentiment-meter {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .sentiment-bar-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .sentiment-bar-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .sentiment-bar-track {
+      height: 8px;
+      background: rgba(0, 0, 0, 0.25);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+      display: flex;
+    }
+
+    .sentiment-bar-fill {
+      height: 100%;
+      transition: width var(--transition-smooth);
+    }
+
+    .fill-pos { background: var(--sentiment-pos); }
+    .fill-neu { background: var(--sentiment-neu); }
+    .fill-neg { background: var(--sentiment-neg); }
+    .fill-vol { background: var(--sentiment-vol); }
+
+    /* Alert / Add Highlights Form */
+    .story-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-secondary);
+    }
+
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--surface-glass-border);
+      border-radius: var(--radius-md);
+      padding: 9px 12px;
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      outline: none;
+      transition: border-color var(--transition-fast);
+    }
+
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--accent-primary);
+    }
+
+    .form-textarea {
+      resize: none;
+      height: 60px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 11px;
+      border-radius: var(--radius-md);
+      border: none;
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      color: #fff;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      box-shadow: 0 4px 12px rgba(129, 140, 248, 0.15);
+    }
+
+    .btn-submit:hover {
+      box-shadow: 0 6px 18px rgba(129, 140, 248, 0.25);
+      transform: translateY(-1px);
+    }
+
+    /* ==========================================================================
+       6. Main Feed Components (Highlights List & Cards)
+       ========================================================================== */
+    .main-feed {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .feed-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 0;
+    }
+
+    .feed-info {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .feed-info span {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .sort-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sort-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .sort-select {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--surface-glass-border);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      padding: 4px 8px;
+      outline: none;
+      cursor: pointer;
+      transition: color var(--transition-fast);
+    }
+
+    .sort-select:hover {
+      color: var(--text-primary);
+    }
+
+    /* Cards Grid */
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 20px;
+    }
+
+    @media (max-width: 640px) {
+      .news-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .news-card {
+      background: var(--surface-card);
+      border: 1px solid var(--surface-glass-border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+      transition: all var(--transition-smooth);
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 0.4s ease forwards;
+    }
+
+    .news-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: transparent;
+      transition: background var(--transition-fast);
+    }
+
+    .news-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.15);
+      box-shadow: var(--shadow-md);
+    }
+
+    .news-card.sentiment-positive::before { background: var(--sentiment-pos); }
+    .news-card.sentiment-negative::before { background: var(--sentiment-neg); }
+    .news-card.sentiment-neutral::before { background: var(--sentiment-neu); }
+    .news-card.sentiment-volatile::before { background: var(--sentiment-vol); }
+
+    /* Card Top Header */
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .publisher-tag {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .publisher-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+
+    .tag-pos .publisher-dot { background: var(--sentiment-pos); }
+    .tag-neg .publisher-dot { background: var(--sentiment-neg); }
+    .tag-neu .publisher-dot { background: var(--sentiment-neu); }
+    .tag-vol .publisher-dot { background: var(--sentiment-vol); }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .card-title {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: 600;
+      line-height: 1.4;
+      color: var(--text-primary);
+      margin-top: 4px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      height: 62px;
+    }
+
+    /* Sentiment / Impact Indicator */
+    .card-indicators {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: rgba(0, 0, 0, 0.15);
+      padding: 12px 14px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+    }
+
+    .indicator-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+    }
+
+    .indicator-label {
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .sentiment-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .sentiment-badge.pos { background: rgba(16, 185, 129, 0.1); color: var(--sentiment-pos); }
+    .sentiment-badge.neg { background: rgba(239, 68, 68, 0.1); color: var(--sentiment-neg); }
+    .sentiment-badge.neu { background: rgba(245, 158, 11, 0.1); color: var(--sentiment-neu); }
+    .sentiment-badge.vol { background: rgba(236, 72, 153, 0.1); color: var(--sentiment-vol); }
+
+    .impact-bar-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      margin-top: 4px;
+    }
+
+    .impact-bar-track {
+      flex: 1;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+    }
+
+    .impact-bar-fill {
+      height: 100%;
+      border-radius: var(--radius-full);
+    }
+
+    .impact-bar-value {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      width: 24px;
+      text-align: right;
+    }
+
+    /* Card Actions */
+    .card-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      padding-top: 14px;
+    }
+
+    .action-group {
+      display: flex;
+      gap: 6px;
+    }
+
+    .card-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: 1px solid var(--surface-glass-border);
+      background: transparent;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      outline: none;
+    }
+
+    .card-btn:hover {
+      color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .card-btn.bookmarked {
+      color: var(--sentiment-neu);
+      background: rgba(245, 158, 11, 0.08);
+      border-color: rgba(245, 158, 11, 0.2);
+    }
+
+    .card-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .btn-analyze {
+      padding: 0 14px;
+      height: 32px;
+      border-radius: 8px;
+      border: none;
+      background: rgba(129, 140, 248, 0.1);
+      color: var(--accent-primary);
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all var(--transition-fast);
+    }
+
+    .btn-analyze:hover {
+      background: var(--accent-primary);
+      color: #fff;
+      box-shadow: 0 4px 10px var(--accent-glow);
+    }
+
+    /* ==========================================================================
+       7. Modal (Analysis Overlay)
+       ========================================================================== */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity var(--transition-smooth);
+      padding: 20px;
+    }
+
+    .modal-overlay.show {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-panel {
+      background: var(--surface-card);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: var(--radius-lg);
+      max-width: 680px;
+      width: 100%;
+      padding: 32px;
+      position: relative;
+      box-shadow: var(--shadow-lg);
+      transform: translateY(20px);
+      transition: transform var(--transition-smooth);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-overlay.show .modal-panel {
+      transform: translateY(0);
+    }
+
+    .btn-close-modal {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--surface-glass-border);
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .btn-close-modal:hover {
+      color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.08);
+      transform: rotate(90deg);
+    }
+
+    .modal-category {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-primary);
+      margin-bottom: 8px;
+    }
+
+    .modal-title {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      font-weight: 700;
+      line-height: 1.35;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+    }
+
+    .modal-meta-row {
+      display: flex;
+      gap: 16px;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--surface-glass-border);
+    }
+
+    .modal-meta-item strong {
+      color: var(--text-primary);
+    }
+
+    .modal-body {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .modal-section-title {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .modal-summary-text {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--text-secondary);
+    }
+
+    .analysis-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 640px) {
+      .analysis-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .chart-container {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--surface-glass-border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+    }
+
+    .chart-title {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .chart-symbol {
+      font-family: var(--font-mono);
+      font-weight: 500;
+      color: var(--accent-secondary);
+    }
+
+    .chart-canvas {
+      width: 100%;
+      height: 150px;
+    }
+
+    .market-impact-card {
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--surface-glass-border);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .impact-bullet {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+      position: relative;
+      padding-left: 14px;
+    }
+
+    .impact-bullet::before {
+      content: '⚡';
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--accent-primary);
+      font-size: 0.8rem;
+    }
+
+    /* ==========================================================================
+       8. Animations & UI Feedback
+       ========================================================================== */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Floating Toast Component */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .toast {
+      background: var(--surface-card);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius-md);
+      padding: 12px 20px;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-primary);
+      font-size: 0.85rem;
+      font-weight: 500;
+      backdrop-filter: blur(16px);
+      animation: slideIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    .toast-icon {
+      color: var(--accent-secondary);
+      width: 18px;
+      height: 18px;
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 60px 40px;
+      color: var(--text-secondary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      background: rgba(255, 255, 255, 0.01);
+      border: 1px dashed var(--surface-glass-border);
+      border-radius: var(--radius-lg);
+    }
+
+    .empty-state svg {
+      width: 48px;
+      height: 48px;
+      color: var(--text-muted);
+    }
+
+    .empty-state h3 {
+      font-family: var(--font-heading);
+      color: var(--text-primary);
+      font-size: 1.15rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Aurora FX -->
+  <div class="aurora-bg">
+    <div class="aurora-glow glow-1"></div>
+    <div class="aurora-glow glow-2"></div>
+    <div class="aurora-glow glow-3"></div>
+  </div>
+
+  <!-- Live Market Ticker -->
+  <div class="ticker-wrap">
+    <div class="ticker" id="liveTicker">
+      <!-- Injected by JS -->
+    </div>
+  </div>
+
+  <!-- Dashboard Container -->
+  <div class="app-container">
+    
+    <!-- 1. Header (Top Block spanned) -->
+    <header class="dashboard-header glass-panel">
+      <div class="brand-section">
+        <div class="brand-logo">N</div>
+        <div class="brand-info">
+          <h1>Nordic Intelligence</h1>
+          <p>Real-Time Market Intelligence</p>
+        </div>
+      </div>
+      
+      <div class="search-wrapper">
+        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search headlines, summaries, assets...">
+        <div class="keyboard-shortcut">Ctrl+K</div>
+      </div>
+
+      <div class="header-actions">
+        <div class="clock-widget">
+          <div class="clock-time" id="currentTime">16:54:15</div>
+          <div id="currentDate">Aug 14, 2026</div>
+        </div>
+        
+        <!-- Toggle Bookmarks Shortcut -->
+        <button class="action-btn" id="bookmarkToggleBtn" title="View Bookmarks">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.907c.961 0 1.371 1.24.588 1.81l-3.97 2.88a1 1 0 00-.364 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.971-2.88a1 1 0 00-1.178 0l-3.97 2.88c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.364-1.118l-3.97-2.88c-.783-.57-.372-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+          </svg>
+          <span class="badge" id="bookmarkBadge" style="display: none;">0</span>
+        </button>
+
+        <!-- Dynamic Theme Toggle -->
+        <button class="action-btn" id="themeToggleBtn" title="Switch Theme">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- 2. Sidebar Navigation & widgets -->
+    <aside class="sidebar">
+      
+      <!-- Filter Topics -->
+      <section class="glass-panel">
+        <h2 class="sidebar-section-title">Topics</h2>
+        <div class="filter-list" id="categoryFilters">
+          <button class="filter-item active" data-category="all">
+            <span>All Channels</span>
+            <span class="filter-count" id="count-all">6</span>
+          </button>
+          <button class="filter-item" data-category="legal">
+            <span>Legal & Justice</span>
+            <span class="filter-count" id="count-legal">1</span>
+          </button>
+          <button class="filter-item" data-category="geopolitics">
+            <span>Geopolitics & Military</span>
+            <span class="filter-count" id="count-geopolitics">1</span>
+          </button>
+          <button class="filter-item" data-category="technology">
+            <span>Technology</span>
+            <span class="filter-count" id="count-technology">1</span>
+          </button>
+          <button class="filter-item" data-category="environment">
+            <span>Environment & Health</span>
+            <span class="filter-count" id="count-environment">3</span>
+          </button>
+          <button class="filter-item" data-category="bookmarks">
+            <span>Saved Highlights</span>
+            <span class="filter-count" id="count-bookmarks">0</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Sentiment Metrics -->
+      <section class="glass-panel">
+        <h2 class="sidebar-section-title">Sentiment Indices</h2>
+        <div class="sentiment-meter" id="sentimentMeterWidget">
+          <!-- Injected dynamically by JS based on currently filtered content -->
+        </div>
+      </section>
+
+      <!-- Custom Headline Dispatcher -->
+      <section class="glass-panel">
+        <h2 class="sidebar-section-title">Intel Dispatcher</h2>
+        <form class="story-form" id="storyForm">
+          <div class="form-group">
+            <label class="form-label" for="storyTitle">Headline</label>
+            <input type="text" id="storyTitle" class="form-input" placeholder="Enter headline..." required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="storyDesc">Summary</label>
+            <textarea id="storyDesc" class="form-textarea" placeholder="Brief analytical summary..." required></textarea>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="storyCategory">Topic</label>
+              <select id="storyCategory" class="form-select">
+                <option value="legal">Legal & Justice</option>
+                <option value="geopolitics">Geopolitics & Military</option>
+                <option value="technology">Technology</option>
+                <option value="environment">Environment & Health</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="storyPublisher">Publisher</label>
+              <input type="text" id="storyPublisher" class="form-input" placeholder="e.g. WSJ" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="storySentiment">Sentiment</label>
+              <select id="storySentiment" class="form-select">
+                <option value="neutral">Neutral</option>
+                <option value="positive">Positive</option>
+                <option value="negative">Negative</option>
+                <option value="volatile">Volatile</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="storyImpact">Impact (1-10)</label>
+              <input type="number" id="storyImpact" class="form-input" min="1" max="10" step="0.1" value="5.0" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="storyAsset">Linked Asset</label>
+              <input type="text" id="storyAsset" class="form-input" placeholder="e.g. AAPL" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="storyAssetChg">Asset Chg (%)</label>
+              <input type="text" id="storyAssetChg" class="form-input" placeholder="e.g. +1.2%" required>
+            </div>
+          </div>
+          <button type="submit" class="btn-submit">Dispatch Highlight</button>
+        </form>
+      </section>
+
+    </aside>
+
+    <!-- 3. Main Highlights Feed -->
+    <main class="main-feed">
+      
+      <div class="feed-actions">
+        <div class="feed-info" id="feedCounter">
+          Showing <span>6</span> key market highlights
+        </div>
+        
+        <div class="sort-wrapper">
+          <label class="sort-label" for="sortSelect">Order By</label>
+          <select id="sortSelect" class="sort-select">
+            <option value="impact-desc">Impact: High to Low</option>
+            <option value="impact-asc">Impact: Low to High</option>
+            <option value="time-desc">Time: Newest First</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Grid list of highlights cards -->
+      <div class="news-grid" id="newsGrid">
+        <!-- Injected dynamically by JS -->
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- 4. Analyze Impact Modal -->
+  <div class="modal-overlay" id="impactModal">
+    <div class="modal-panel">
+      <button class="btn-close-modal" id="modalCloseBtn" aria-label="Close Analysis">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+      
+      <div class="modal-category" id="modalCategory">Legal & Justice</div>
+      <h2 class="modal-title" id="modalTitle">Luigi Mangione pleads guilty to federal charges in killing of UnitedHealthcare CEO</h2>
+      
+      <div class="modal-meta-row">
+        <div class="modal-meta-item">Impact Index: <strong id="modalImpact">9.2</strong></div>
+        <div class="modal-meta-item">Sentiment: <strong id="modalSentiment">Negative</strong></div>
+        <div class="modal-meta-item">Source: <strong id="modalPublisher">Associated Press</strong></div>
+      </div>
+      
+      <div class="modal-body">
+        <div>
+          <h3 class="modal-section-title">Analytical Summary</h3>
+          <p class="modal-summary-text" id="modalSummary">
+            Placeholder analytical summary for the specific event.
+          </p>
+        </div>
+        
+        <div class="analysis-grid">
+          <div class="chart-container">
+            <div class="chart-header">
+              <span class="chart-title">Asset Reaction Plot</span>
+              <span class="chart-symbol" id="modalAssetSymbol">UNH</span>
+            </div>
+            <canvas class="chart-canvas" id="modalChartCanvas"></canvas>
+          </div>
+          
+          <div class="market-impact-card">
+            <h3 class="modal-section-title">Market Outlook</h3>
+            <div id="modalImpactList">
+              <div class="impact-bullet">Sector capital shifts expected in the upcoming 72 hours.</div>
+              <div class="impact-bullet">Potential long-term governance adjustments and policy risks.</div>
+              <div class="impact-bullet">Asset class volatility spikes temporarily following dissemination.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Feed notifications -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ==========================================================================
+       9. Core Application Script
+       ========================================================================== */ -->
+  <script>
+    // Initial dataset containing current actual headlines (August 14, 2026)
+    const initialStories = [
+      {
+        id: "story-1",
+        title: "Luigi Mangione pleads guilty to federal charges in killing of UnitedHealthcare CEO",
+        summary: "Luigi Mangione has entered a guilty plea to federal charges related to the high-profile shooting of UnitedHealthcare CEO Brian Thompson. This resolution marks a major milestone in the federal prosecution, highlighting heightened corporate security protocols.",
+        category: "legal",
+        publisher: "Associated Press",
+        time: "2h ago",
+        timestamp: Date.now() - 2 * 60 * 60 * 1000,
+        sentiment: "negative",
+        impact: 9.2,
+        asset: "UNH",
+        assetChange: "-2.4%",
+        marketOutlook: [
+          "Drives immediate demand and budget reallocation towards corporate executive safety systems.",
+          "Temporarily impacts investor confidence in major health insurance carriers.",
+          "Sets a rapid legal precedent in federal judicial proceedings regarding corporate threats."
+        ]
+      },
+      {
+        id: "story-2",
+        title: "U.S. Deploys New Carrier to Middle East to Replace USS Abraham Lincoln",
+        summary: "The Pentagon has announced the deployment of a new carrier strike group to the Middle East to relieve the USS Abraham Lincoln. Concurrently, the administration is reportedly finalizing a comprehensive economic isolation strategy aimed at curtailing Iran's petroleum trade.",
+        category: "geopolitics",
+        publisher: "Reuters",
+        time: "4h ago",
+        timestamp: Date.now() - 4 * 60 * 60 * 1000,
+        sentiment: "volatile",
+        impact: 8.5,
+        asset: "USO",
+        assetChange: "+1.8%",
+        marketOutlook: [
+          "Induces short-term premium increases on Brent and WTI crude oil futures.",
+          "Boosts performance and transaction volumes in national defense and aerospace equities.",
+          "Strengthens safety bids on physical precious metals, primarily gold (GLD)."
+        ]
+      },
+      {
+        id: "story-3",
+        title: "Federal Judge Orders Google to Remove App Store Warning Barriers",
+        summary: "A federal district judge has ordered Google to halt the inclusion of 'fear-mongering' warning dialogs when Android users attempt to download and sideload third-party application marketplaces. The ruling identifies such prompts as anticompetitive friction.",
+        category: "technology",
+        publisher: "Bloomberg Tech",
+        time: "5h ago",
+        timestamp: Date.now() - 5 * 60 * 60 * 1000,
+        sentiment: "neutral",
+        impact: 7.8,
+        asset: "GOOGL",
+        assetChange: "-1.5%",
+        marketOutlook: [
+          "Dilutes Google Play Store commission revenues over the medium to long term.",
+          "Lowers entry barriers for independent application platforms (Epic Games, AltStore).",
+          "Accelerates structural regulatory changes targeting digital mobile ecosystems."
+        ]
+      },
+      {
+        id: "story-4",
+        title: "Juneau Glacial Outburst Flash Floods Trigger Emergency Evacuations",
+        summary: "Accelerated melting and structural failure at the Mendenhall Glacier have caused extreme glacial outburst flash flooding along the Mendenhall River. Homes have been damaged, prompting municipal emergency response teams to order immediate evacuations.",
+        category: "environment",
+        publisher: "Weather Channel",
+        time: "8h ago",
+        timestamp: Date.now() - 8 * 60 * 60 * 1000,
+        sentiment: "negative",
+        impact: 6.5,
+        asset: "KIE",
+        assetChange: "-0.8%",
+        marketOutlook: [
+          "Increases pressure on regional catastrophe property insurance underwriters.",
+          "Draws public capital allocations toward municipal flood protection and warning systems.",
+          "Spotlights commercial applications for real-time climate monitoring and GIS intelligence."
+        ]
+      },
+      {
+        id: "story-5",
+        title: "FDA Classifies Salmonella Egg Recall as High-Risk Class I Threat",
+        summary: "The Food and Drug Administration has officially designated the massive recall of 1.5 million dozen eggs as Class I, indicating a high probability of severe adverse health consequences or death. The recall stems from multi-state salmonella outbreaks.",
+        category: "environment",
+        publisher: "NBC News",
+        time: "12h ago",
+        timestamp: Date.now() - 12 * 60 * 60 * 1000,
+        sentiment: "negative",
+        impact: 5.8,
+        asset: "FOOD",
+        assetChange: "-3.2%",
+        marketOutlook: [
+          "Causes severe near-term distribution disruptions in wholesale food supply chains.",
+          "Increases compliance expenses and auditing volumes for food processing facilities.",
+          "Boosts market opportunities for agricultural safety diagnostic systems."
+        ]
+      },
+      {
+        id: "story-6",
+        title: "California Commissioner Freezes Homeowner Insurance Cancellations Near Gann Fire",
+        summary: "California Insurance Commissioner Ricardo Lara has issued a one-year moratorium prohibiting insurers from canceling or non-renewing policies for approximately 64,000 policyholders residing in zip codes near the active Gann Fire zone.",
+        category: "environment",
+        publisher: "LA Times",
+        time: "1d ago",
+        timestamp: Date.now() - 24 * 60 * 60 * 1000,
+        sentiment: "positive",
+        impact: 6.0,
+        asset: "CB",
+        assetChange: "-0.5%",
+        marketOutlook: [
+          "Provides crucial fiscal relief and immediate stabilization to vulnerable property owners.",
+          "Imposes temporary margin constraints on regional property and casualty underwriters.",
+          "Drives demand for utility-scale wildfire containment technology and remote asset tracking."
+        ]
+      }
+    ];
+
+    // Initialize application state
+    let stories = [...initialStories];
+    let bookmarkedIds = [];
+    let currentCategoryFilter = 'all';
+    let currentSort = 'impact-desc';
+    let searchQuery = '';
+
+    // Cache DOM Elements
+    const newsGrid = document.getElementById('newsGrid');
+    const searchInput = document.getElementById('searchInput');
+    const categoryFilters = document.getElementById('categoryFilters');
+    const sortSelect = document.getElementById('sortSelect');
+    const feedCounter = document.getElementById('feedCounter');
+    const bookmarkToggleBtn = document.getElementById('bookmarkToggleBtn');
+    const bookmarkBadge = document.getElementById('bookmarkBadge');
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const liveTicker = document.getElementById('liveTicker');
+    const sentimentMeterWidget = document.getElementById('sentimentMeterWidget');
+    
+    // Form Elements
+    const storyForm = document.getElementById('storyForm');
+    const storyTitle = document.getElementById('storyTitle');
+    const storyDesc = document.getElementById('storyDesc');
+    const storyCategory = document.getElementById('storyCategory');
+    const storyPublisher = document.getElementById('storyPublisher');
+    const storySentiment = document.getElementById('storySentiment');
+    const storyImpact = document.getElementById('storyImpact');
+    const storyAsset = document.getElementById('storyAsset');
+    const storyAssetChg = document.getElementById('storyAssetChg');
+
+    // Modal Elements
+    const impactModal = document.getElementById('impactModal');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+    const modalCategory = document.getElementById('modalCategory');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalImpact = document.getElementById('modalImpact');
+    const modalSentiment = document.getElementById('modalSentiment');
+    const modalPublisher = document.getElementById('modalPublisher');
+    const modalSummary = document.getElementById('modalSummary');
+    const modalAssetSymbol = document.getElementById('modalAssetSymbol');
+    const modalImpactList = document.getElementById('modalImpactList');
+    const modalChartCanvas = document.getElementById('modalChartCanvas');
+
+    // ==========================================================================
+    // 1. Initializers & Setup
+    // ==========================================================================
+    function init() {
+      // Load bookmarks from local storage
+      const stored = localStorage.getItem('nordic_bookmarks');
+      if (stored) {
+        bookmarkedIds = JSON.parse(stored);
+        updateBookmarkBadge();
+      }
+
+      // Check system preference theme or load from storage
+      const savedTheme = localStorage.getItem('nordic_theme') || 'nordic';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      updateThemeToggleButtonIcon(savedTheme);
+
+      // Start Clock
+      setInterval(updateClock, 1000);
+      updateClock();
+
+      // Render Dashboard Components
+      renderTicker();
+      renderFeed();
+      renderCategoryCounts();
+
+      // Event Listeners Setup
+      setupEventListeners();
+    }
+
+    // ==========================================================================
+    // 2. Rendering Engines
+    // ==========================================================================
+    function renderTicker() {
+      let tickerHTML = '';
+      // Clone elements to make a continuous seamless scrolling experience
+      const displayStories = [...stories, ...stories];
+      
+      displayStories.forEach(s => {
+        const changeClass = s.assetChange.startsWith('-') ? 'neg' : s.assetChange.startsWith('+') ? 'pos' : 'neu';
+        tickerHTML += `
+          <div class="ticker-item">
+            <span class="ticker-asset">${s.asset}</span>
+            <span class="ticker-change ${changeClass}">${s.assetChange}</span>
+            <span class="ticker-source">via ${s.publisher}</span>
+          </div>
+        `;
+      });
+      liveTicker.innerHTML = tickerHTML;
+    }
+
+    function renderFeed() {
+      // Filter stories
+      let filtered = stories.filter(story => {
+        // Category filters
+        if (currentCategoryFilter === 'bookmarks') {
+          if (!bookmarkedIds.includes(story.id)) return false;
+        } else if (currentCategoryFilter !== 'all') {
+          if (story.category !== currentCategoryFilter) return false;
+        }
+
+        // Search text matching
+        if (searchQuery) {
+          const matchString = `${story.title} ${story.summary} ${story.publisher} ${story.asset}`.toLowerCase();
+          return matchString.includes(searchQuery.toLowerCase());
+        }
+
+        return true;
+      });
+
+      // Sort stories
+      filtered.sort((a, b) => {
+        if (currentSort === 'impact-desc') return b.impact - a.impact;
+        if (currentSort === 'impact-asc') return a.impact - b.impact;
+        if (currentSort === 'time-desc') return b.timestamp - a.timestamp;
+        return 0;
+      });
+
+      // Render Grid Content
+      if (filtered.length === 0) {
+        newsGrid.innerHTML = `
+          <div class="empty-state">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            <h3>No Highlights Found</h3>
+            <p>Refine your search parameters or adjust filters to uncover active market alerts.</p>
+          </div>
+        `;
+        feedCounter.innerHTML = `Showing <span>0</span> matching highlights`;
+      } else {
+        newsGrid.innerHTML = filtered.map(story => {
+          const isSaved = bookmarkedIds.includes(story.id);
+          const categoryLabels = {
+            legal: "Legal & Justice",
+            geopolitics: "Geopolitics & Military",
+            technology: "Technology",
+            environment: "Environment & Health"
+          };
+          
+          return `
+            <article class="news-card sentiment-${story.sentiment}" id="${story.id}">
+              <div class="card-top">
+                <div class="publisher-tag tag-${story.sentiment}">
+                  <span class="publisher-dot"></span>
+                  ${story.publisher}
+                </div>
+                <div class="card-meta">
+                  <span>${story.time}</span>
+                </div>
+              </div>
+              
+              <div>
+                <h3 class="card-title" title="${story.title}">${story.title}</h3>
+              </div>
+
+              <div class="card-indicators">
+                <div class="indicator-row">
+                  <span class="indicator-label">Sentiment Outlook</span>
+                  <span class="sentiment-badge ${getSentimentClass(story.sentiment)}">${story.sentiment}</span>
+                </div>
+                
+                <div class="impact-bar-container">
+                  <span class="indicator-label">Market Impact</span>
+                  <div class="impact-bar-track">
+                    <div class="impact-bar-fill" style="width: ${story.impact * 10}%; background: ${getImpactColor(story.impact)};"></div>
+                  </div>
+                  <span class="impact-bar-value">${story.impact}</span>
+                </div>
+              </div>
+
+              <div class="card-actions">
+                <button class="btn-analyze" onclick="openAnalysis('${story.id}')">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
+                  Analyze Impact
+                </button>
+                <div class="action-group">
+                  <button class="card-btn ${isSaved ? 'bookmarked' : ''}" onclick="toggleBookmark('${story.id}')" title="Save Highlight">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="${isSaved ? 'currentColor' : 'none'}" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.907c.961 0 1.371 1.24.588 1.81l-3.97 2.88a1 1 0 00-.364 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.971-2.88a1 1 0 00-1.178 0l-3.97 2.88c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.364-1.118l-3.97-2.88c-.783-.57-.372-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                    </svg>
+                  </button>
+                  <button class="card-btn" onclick="shareStory('${story.id}')" title="Copy Share Link">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 10.742l4.684-2.732m0 0L13 9M13.368 8.01l4.684 2.732m-4.684-2.732a3 3 0 11-5.368-2.684 3 3 0 015.368 2.684zm0 9.492a3 3 0 11-5.368 2.684 3 3 0 015.368-2.684zm0-9.492l4.684 2.732m0 0a3 3 0 11-5.368 2.684 3 3 0 015.368-2.684z" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </article>
+          `;
+        }).join('');
+
+        feedCounter.innerHTML = `Showing <span>${filtered.length}</span> active highlights`;
+      }
+
+      renderSentimentMetrics(filtered);
+    }
+
+    // Category Counts calculation
+    function renderCategoryCounts() {
+      const counts = {
+        all: stories.length,
+        legal: stories.filter(s => s.category === 'legal').length,
+        geopolitics: stories.filter(s => s.category === 'geopolitics').length,
+        technology: stories.filter(s => s.category === 'technology').length,
+        environment: stories.filter(s => s.category === 'environment').length,
+        bookmarks: bookmarkedIds.length
+      };
+
+      for (const cat in counts) {
+        const el = document.getElementById(`count-${cat}`);
+        if (el) el.textContent = counts[cat];
+      }
+    }
+
+    // Sentiment index bars
+    function renderSentimentMetrics(activeStories) {
+      if (activeStories.length === 0) {
+        sentimentMeterWidget.innerHTML = `
+          <div style="font-size: 0.8rem; text-align: center; color: var(--text-muted); padding: 10px 0;">
+            No items to compile index.
+          </div>
+        `;
+        return;
+      }
+
+      const total = activeStories.length;
+      const positive = activeStories.filter(s => s.sentiment === 'positive').length;
+      const neutral = activeStories.filter(s => s.sentiment === 'neutral').length;
+      const negative = activeStories.filter(s => s.sentiment === 'negative').length;
+      const volatile = activeStories.filter(s => s.sentiment === 'volatile').length;
+
+      const posPct = Math.round((positive / total) * 100);
+      const neuPct = Math.round((neutral / total) * 100);
+      const negPct = Math.round((negative / total) * 100);
+      const volPct = Math.round((volatile / total) * 100);
+
+      sentimentMeterWidget.innerHTML = `
+        <div class="sentiment-bar-wrapper">
+          <div class="sentiment-bar-info">
+            <span>Positive Outlook</span>
+            <span>${posPct}%</span>
+          </div>
+          <div class="sentiment-bar-track">
+            <div class="sentiment-bar-fill fill-pos" style="width: ${posPct}%"></div>
+          </div>
+        </div>
+        
+        <div class="sentiment-bar-wrapper">
+          <div class="sentiment-bar-info">
+            <span>Neutral / Steady</span>
+            <span>${neuPct}%</span>
+          </div>
+          <div class="sentiment-bar-track">
+            <div class="sentiment-bar-fill fill-neu" style="width: ${neuPct}%"></div>
+          </div>
+        </div>
+
+        <div class="sentiment-bar-wrapper">
+          <div class="sentiment-bar-info">
+            <span>Negative Risk</span>
+            <span>${negPct}%</span>
+          </div>
+          <div class="sentiment-bar-track">
+            <div class="sentiment-bar-fill fill-neg" style="width: ${negPct}%"></div>
+          </div>
+        </div>
+
+        <div class="sentiment-bar-wrapper">
+          <div class="sentiment-bar-info">
+            <span>Volatility Spikes</span>
+            <span>${volPct}%</span>
+          </div>
+          <div class="sentiment-bar-track">
+            <div class="sentiment-bar-fill fill-vol" style="width: ${volPct}%"></div>
+          </div>
+        </div>
+      `;
+    }
+
+    // ==========================================================================
+    // 3. Event Listeners & Interaction Handles
+    // ==========================================================================
+    function setupEventListeners() {
+      // Category Navigation
+      categoryFilters.addEventListener('click', (e) => {
+        const btn = e.target.closest('.filter-item');
+        if (!btn) return;
+        
+        document.querySelectorAll('.filter-item').forEach(item => item.classList.remove('active'));
+        btn.classList.add('active');
+        
+        currentCategoryFilter = btn.dataset.category;
+        renderFeed();
+      });
+
+      // Search Inputs
+      searchInput.addEventListener('input', (e) => {
+        searchQuery = e.target.value;
+        renderFeed();
+      });
+
+      // Keyboard Shortcut Ctrl+K
+      window.addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+          e.preventDefault();
+          searchInput.focus();
+        }
+      });
+
+      // Sort Select
+      sortSelect.addEventListener('change', (e) => {
+        currentSort = e.target.value;
+        renderFeed();
+      });
+
+      // Form Dispatch Submition
+      storyForm.addEventListener('submit', handleStorySubmit);
+
+      // Bookmark Toggle Panel
+      bookmarkToggleBtn.addEventListener('click', () => {
+        const bookmarksBtn = document.querySelector('[data-category="bookmarks"]');
+        if (bookmarksBtn) {
+          bookmarksBtn.click();
+        }
+      });
+
+      // Theme toggle
+      themeToggleBtn.addEventListener('click', toggleThemeSetting);
+
+      // Modal close button
+      modalCloseBtn.addEventListener('click', closeModal);
+      impactModal.addEventListener('click', (e) => {
+        if (e.target === impactModal) closeModal();
+      });
+    }
+
+    // ==========================================================================
+    // 4. Feature Actions
+    // ==========================================================================
+    function handleStorySubmit(e) {
+      e.preventDefault();
+      
+      const newStory = {
+        id: `story-${Date.now()}`,
+        title: storyTitle.value.trim(),
+        summary: storyDesc.value.trim(),
+        category: storyCategory.value,
+        publisher: storyPublisher.value.trim(),
+        time: "Just now",
+        timestamp: Date.now(),
+        sentiment: storySentiment.value,
+        impact: parseFloat(storyImpact.value) || 5.0,
+        asset: storyAsset.value.trim().toUpperCase(),
+        assetChange: storyAssetChg.value.trim(),
+        marketOutlook: [
+          `Signals structural changes within the linked ${storyAsset.value.trim().toUpperCase()} asset scope.`,
+          "Demands adjustments to strategic holdings and portfolio weighting indices.",
+          "Generates systemic volume increases across corresponding trading desks."
+        ]
+      };
+
+      // Add to beginning of local array
+      stories.unshift(newStory);
+      
+      // Save/Render updates
+      renderTicker();
+      renderFeed();
+      renderCategoryCounts();
+      
+      // Reset form fields
+      storyForm.reset();
+      
+      // Notifications
+      showToast("Intelligence Alert Dispatched Successfully!");
+    }
+
+    function toggleBookmark(storyId) {
+      const idx = bookmarkedIds.indexOf(storyId);
+      if (idx === -1) {
+        bookmarkedIds.push(storyId);
+        showToast("Highlight bookmarked for tracking");
+      } else {
+        bookmarkedIds.splice(idx, 1);
+        showToast("Bookmark removed");
+      }
+      
+      localStorage.setItem('nordic_bookmarks', JSON.stringify(bookmarkedIds));
+      updateBookmarkBadge();
+      renderFeed();
+      renderCategoryCounts();
+    }
+
+    function toggleThemeSetting() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'abyss' ? 'nordic' : 'abyss';
+      
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('nordic_theme', next);
+      updateThemeToggleButtonIcon(next);
+      showToast(`Switched theme to ${next === 'abyss' ? 'Cyber Abyss' : 'Nordic Aurora'}`);
+    }
+
+    function updateThemeToggleButtonIcon(theme) {
+      if (theme === 'abyss') {
+        // Sun icon
+        themeToggleBtn.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+          </svg>
+        `;
+      } else {
+        // Moon icon
+        themeToggleBtn.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+        `;
+      }
+    }
+
+    function updateBookmarkBadge() {
+      if (bookmarkedIds.length > 0) {
+        bookmarkBadge.textContent = bookmarkedIds.length;
+        bookmarkBadge.style.display = 'flex';
+      } else {
+        bookmarkBadge.style.display = 'none';
+      }
+    }
+
+    function shareStory(storyId) {
+      const dummyLink = `${window.location.origin}/highlights?id=${storyId}`;
+      navigator.clipboard.writeText(dummyLink).then(() => {
+        showToast("Intelligence link copied to clipboard");
+      }).catch(() => {
+        showToast("Error generating link sharing clip");
+      });
+    }
+
+    // Modal Operations
+    function openAnalysis(storyId) {
+      const story = stories.find(s => s.id === storyId);
+      if (!story) return;
+
+      const categoryLabels = {
+        legal: "Legal & Justice",
+        geopolitics: "Geopolitics & Military",
+        technology: "Technology",
+        environment: "Environment & Health"
+      };
+
+      // Populate elements
+      modalCategory.textContent = categoryLabels[story.category] || "Market Intelligence";
+      modalTitle.textContent = story.title;
+      modalImpact.textContent = story.impact;
+      modalPublisher.textContent = story.publisher;
+      modalSummary.textContent = story.summary;
+      modalAssetSymbol.textContent = story.asset;
+
+      // Populate impact bullet list
+      modalImpactList.innerHTML = story.marketOutlook.map(bullet => `
+        <div class="impact-bullet">${bullet}</div>
+      `).join('');
+
+      // Open Modal Screen
+      impactModal.classList.add('show');
+      document.body.style.overflow = 'hidden';
+
+      // Draw interactive asset reaction plot
+      setTimeout(() => {
+        drawAssetChart(story.sentiment, story.asset);
+      }, 50);
+    }
+
+    function closeModal() {
+      impactModal.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+
+    // ==========================================================================
+    // 5. Dynamic Chart Generator (Canvas Implementation)
+    // ==========================================================================
+    function drawAssetChart(sentiment, assetSymbol) {
+      const canvas = modalChartCanvas;
+      
+      // Handle high resolution retina monitors
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      
+      const ctx = canvas.getContext('2d');
+      ctx.scale(dpr, dpr);
+      
+      const width = rect.width;
+      const height = rect.height;
+      ctx.clearRect(0, 0, width, height);
+
+      // Generate visual chart plots based on sentiment values
+      let points = [];
+      const steps = 6;
+      let val = height / 2; // Start in middle
+      
+      // Determine seed increments based on sentiment
+      let volatility = 10;
+      let trend = 0;
+      if (sentiment === 'positive') {
+        trend = -15; // Drawing axis has 0 at top, so negative trend means going up
+        volatility = 5;
+      } else if (sentiment === 'negative') {
+        trend = 15; // Positive trend means going down
+        volatility = 6;
+      } else if (sentiment === 'volatile') {
+        trend = 0;
+        volatility = 28;
+      } else { // Neutral
+        trend = 0;
+        volatility = 4;
+      }
+
+      points.push({ x: 0, y: val });
+      for (let i = 1; i <= steps; i++) {
+        const x = (width / steps) * i;
+        val = val + trend + (Math.random() * volatility * 2 - volatility);
+        // Bounds checking
+        val = Math.max(20, Math.min(height - 20, val));
+        points.push({ x: x, y: i === steps ? val + (trend * 0.5) : val });
+      }
+
+      // Draw Grid Lines
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
+      ctx.lineWidth = 1;
+      for (let i = 1; i < 4; i++) {
+        const y = (height / 4) * i;
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(width, y);
+        ctx.stroke();
+      }
+
+      // Determine Theme Accent Color
+      const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-primary').trim();
+      const secondaryColor = getComputedStyle(document.documentElement).getPropertyValue('--accent-secondary').trim();
+
+      // Create Gradient for fill under line
+      const gradient = ctx.createLinearGradient(0, 0, 0, height);
+      gradient.addColorStop(0, primaryColor + '20'); // 12% opacity
+      gradient.addColorStop(1, 'transparent');
+
+      // Draw filled area under line
+      ctx.beginPath();
+      ctx.moveTo(0, height);
+      ctx.lineTo(0, points[0].y);
+      for (let i = 1; i < points.length; i++) {
+        ctx.lineTo(points[i].x, points[i].y);
+      }
+      ctx.lineTo(width, height);
+      ctx.closePath();
+      ctx.fillStyle = gradient;
+      ctx.fill();
+
+      // Draw Line
+      ctx.beginPath();
+      ctx.moveTo(points[0].x, points[0].y);
+      for (let i = 1; i < points.length; i++) {
+        // Curve to make it look smooth
+        const xc = (points[i-1].x + points[i].x) / 2;
+        const yc = (points[i-1].y + points[i].y) / 2;
+        ctx.quadraticCurveTo(points[i-1].x, points[i-1].y, xc, yc);
+      }
+      ctx.lineTo(points[points.length-1].x, points[points.length-1].y);
+      ctx.strokeStyle = primaryColor;
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      // Draw Node points at intersections
+      points.forEach((p, idx) => {
+        if (idx === points.length - 1 || idx === 0) {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, 4, 0, 2 * Math.PI);
+          ctx.fillStyle = secondaryColor;
+          ctx.fill();
+        }
+      });
+    }
+
+    // ==========================================================================
+    // 6. Utility Functions
+    // ==========================================================================
+    function getSentimentClass(sentiment) {
+      if (sentiment === 'positive') return 'pos';
+      if (sentiment === 'negative') return 'neg';
+      if (sentiment === 'volatile') return 'vol';
+      return 'neu';
+    }
+
+    // Impact color levels
+    function getImpactColor(impact) {
+      if (impact >= 8.0) return 'var(--sentiment-neg)';
+      if (impact >= 6.0) return 'var(--sentiment-vol)';
+      if (impact >= 4.0) return 'var(--sentiment-neu)';
+      return 'var(--sentiment-pos)';
+    }
+
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = `
+        <svg class="toast-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>${message}</span>
+      `;
+      toastContainer.appendChild(toast);
+      
+      // Auto-remove toast
+      setTimeout(() => {
+        toast.style.animation = 'slideIn 0.3s ease reverse forwards';
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+
+    function updateClock() {
+      const now = new Date();
+      const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+      document.getElementById('currentTime').textContent = now.toLocaleTimeString('en-US', options);
+      
+      const dateOptions = { month: 'short', day: '2-digit', year: 'numeric' };
+      document.getElementById('currentDate').textContent = now.toLocaleDateString('en-US', dateOptions);
+    }
+
+    // Initialize application
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
