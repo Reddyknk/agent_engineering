@@ -69,6 +69,7 @@ def emit(events: list[dict[str, Any]], project_id: str, speed: float) -> None:
     os.environ["GOOGLE_CLOUD_PROJECT"] = project_id
     os.environ["OTEL_SERVICE_NAME"] = "class-02c-replay"
     os.environ["OTEL_RESOURCE_ATTRIBUTES"] = (
+        f"gcp.project_id={project_id},"
         "deployment.environment=classroom,class.name=02C,replay.mode=telemetry_only"
     )
 

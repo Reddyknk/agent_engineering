@@ -18,7 +18,11 @@ if [[ ! -f "$PROJECT_ROOT/.env" ]]; then
   exit 1
 fi
 
-if [[ ! -f "$PROJECT_ROOT/.venv/bin/activate" ]]; then
+if [[ -f "$PROJECT_ROOT/.venv/Scripts/activate" ]]; then
+  ACTIVATE_PATH="$PROJECT_ROOT/.venv/Scripts/activate"
+elif [[ -f "$PROJECT_ROOT/.venv/bin/activate" ]]; then
+  ACTIVATE_PATH="$PROJECT_ROOT/.venv/bin/activate"
+else
   echo "Missing project virtual environment."
   echo "See Task 1 of class_02C_instructions.md:"
   echo "  python3 -m venv .venv && source .venv/bin/activate && python -m pip install -e ."
@@ -31,7 +35,7 @@ if [[ -z "$PROJECT_ID" ]]; then
   exit 1
 fi
 
-source "$PROJECT_ROOT/.venv/bin/activate"
+source "$ACTIVATE_PATH"
 
 set -a
 source "$PROJECT_ROOT/.env"
@@ -39,10 +43,10 @@ set +a
 
 export GOOGLE_CLOUD_PROJECT="$PROJECT_ID"
 export OTEL_SERVICE_NAME="${OTEL_SERVICE_NAME:-class-02c-live}"
-export OTEL_RESOURCE_ATTRIBUTES="${OTEL_RESOURCE_ATTRIBUTES:-deployment.environment=classroom,class.name=02C}"
+export OTEL_RESOURCE_ATTRIBUTES="${OTEL_RESOURCE_ATTRIBUTES:-gcp.project_id=$PROJECT_ID,deployment.environment=classroom,class.name=02C}"
 export OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT="${OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT:-NO_CONTENT}"
 
-exec adk api_server \
+exec "$(dirname "$ACTIVATE_PATH")/adk" api_server \
   --otel_to_cloud \
   --no-reload \
   --port "${ADK_PORT:-8000}" \
