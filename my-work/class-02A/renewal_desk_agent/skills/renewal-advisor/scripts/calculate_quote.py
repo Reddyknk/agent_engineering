@@ -14,9 +14,16 @@ def money(value: Decimal) -> Decimal:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--arr", type=Decimal, required=True)
-    parser.add_argument("--discount-percent", type=Decimal, required=True)
+    parser = argparse.ArgumentParser(description="Deterministically calculate discount amount and net ARR.")
+    parser.add_argument("--arr", type=Decimal, required=True, help="Annual Recurring Revenue")
+    parser.add_argument(
+        "--discount-percent",
+        "--discount_percent",
+        type=Decimal,
+        required=True,
+        dest="discount_percent",
+        help="Discount percentage (0 to 100)",
+    )
     args = parser.parse_args()
 
     if args.arr < 0:

@@ -37,6 +37,16 @@ WidgetWare renews enterprise software contracts. Customer-success managers need 
 
 The source documents are already provided. Your job is to engineer the skill, not invent policy.
 
+## Running ADK Web
+
+To launch ADK Web, run the following command from the root directory containing `renewal_desk_agent/`:
+
+```bash
+adk web .
+```
+
+Open the local URL (e.g. `http://localhost:8000`), select `renewal_desk_agent`, and start a session.
+
 ## Timebox
 
 90 minutes:
@@ -63,7 +73,7 @@ The source documents are already provided. Your job is to engineer the skill, no
 ### Task 1 — Establish the baseline
 
 1. Complete the setup in `SETUP.md`.
-2. Start ADK Web.
+2. Start ADK Web using `adk web .`.
 3. Ask: `What specialist skills are available to you? Give only their names and descriptions.`
 4. Inspect the trace and record what was visible at L1 in `SUBMISSION.md`.
 5. Ask: `A customer asked for a renewal discount. What should I do?`

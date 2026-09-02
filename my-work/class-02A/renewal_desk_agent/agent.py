@@ -24,9 +24,12 @@ skill_toolset = SkillToolset(
     code_executor=UnsafeLocalCodeExecutor(),
 )
 
+# Read model setting from environment variable AGENT_MODEL or MODEL
+model_name = os.getenv("AGENT_MODEL") or os.getenv("MODEL") or "gemini-2.5-flash"
+
 root_agent = Agent(
     name="renewal_desk_agent",
-    model=os.getenv("AGENT_MODEL", "gemini-2.5-flash"),
+    model=model_name,
     description="Helps WidgetWare teams analyze enterprise renewals.",
     instruction=(
         "You are WidgetWare's Renewal Desk Agent. Use specialized skills when "

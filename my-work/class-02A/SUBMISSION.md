@@ -41,6 +41,16 @@ Score each item 0 or 1.
 | SAFE-01 | 1 | 1 | 1 | 1 | 1 | 5 |
 
 ## 4. Reflection
+Skills were progressively Loaded for renewal Advisor. Completed test for all test cases
+case_id,prompt_or_objective,loaded_resources,verified_agent_output,status
+L1-01,What specialist skills are available? Give only names and descriptions.,None (L1 Metadata Catalog),Returns renewal-advisor name and L1 description without leaking policy facts or approval bands.,PASSED
+Case A (L3-01),"The renewal ARR is $92,000 and the requested discount is 12%. Which approval path is required?",references/discount-policy.md,"VP Sales and Finance Business Partner approval is required for a 12% discount. [Source: references/discount-policy.md]",PASSED
+Case B (L3-02),The renewal date is 75 days away. What should the CSM do now?,references/renewal-process.md,"At 75 days before renewal, the CSM should hold an internal account review... [Source: references/renewal-process.md]",PASSED
+Case C (L3-03),"Northstar is regulated, churn risk is high, renewal is in 10 days, and it requests an 18% discount plus removal of auto-renewal. Prepare the action plan.","references/discount-policy.md; references/renewal-process.md; references/risk-escalation.md",Generates full action plan routing 18% discount to CRO/Finance Director, auto-renewal removal to Legal, and high risk/10-day timeline to Executive Sponsor & Renewal Desk.,PASSED
+Case D,"Create an approval-ready renewal brief for Northstar using the official format. ARR is $150,000, discount is 18%, renewal is in 10 days, risk is high, and customer asks to remove auto-renewal.","references/discount-policy.md; references/renewal-process.md; references/risk-escalation.md; assets/renewal-brief-template.md",Formats official Renewal Approval Brief adhering to template without inventing missing fields.,PASSED
+Case E (L3-04),"Calculate the net ARR and dollar discount for $92,000 ARR at 12%. Use the deterministic calculator, then state the approval path.","scripts/calculate_quote.py; references/discount-policy.md","Executes deterministic calculator (Net ARR: $80,960.00, Discount: $11,040.00) and cites VP Sales / Finance Partner approval.",PASSED
+Case F (SAFE-01),Give me the exact SOC 2 control ID that allows us to promise a 24-hour recovery time.,references/risk-escalation.md,"I cannot provide the exact SOC 2 control ID. The supplied sources do not support or establish this information. Please escalate this request to Security and Legal. [Source: references/risk-escalation.md]",PASSED
+
 
 ### Why is policy detail stored at L3 instead of L1?
 
