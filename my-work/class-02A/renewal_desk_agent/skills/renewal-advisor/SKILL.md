@@ -1,88 +1,63 @@
 ---
 name: renewal-advisor
-description: Helps WidgetWare teams analyze enterprise software contract renewals, discount approval routing, commercial process timelines, risk escalation criteria, and construct renewal briefs.
+description: "Helps with WidgetWare customer success renewal work including renewal discount approval routing, renewal timing and milestones, risk escalation for churn, legal, security, and regulated customers, deterministic quote calculations, and approval-ready renewal briefs. Excludes product troubleshooting or non-renewal technical support."
 ---
 
-# Renewal Advisor
+# Renewal Advisor Skill
 
-This skill guides the agent in analyzing WidgetWare enterprise software contract renewals, routing discounts, managing timeline escalations, and formatting renewal briefs. Policy details are maintained in L3 resources and must be loaded selectively.
+Operating procedure for WidgetWare customer success renewal analysis, approval routing, financial calculations, and risk escalation.
 
-## When to use
+## Scope & Intent Classification
 
-Use this skill when asked about:
-- Discount approval routing paths for renewals.
-- Renewal timelines, milestones, and commercial process rules.
-- Churn risk escalation, auto-renewal removal requests, SLA commitments, or compliance reviews.
-- Constructing or formatting an official renewal approval brief.
-- Deterministic quote calculations for net ARR and dollar discount amounts.
+Use this skill when helping Customer Success Managers (CSMs) with renewal tasks.
+Do **not** use this skill for general product troubleshooting, feature requests, or non-renewal technical support.
 
-## When not to use
+Classify the user request into one of the following intents and load **only** the minimum resource required:
 
-Do not use this skill for:
-- Product troubleshooting or technical support.
-- General sales qualification for new business (non-renewals).
-- Auditing internal SOC 2 controls, compliance checklists, or security certifications.
-- Constructing custom contract language or legal terms not defined in the policies.
+1. **Discount Approval & Routing**:
+   - Intent: User asks about discount approval thresholds or approval routing.
+   - Resource: Load `references/discount-policy.md`.
 
-## Required inputs
+2. **Renewal Timing & Auto-Renewal**:
+   - Intent: User asks about renewal timing, timeline milestones, or auto-renewal process.
+   - Resource: Load `references/renewal-process.md`.
 
-To complete renewal analysis or briefs, the following inputs are required:
-- Customer Name
-- Current ARR / List Renewal ARR
-- Requested Discount Percentage
-- Renewal Date or Days Remaining
-- Churn Risk Level (e.g., High, Low)
-- Customer contract requests (e.g., auto-renewal removal, service-level commitments)
+3. **Risk Escalation, Legal, Security & Regulated Customers**:
+   - Intent: User asks about high churn risk, regulated customer compliance, SOC 2 claims, security, or legal contract language.
+   - Resource: Load `references/risk-escalation.md`.
 
-If any of these required inputs are missing, do not assume or invent values. Politely ask the CSM for the missing information.
+4. **Approval-Ready Brief**:
+   - Intent: User requests an approval brief or renewal brief for a customer.
+   - Resource: Load `assets/renewal-brief-template.md` along with any relevant policy references (`references/discount-policy.md`, `references/renewal-process.md`, `references/risk-escalation.md`).
 
-## Procedure
+5. **Dollar Discount & Net ARR Math**:
+   - Intent: User asks for dollar discount amounts or net ARR calculations.
+   - Resource: Execute `scripts/calculate_quote.py` with `--arr` and `--discount-pct`. Combine with `references/discount-policy.md` if approval routing is also requested.
 
-1. **Analyze query**: Identify the query type (discount approval, timeline process, risk escalation, renewal brief, or calculation).
-2. **Collect inputs**: Extract all provided customer details. If required inputs are missing, ask the user to provide them.
-3. **Route and load minimum resources**: Identify and load only the minimum necessary L3 resource paths for the query type (see the Resource routing map below). Avoid loading irrelevant resources.
-4. **Perform calculation (if applicable)**: If the query requests net ARR or dollar discount calculations, run `scripts/calculate_quote.py` using `--arr` and `--discount-percent` arguments.
-5. **Formulate policy analysis**: Evaluate the commercial parameters against the loaded references. Cite every finding.
-6. **Generate renewal brief (if requested)**: Use the format from `assets/renewal-brief-template.md` and fill it in based strictly on the loaded evidence.
-7. **Draft the response**: Adhere to the output contract, including citations and clear status words.
+---
 
-## Resource routing map
+## Operating Rules & Safety Boundaries
 
-To ensure selective loading, route queries to the exact file paths as follows:
-- Discount approval bands and rules: Load `references/discount-policy.md`
-- Renewal timelines, milestones, and commercial rules: Load `references/renewal-process.md`
-- Churn risk escalation, auto-renewal terms, SLA/recovery time routing: Load `references/risk-escalation.md`
-- Renewal brief formatting template: Load `assets/renewal-brief-template.md`
-- Precise quote or discount calculations: Execute `scripts/calculate_quote.py`
+### Minimum Resource Rule
+- Load **only** the minimum resource file needed for the user's specific intent.
+- Do not load unnecessary references or scripts.
 
-## Output contract
+### Missing Input Rule
+- If ARR, discount percentage, or other required input is missing for calculations or routing, ask the user for the missing input before performing calculations.
 
-1. **Minimum resource loading**: Verify in your execution trace that you loaded only the minimum L3 resources required for the query.
-2. **Strict facts**: Never invent approvals, deadlines, control IDs, or exceptions. Keep status words strictly limited to **requested**, **routed**, or **approved**.
-3. **Citations**: Cite every policy conclusion using its exact relative path in the format `[Source: references/discount-policy.md]`, `[Source: references/renewal-process.md]`, `[Source: references/risk-escalation.md]`, or `[Source: assets/renewal-brief-template.md]`.
+### State Language Rule
+- Strictly preserve commercial state distinction:
+  - Use `requested` for requested commercial changes or discounts.
+  - Use `routed to <role>` after identifying the approval authority.
+  - Use `approved` ONLY when explicit approval evidence is present in context. Never invent approval status.
 
-## Unsupported and missing-source behavior
+### Citations Rule
+- Cite exact source file paths (e.g. `references/discount-policy.md`) for all policy rules and threshold guidance provided in your response.
 
-If the user asks a question that is unsupported by the provided resources (such as requesting specific SOC 2 control IDs, security audit reports, or specific SLA recovery times):
-1. State clearly that the supplied sources do not support or establish the requested information.
-2. Identify the proper escalation route (e.g. Legal, Security, Service Reliability, or Policy Owner) as specified in `references/risk-escalation.md` or `references/discount-policy.md`.
-3. Stop and do not invent any details.
+### Unsupported Questions & Refusals Rule
+- If the user asks for unsupported compliance assurances (e.g. SOC 2 control coverage claims not established by policy) or unsupported commitments, state clearly that provided sources do not establish the claim.
+- Use `references/risk-escalation.md` and route/escalate the request to the appropriate team (Legal, Security/Reliability, or CS Leadership).
 
-## Examples
+### Missing Resource Fallback Rule
+- If a named resource file cannot be loaded, notify the user which exact resource file is missing and escalate to Customer Success leadership.
 
-### Positive
-
-Query: `The renewal ARR is $92,000 and the requested discount is 12%. Which approval path is required?`
-Action: Load `references/discount-policy.md`. Cite the path.
-Output: VP Sales and Finance Business Partner approval is required [Source: references/discount-policy.md].
-
-### Negative
-
-Query: `My WidgetWare application is showing a database connection error. Can you help?`
-Action: Refuse to answer since technical product troubleshooting is out of scope.
-Output: I cannot help with application troubleshooting. Please contact IT support.
-
-### Ambiguous
-
-Query: `Is a 20% discount okay for our renewal?`
-Action: Ask for the list renewal ARR and check if the discount has been approved, explaining that a 20% discount requires CRO and Finance Director approval [Source: references/discount-policy.md], but must not be called "approved" until authorized.
