@@ -284,7 +284,8 @@ Find `TODO 3C` inside `attractions_planner`'s instruction. Replace it with:
 From `class-02B/adk_multiagent_systems`:
 
 ```bash
-adk web --port 8000 --reload_agents
+a
+
 ```
 
 Open `http://127.0.0.1:8000`, select `parent_and_subagents`, and try:

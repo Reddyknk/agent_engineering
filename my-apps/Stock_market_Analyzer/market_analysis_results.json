@@ -1,0 +1,1103 @@
+{
+  "timestamp": "2026-09-11T00:14:12.991985+00:00",
+  "marketMovers": [],
+  "sectors": [
+    {
+      "sector": "Technology",
+      "etf": {
+        "symbol": "XLK",
+        "open": NaN,
+        "high": NaN,
+        "low": NaN,
+        "close": NaN,
+        "volume": 5544980,
+        "avgVolume": 6380958,
+        "relVolume": 0.87,
+        "changePercent": NaN,
+        "pivots": {
+          "pivot": NaN,
+          "r1": NaN,
+          "r2": NaN,
+          "r3": NaN,
+          "s1": NaN,
+          "s2": NaN,
+          "s3": NaN
+        }
+      },
+      "topStocks": [
+        {
+          "symbol": "AAPL",
+          "open": NaN,
+          "high": NaN,
+          "low": NaN,
+          "close": NaN,
+          "volume": 69820744,
+          "avgVolume": 44702564,
+          "relVolume": 1.56,
+          "changePercent": NaN,
+          "pivots": {
+            "pivot": NaN,
+            "r1": NaN,
+            "r2": NaN,
+            "r3": NaN,
+            "s1": NaN,
+            "s2": NaN,
+            "s3": NaN
+          }
+        },
+        {
+          "symbol": "MSFT",
+          "open": NaN,
+          "high": NaN,
+          "low": NaN,
+          "close": NaN,
+          "volume": 15852734,
+          "avgVolume": 21134033,
+          "relVolume": 0.75,
+          "changePercent": NaN,
+          "pivots": {
+            "pivot": NaN,
+            "r1": NaN,
+            "r2": NaN,
+            "r3": NaN,
+            "s1": NaN,
+            "s2": NaN,
+            "s3": NaN
+          }
+        },
+        {
+          "symbol": "NVDA",
+          "open": NaN,
+          "high": NaN,
+          "low": NaN,
+          "close": NaN,
+          "volume": 100845811,
+          "avgVolume": 146239071,
+          "relVolume": 0.69,
+          "changePercent": NaN,
+          "pivots": {
+            "pivot": NaN,
+            "r1": NaN,
+            "r2": NaN,
+            "r3": NaN,
+            "s1": NaN,
+            "s2": NaN,
+            "s3": NaN
+          }
+        }
+      ]
+    },
+    {
+      "sector": "Energy",
+      "etf": {
+        "symbol": "XLE",
+        "open": NaN,
+        "high": NaN,
+        "low": NaN,
+        "close": NaN,
+        "volume": 37132344,
+        "avgVolume": 27900724,
+        "relVolume": 1.33,
+        "changePercent": NaN,
+        "pivots": {
+          "pivot": NaN,
+          "r1": NaN,
+          "r2": NaN,
+          "r3": NaN,
+          "s1": NaN,
+          "s2": NaN,
+          "s3": NaN
+        }
+      },
+      "topStocks": [
+        {
+          "symbol": "XOM",
+          "open": NaN,
+          "high": NaN,
+          "low": NaN,
+          "close": NaN,
+          "volume": 16203525,
+          "avgVolume": 13857002,
+          "relVolume": 1.17,
+          "changePercent": NaN,
+          "pivots": {
+            "pivot": NaN,
+            "r1": NaN,
+            "r2": NaN,
+            "r3": NaN,
+            "s1": NaN,
+            "s2": NaN,
+            "s3": NaN
+          }
+        },
+        {
+          "symbol": "CVX",
+          "open": NaN,
+          "high": NaN,
+          "low": NaN,
+          "close": NaN,
+          "volume": 9615583,
+          "avgVolume": 7945828,
+          "relVolume": 1.21,
+          "changePercent": NaN,
+          "pivots": {
+            "pivot": NaN,
+            "r1": NaN,
+            "r2": NaN,
+            "r3": NaN,
+            "s1": NaN,
+            "s2": NaN,
+            "s3": NaN
+          }
+        },
+        {
+          "symbol": "COP",
+          "open": NaN,
+          "high": NaN,
+          "low": NaN,
+          "close": NaN,
+          "volume": 5580916,
+          "avgVolume": 5939511,
+          "relVolume": 0.94,
+          "changePercent": NaN,
+          "pivots": {
+            "pivot": NaN,
+            "r1": NaN,
+            "r2": NaN,
+            "r3": NaN,
+            "s1": NaN,
+            "s2": NaN,
+            "s3": NaN
+          }
+        }
+      ]
+    },
+    {
+      "sector": "Financials",
+      "etf": {
+        "symbol": "XLF",
+        "open": NaN,
+        "high": NaN,
+        "low": NaN,
+        "close": NaN,
+        "volume": 25294202,
+        "avgVolume": 29024680,
+        "relVolume": 0.87,
+        "changePercent": NaN,
+        "pivots": {
+          "pivot": NaN,
+          "r1": NaN,
+          "r2": NaN,
+          "r3": NaN,
+          "s1": NaN,
+          "s2": NaN,
+          "s3": NaN
+        }
+      },
+      "topStocks": [
+        {
+          "symbol": "JPM",
+          "open": NaN,
+          "high": NaN,
+          "low": NaN,
+          "close": NaN,
+          "volume": 4177661,
+          "avgVolume": 5392266,
+          "relVolume": 0.77,
+          "changePercent": NaN,
+          "pivots": {
+            "pivot": NaN,
+            "r1": NaN,
+            "r2": NaN,
+            "r3": NaN,
+            "s1": NaN,
+            "s2": NaN,
+            "s3": NaN
+          }
+        },
+        {
+          "symbol": "BAC",
+          "open": NaN,
+          "high": NaN,
+          "low": NaN,
+          "close": NaN,
+          "volume": 26504890,
+          "avgVolume": 32728689,
+          "relVolume": 0.81,
+          "changePercent": NaN,
+          "pivots": {
+            "pivot": NaN,
+            "r1": NaN,
+            "r2": NaN,
+            "r3": NaN,
+            "s1": NaN,
+            "s2": NaN,
+            "s3": NaN
+          }
+        },
+        {
+          "symbol": "WFC",
+          "open": NaN,
+          "high": NaN,
+          "low": NaN,
+          "close": NaN,
+          "volume": 13068936,
+          "avgVolume": 14053343,
+          "relVolume": 0.93,
+          "changePercent": NaN,
+          "pivots": {
+            "pivot": NaN,
+            "r1": NaN,
+            "r2": NaN,
+            "r3": NaN,
+            "s1": NaN,
+            "s2": NaN,
+            "s3": NaN
+          }
+        }
+      ]
+    },
+    {
+      "sector": "Healthcare",
+      "etf": {
+        "symbol": "XLV",
+        "open": NaN,
+        "high": NaN,
+        "low": NaN,
+        "close": NaN,
+        "volume": 7671595,
+        "avgVolume": 7373409,
+        "relVolume": 1.04,
+        "changePercent": NaN,
+        "pivots": {
+          "pivot": NaN,
+          "r1": NaN,
+          "r2": NaN,
+          "r3": NaN,
+          "s1": NaN,
+          "s2": NaN,
+          "s3": NaN
+        }
+      },
+      "topStocks": [
+        {
+          "symbol": "LLY",
+          "open": NaN,
+          "high": NaN,
+          "low": NaN,
+          "close": NaN,
+          "volume": 1991604,
+          "avgVolume": 2440890,
+          "relVolume": 0.82,
+          "changePercent": NaN,
+          "pivots": {
+            "pivot": NaN,
+            "r1": NaN,
+            "r2": NaN,
+            "r3": NaN,
+            "s1": NaN,
+            "s2": NaN,
+            "s3": NaN
+          }
+        },
+        {
+          "symbol": "JNJ",
+          "open": NaN,
+          "high": NaN,
+          "low": NaN,
+          "close": NaN,
+          "volume": 4844617,
+          "avgVolume": 6423041,
+          "relVolume": 0.75,
+          "changePercent": NaN,
+          "pivots": {
+            "pivot": NaN,
+            "r1": NaN,
+            "r2": NaN,
+            "r3": NaN,
+            "s1": NaN,
+            "s2": NaN,
+            "s3": NaN
+          }
+        },
+        {
+          "symbol": "UNH",
+          "open": NaN,
+          "high": NaN,
+          "low": NaN,
+          "close": NaN,
+          "volume": 4265842,
+          "avgVolume": 4895794,
+          "relVolume": 0.87,
+          "changePercent": NaN,
+          "pivots": {
+            "pivot": NaN,
+            "r1": NaN,
+            "r2": NaN,
+            "r3": NaN,
+            "s1": NaN,
+            "s2": NaN,
+            "s3": NaN
+          }
+        }
+      ]
+    },
+    {
+      "sector": "Industrials",
+      "etf": {
+        "symbol": "XLI",
+        "open": NaN,
+        "high": NaN,
+        "low": NaN,
+        "close": NaN,
+        "volume": 7731920,
+        "avgVolume": 7558172,
+        "relVolume": 1.02,
+        "changePercent": NaN,
+        "pivots": {
+          "pivot": NaN,
+          "r1": NaN,
+          "r2": NaN,
+          "r3": NaN,
+          "s1": NaN,
+          "s2": NaN,
+          "s3": NaN
+        }
+      },
+      "topStocks": [
+        {
+          "symbol": "GE",
+          "open": NaN,
+          "high": NaN,
+          "low": NaN,
+          "close": NaN,
+          "volume": 3460878,
+          "avgVolume": 3453037,
+          "relVolume": 1.0,
+          "changePercent": NaN,
+          "pivots": {
+            "pivot": NaN,
+            "r1": NaN,
+            "r2": NaN,
+            "r3": NaN,
+            "s1": NaN,
+            "s2": NaN,
+            "s3": NaN
+          }
+        },
+        {
+          "symbol": "CAT",
+          "open": NaN,
+          "high": NaN,
+          "low": NaN,
+          "close": NaN,
+          "volume": 1780448,
+          "avgVolume": 2280254,
+          "relVolume": 0.78,
+          "changePercent": NaN,
+          "pivots": {
+            "pivot": NaN,
+            "r1": NaN,
+            "r2": NaN,
+            "r3": NaN,
+            "s1": NaN,
+            "s2": NaN,
+            "s3": NaN
+          }
+        },
+        {
+          "symbol": "HON",
+          "open": NaN,
+          "high": NaN,
+          "low": NaN,
+          "close": NaN,
+          "volume": 1974307,
+          "avgVolume": 2626080,
+          "relVolume": 0.75,
+          "changePercent": NaN,
+          "pivots": {
+            "pivot": NaN,
+            "r1": NaN,
+            "r2": NaN,
+            "r3": NaN,
+            "s1": NaN,
+            "s2": NaN,
+            "s3": NaN
+          }
+        }
+      ]
+    },
+    {
+      "sector": "Communication Services",
+      "etf": {
+        "symbol": "XLC",
+        "open": NaN,
+        "high": NaN,
+        "low": NaN,
+        "close": NaN,
+        "volume": 4962905,
+        "avgVolume": 4325650,
+        "relVolume": 1.15,
+        "changePercent": NaN,
+        "pivots": {
+          "pivot": NaN,
+          "r1": NaN,
+          "r2": NaN,
+          "r3": NaN,
+          "s1": NaN,
+          "s2": NaN,
+          "s3": NaN
+        }
+      },
+      "topStocks": [
+        {
+          "symbol": "GOOGL",
+          "open": NaN,
+          "high": NaN,
+          "low": NaN,
+          "close": NaN,
+          "volume": 22782704,
+          "avgVolume": 25092350,
+          "relVolume": 0.91,
+          "changePercent": NaN,
+          "pivots": {
+            "pivot": NaN,
+            "r1": NaN,
+            "r2": NaN,
+            "r3": NaN,
+            "s1": NaN,
+            "s2": NaN,
+            "s3": NaN
+          }
+        },
+        {
+          "symbol": "META",
+          "open": NaN,
+          "high": NaN,
+          "low": NaN,
+          "close": NaN,
+          "volume": 20418899,
+          "avgVolume": 18792979,
+          "relVolume": 1.09,
+          "changePercent": NaN,
+          "pivots": {
+            "pivot": NaN,
+            "r1": NaN,
+            "r2": NaN,
+            "r3": NaN,
+            "s1": NaN,
+            "s2": NaN,
+            "s3": NaN
+          }
+        },
+        {
+          "symbol": "NFLX",
+          "open": NaN,
+          "high": NaN,
+          "low": NaN,
+          "close": NaN,
+          "volume": 19936837,
+          "avgVolume": 27102893,
+          "relVolume": 0.74,
+          "changePercent": NaN,
+          "pivots": {
+            "pivot": NaN,
+            "r1": NaN,
+            "r2": NaN,
+            "r3": NaN,
+            "s1": NaN,
+            "s2": NaN,
+            "s3": NaN
+          }
+        }
+      ]
+    },
+    {
+      "sector": "Consumer Discretionary",
+      "etf": {
+        "symbol": "XLY",
+        "open": NaN,
+        "high": NaN,
+        "low": NaN,
+        "close": NaN,
+        "volume": 5794947,
+        "avgVolume": 5685024,
+        "relVolume": 1.02,
+        "changePercent": NaN,
+        "pivots": {
+          "pivot": NaN,
+          "r1": NaN,
+          "r2": NaN,
+          "r3": NaN,
+          "s1": NaN,
+          "s2": NaN,
+          "s3": NaN
+        }
+      },
+      "topStocks": [
+        {
+          "symbol": "AMZN",
+          "open": NaN,
+          "high": NaN,
+          "low": NaN,
+          "close": NaN,
+          "volume": 25371219,
+          "avgVolume": 33274411,
+          "relVolume": 0.76,
+          "changePercent": NaN,
+          "pivots": {
+            "pivot": NaN,
+            "r1": NaN,
+            "r2": NaN,
+            "r3": NaN,
+            "s1": NaN,
+            "s2": NaN,
+            "s3": NaN
+          }
+        },
+        {
+          "symbol": "TSLA",
+          "open": NaN,
+          "high": NaN,
+          "low": NaN,
+          "close": NaN,
+          "volume": 29554006,
+          "avgVolume": 43680280,
+          "relVolume": 0.68,
+          "changePercent": NaN,
+          "pivots": {
+            "pivot": NaN,
+            "r1": NaN,
+            "r2": NaN,
+            "r3": NaN,
+            "s1": NaN,
+            "s2": NaN,
+            "s3": NaN
+          }
+        },
+        {
+          "symbol": "HD",
+          "open": NaN,
+          "high": NaN,
+          "low": NaN,
+          "close": NaN,
+          "volume": 4307096,
+          "avgVolume": 3661629,
+          "relVolume": 1.18,
+          "changePercent": NaN,
+          "pivots": {
+            "pivot": NaN,
+            "r1": NaN,
+            "r2": NaN,
+            "r3": NaN,
+            "s1": NaN,
+            "s2": NaN,
+            "s3": NaN
+          }
+        }
+      ]
+    },
+    {
+      "sector": "Consumer Staples",
+      "etf": {
+        "symbol": "XLP",
+        "open": NaN,
+        "high": NaN,
+        "low": NaN,
+        "close": NaN,
+        "volume": 10333625,
+        "avgVolume": 9640052,
+        "relVolume": 1.07,
+        "changePercent": NaN,
+        "pivots": {
+          "pivot": NaN,
+          "r1": NaN,
+          "r2": NaN,
+          "r3": NaN,
+          "s1": NaN,
+          "s2": NaN,
+          "s3": NaN
+        }
+      },
+      "topStocks": [
+        {
+          "symbol": "PG",
+          "open": NaN,
+          "high": NaN,
+          "low": NaN,
+          "close": NaN,
+          "volume": 10893968,
+          "avgVolume": 8190196,
+          "relVolume": 1.33,
+          "changePercent": NaN,
+          "pivots": {
+            "pivot": NaN,
+            "r1": NaN,
+            "r2": NaN,
+            "r3": NaN,
+            "s1": NaN,
+            "s2": NaN,
+            "s3": NaN
+          }
+        },
+        {
+          "symbol": "KO",
+          "open": NaN,
+          "high": NaN,
+          "low": NaN,
+          "close": NaN,
+          "volume": 11800688,
+          "avgVolume": 15504028,
+          "relVolume": 0.76,
+          "changePercent": NaN,
+          "pivots": {
+            "pivot": NaN,
+            "r1": NaN,
+            "r2": NaN,
+            "r3": NaN,
+            "s1": NaN,
+            "s2": NaN,
+            "s3": NaN
+          }
+        },
+        {
+          "symbol": "PEP",
+          "open": NaN,
+          "high": NaN,
+          "low": NaN,
+          "close": NaN,
+          "volume": 7403554,
+          "avgVolume": 7216645,
+          "relVolume": 1.03,
+          "changePercent": NaN,
+          "pivots": {
+            "pivot": NaN,
+            "r1": NaN,
+            "r2": NaN,
+            "r3": NaN,
+            "s1": NaN,
+            "s2": NaN,
+            "s3": NaN
+          }
+        }
+      ]
+    },
+    {
+      "sector": "Utilities",
+      "etf": {
+        "symbol": "XLU",
+        "open": NaN,
+        "high": NaN,
+        "low": NaN,
+        "close": NaN,
+        "volume": 20598552,
+        "avgVolume": 22734685,
+        "relVolume": 0.91,
+        "changePercent": NaN,
+        "pivots": {
+          "pivot": NaN,
+          "r1": NaN,
+          "r2": NaN,
+          "r3": NaN,
+          "s1": NaN,
+          "s2": NaN,
+          "s3": NaN
+        }
+      },
+      "topStocks": [
+        {
+          "symbol": "NEE",
+          "open": NaN,
+          "high": NaN,
+          "low": NaN,
+          "close": NaN,
+          "volume": 12878935,
+          "avgVolume": 11228583,
+          "relVolume": 1.15,
+          "changePercent": NaN,
+          "pivots": {
+            "pivot": NaN,
+            "r1": NaN,
+            "r2": NaN,
+            "r3": NaN,
+            "s1": NaN,
+            "s2": NaN,
+            "s3": NaN
+          }
+        },
+        {
+          "symbol": "SO",
+          "open": NaN,
+          "high": NaN,
+          "low": NaN,
+          "close": NaN,
+          "volume": 4663133,
+          "avgVolume": 5926573,
+          "relVolume": 0.79,
+          "changePercent": NaN,
+          "pivots": {
+            "pivot": NaN,
+            "r1": NaN,
+            "r2": NaN,
+            "r3": NaN,
+            "s1": NaN,
+            "s2": NaN,
+            "s3": NaN
+          }
+        },
+        {
+          "symbol": "DUK",
+          "open": NaN,
+          "high": NaN,
+          "low": NaN,
+          "close": NaN,
+          "volume": 3182169,
+          "avgVolume": 3407846,
+          "relVolume": 0.93,
+          "changePercent": NaN,
+          "pivots": {
+            "pivot": NaN,
+            "r1": NaN,
+            "r2": NaN,
+            "r3": NaN,
+            "s1": NaN,
+            "s2": NaN,
+            "s3": NaN
+          }
+        }
+      ]
+    },
+    {
+      "sector": "Materials",
+      "etf": {
+        "symbol": "XLB",
+        "open": NaN,
+        "high": NaN,
+        "low": NaN,
+        "close": NaN,
+        "volume": 9629018,
+        "avgVolume": 12168581,
+        "relVolume": 0.79,
+        "changePercent": NaN,
+        "pivots": {
+          "pivot": NaN,
+          "r1": NaN,
+          "r2": NaN,
+          "r3": NaN,
+          "s1": NaN,
+          "s2": NaN,
+          "s3": NaN
+        }
+      },
+      "topStocks": [
+        {
+          "symbol": "LIN",
+          "open": NaN,
+          "high": NaN,
+          "low": NaN,
+          "close": NaN,
+          "volume": 2147456,
+          "avgVolume": 1897215,
+          "relVolume": 1.13,
+          "changePercent": NaN,
+          "pivots": {
+            "pivot": NaN,
+            "r1": NaN,
+            "r2": NaN,
+            "r3": NaN,
+            "s1": NaN,
+            "s2": NaN,
+            "s3": NaN
+          }
+        },
+        {
+          "symbol": "APD",
+          "open": NaN,
+          "high": NaN,
+          "low": NaN,
+          "close": NaN,
+          "volume": 818081,
+          "avgVolume": 957698,
+          "relVolume": 0.85,
+          "changePercent": NaN,
+          "pivots": {
+            "pivot": NaN,
+            "r1": NaN,
+            "r2": NaN,
+            "r3": NaN,
+            "s1": NaN,
+            "s2": NaN,
+            "s3": NaN
+          }
+        },
+        {
+          "symbol": "ECL",
+          "open": NaN,
+          "high": NaN,
+          "low": NaN,
+          "close": NaN,
+          "volume": 1174867,
+          "avgVolume": 1209196,
+          "relVolume": 0.97,
+          "changePercent": NaN,
+          "pivots": {
+            "pivot": NaN,
+            "r1": NaN,
+            "r2": NaN,
+            "r3": NaN,
+            "s1": NaN,
+            "s2": NaN,
+            "s3": NaN
+          }
+        }
+      ]
+    },
+    {
+      "sector": "Real Estate",
+      "etf": {
+        "symbol": "XLRE",
+        "open": NaN,
+        "high": NaN,
+        "low": NaN,
+        "close": NaN,
+        "volume": 4699642,
+        "avgVolume": 5416394,
+        "relVolume": 0.87,
+        "changePercent": NaN,
+        "pivots": {
+          "pivot": NaN,
+          "r1": NaN,
+          "r2": NaN,
+          "r3": NaN,
+          "s1": NaN,
+          "s2": NaN,
+          "s3": NaN
+        }
+      },
+      "topStocks": [
+        {
+          "symbol": "PLD",
+          "open": NaN,
+          "high": NaN,
+          "low": NaN,
+          "close": NaN,
+          "volume": 2845851,
+          "avgVolume": 3021735,
+          "relVolume": 0.94,
+          "changePercent": NaN,
+          "pivots": {
+            "pivot": NaN,
+            "r1": NaN,
+            "r2": NaN,
+            "r3": NaN,
+            "s1": NaN,
+            "s2": NaN,
+            "s3": NaN
+          }
+        },
+        {
+          "symbol": "AMT",
+          "open": NaN,
+          "high": NaN,
+          "low": NaN,
+          "close": NaN,
+          "volume": 2276524,
+          "avgVolume": 2198572,
+          "relVolume": 1.04,
+          "changePercent": NaN,
+          "pivots": {
+            "pivot": NaN,
+            "r1": NaN,
+            "r2": NaN,
+            "r3": NaN,
+            "s1": NaN,
+            "s2": NaN,
+            "s3": NaN
+          }
+        },
+        {
+          "symbol": "EQIX",
+          "open": NaN,
+          "high": NaN,
+          "low": NaN,
+          "close": NaN,
+          "volume": 466924,
+          "avgVolume": 522292,
+          "relVolume": 0.89,
+          "changePercent": NaN,
+          "pivots": {
+            "pivot": NaN,
+            "r1": NaN,
+            "r2": NaN,
+            "r3": NaN,
+            "s1": NaN,
+            "s2": NaN,
+            "s3": NaN
+          }
+        }
+      ]
+    }
+  ],
+  "magnificentSeven": [
+    {
+      "symbol": "AAPL",
+      "open": NaN,
+      "high": NaN,
+      "low": NaN,
+      "close": NaN,
+      "volume": 69820744,
+      "avgVolume": 44702564,
+      "relVolume": 1.56,
+      "changePercent": NaN,
+      "pivots": {
+        "pivot": NaN,
+        "r1": NaN,
+        "r2": NaN,
+        "r3": NaN,
+        "s1": NaN,
+        "s2": NaN,
+        "s3": NaN
+      }
+    },
+    {
+      "symbol": "MSFT",
+      "open": NaN,
+      "high": NaN,
+      "low": NaN,
+      "close": NaN,
+      "volume": 15852734,
+      "avgVolume": 21134033,
+      "relVolume": 0.75,
+      "changePercent": NaN,
+      "pivots": {
+        "pivot": NaN,
+        "r1": NaN,
+        "r2": NaN,
+        "r3": NaN,
+        "s1": NaN,
+        "s2": NaN,
+        "s3": NaN
+      }
+    },
+    {
+      "symbol": "NVDA",
+      "open": NaN,
+      "high": NaN,
+      "low": NaN,
+      "close": NaN,
+      "volume": 100845811,
+      "avgVolume": 146239071,
+      "relVolume": 0.69,
+      "changePercent": NaN,
+      "pivots": {
+        "pivot": NaN,
+        "r1": NaN,
+        "r2": NaN,
+        "r3": NaN,
+        "s1": NaN,
+        "s2": NaN,
+        "s3": NaN
+      }
+    },
+    {
+      "symbol": "AMZN",
+      "open": NaN,
+      "high": NaN,
+      "low": NaN,
+      "close": NaN,
+      "volume": 25371219,
+      "avgVolume": 33274411,
+      "relVolume": 0.76,
+      "changePercent": NaN,
+      "pivots": {
+        "pivot": NaN,
+        "r1": NaN,
+        "r2": NaN,
+        "r3": NaN,
+        "s1": NaN,
+        "s2": NaN,
+        "s3": NaN
+      }
+    },
+    {
+      "symbol": "GOOGL",
+      "open": NaN,
+      "high": NaN,
+      "low": NaN,
+      "close": NaN,
+      "volume": 22782704,
+      "avgVolume": 25092350,
+      "relVolume": 0.91,
+      "changePercent": NaN,
+      "pivots": {
+        "pivot": NaN,
+        "r1": NaN,
+        "r2": NaN,
+        "r3": NaN,
+        "s1": NaN,
+        "s2": NaN,
+        "s3": NaN
+      }
+    },
+    {
+      "symbol": "META",
+      "open": NaN,
+      "high": NaN,
+      "low": NaN,
+      "close": NaN,
+      "volume": 20418899,
+      "avgVolume": 18792979,
+      "relVolume": 1.09,
+      "changePercent": NaN,
+      "pivots": {
+        "pivot": NaN,
+        "r1": NaN,
+        "r2": NaN,
+        "r3": NaN,
+        "s1": NaN,
+        "s2": NaN,
+        "s3": NaN
+      }
+    },
+    {
+      "symbol": "TSLA",
+      "open": NaN,
+      "high": NaN,
+      "low": NaN,
+      "close": NaN,
+      "volume": 29554006,
+      "avgVolume": 43680280,
+      "relVolume": 0.68,
+      "changePercent": NaN,
+      "pivots": {
+        "pivot": NaN,
+        "r1": NaN,
+        "r2": NaN,
+        "r3": NaN,
+        "s1": NaN,
+        "s2": NaN,
+        "s3": NaN
+      }
+    },
+    {
+      "symbol": "OSIS",
+      "open": NaN,
+      "high": NaN,
+      "low": NaN,
+      "close": NaN,
+      "volume": 267760,
+      "avgVolume": 263966,
+      "relVolume": 1.01,
+      "changePercent": NaN,
+      "pivots": {
+        "pivot": NaN,
+        "r1": NaN,
+        "r2": NaN,
+        "r3": NaN,
+        "s1": NaN,
+        "s2": NaN,
+        "s3": NaN
+      }
+    }
+  ]
+}
