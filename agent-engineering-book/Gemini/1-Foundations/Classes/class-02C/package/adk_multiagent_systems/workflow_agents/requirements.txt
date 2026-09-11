@@ -1,0 +1,13 @@
+# Dependencies for the DEPLOYED agent.
+#
+# `adk deploy agent_engine` reads requirements.txt from this agent folder and
+# ignores the project's pyproject.toml. Without this file ADK generates one
+# containing only google-adk, and the deployed container would fail on import
+# because the researcher's Wikipedia tool would be missing.
+#
+# ADK appends google-cloud-aiplatform[adk,agent_engines] and its own google-adk
+# pin to this file at deploy time, so do not add it to golden-source.sha256:
+# the checksum would break during a deployment.
+
+langchain-community>=0.4.1,<0.5
+wikipedia>=1.4,<2

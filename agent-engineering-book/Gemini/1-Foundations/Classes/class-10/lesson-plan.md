@@ -80,4 +80,4 @@ Adds the extended state machine and the full batch loop on top of `class-09/` wi
 
 ## Bridge to Book 2
 
-Book 1 is complete. Book 2 begins its own eleven-class course, with its own Class 1 — the same WidgetWare system, now asked to serve many users, remember across time, draw on enterprise knowledge, plan over ambiguous goals, and collaborate with agents it doesn't own. See `../../../2-Advanced-Architectures/` for the manuscript; Book 2's course companion is built separately.
+Book 1 is complete. Book 2 begins its own ten-class course, with its own Class 1 — the same WidgetWare system, now asked to serve many users, remember across time, draw on enterprise knowledge, plan over ambiguous goals, and collaborate with agents it doesn't own. See `../../../2-Enterprise-Agent-Platform/Manuscript/` for the manuscript; Book 2's course companion is built separately.

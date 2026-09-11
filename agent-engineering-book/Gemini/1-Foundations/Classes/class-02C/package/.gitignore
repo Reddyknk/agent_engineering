@@ -1,0 +1,10 @@
+.env
+.venv/
+.pip-cache/
+*.egg-info/
+__pycache__/
+*.py[cod]
+.DS_Store
+movie_pitches/*.txt
+# Local artifact store written by the artifact service during a dev run.
+.adk/

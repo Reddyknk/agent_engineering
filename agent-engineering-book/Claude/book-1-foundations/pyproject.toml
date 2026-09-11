@@ -1,0 +1,63 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "widgetware-sdr"
+version = "0.1.0"
+description = "WidgetWare prospect-intelligence and sales-development agent — the reference application for Agent Engineering with Claude and Open Source, Book 1."
+requires-python = ">=3.11"
+
+# Versions are pinned exactly, not floored. See architecture/ADR-000: a
+# compatible-release specifier would have accepted the broken
+# langgraph / langgraph-prebuilt combination shipped in early 2026.
+dependencies = [
+    "langgraph==1.2.11",
+    "langchain-anthropic==1.7.1",
+    "langchain-core==1.6.2",
+    "anthropic==1.4.0",
+    "pydantic==2.13.5",
+    "pydantic-settings==2.15.0",
+    "pyyaml==6.0.3",
+]
+
+[project.optional-dependencies]
+# Each extra maps to the version that introduces it, so a reader working
+# through Chapter 5 is not obliged to install a database driver.
+mcp = [
+    "mcp==2.1.1",           # V5, Chapter 9
+]
+retrieval = [
+    "psycopg[binary]==3.3.5",       # V6, Chapter 10
+    "pgvector==0.5.0",
+    "sentence-transformers==6.0.1",
+]
+serve = [
+    "fastapi==0.141.1",             # V10, Chapters 14-15
+    "uvicorn[standard]==0.52.4",
+    "langgraph-checkpoint-postgres==3.1.2",
+    "opentelemetry-sdk==1.44.0",
+    "opentelemetry-exporter-otlp-proto-http==1.44.0",
+    "langfuse==4.15.1",
+]
+dev = [
+    "pytest==9.1.1",
+    "pytest-asyncio==1.4.0",
+    "jsonschema==4.26.0",
+    "ruff==0.16.6",
+]
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+markers = [
+    "live: requires a real Anthropic API call (deselect with -m 'not live')",
+    "db: requires the PostgreSQL service from docker-compose.yml",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

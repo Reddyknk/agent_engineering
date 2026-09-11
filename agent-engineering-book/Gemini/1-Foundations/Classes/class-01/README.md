@@ -9,7 +9,11 @@ Class 1 merges the former Class 1 (charter) and Class 2 (repository harness) int
 
 ## Prerequisites
 
-This class is fully offline — no Gemini API access needed yet. But go ahead and get a free API key now anyway, so it's ready by Class 3 (the first class with a real model call): `aistudio.google.com` → **Get API key** → **Create API key**, no payment method required for course-scale usage. Full instructions, plus the paid Vertex AI alternative, are in `../SETUP.md`'s "Getting and paying for API access" section.
+The Class 1 build itself is fully offline — no model call happens until Class 3. But **Class 1 is where you create your Google Cloud project**, because every class from Class 2 onward assumes it already exists.
+
+Follow the "Google Cloud" section of [`../SETUP.md`](../SETUP.md): start the free trial ($300 credit, 90 days; a payment method is required for identity verification and is not charged — a debit card is enough, and UPI works from India; prepaid and virtual cards do not), create a project, install `gcloud`, and run all four auth commands — including `gcloud auth application-default login`, which is the one people skip.
+
+There is one model path in this course and it is Google Cloud. See [`../CONVENTIONS.md`](../CONVENTIONS.md).
 
 ## In this folder
 
@@ -53,3 +57,4 @@ From 0:30 onward, follow the standard cadence, adapted for this class's two-part
 - [ ] All 8 Kahoot questions run, especially the one confirming participants understand real code now exists — a common early confusion carried over from the previous course structure
 - [ ] Every participant's `./scripts/check.sh` passes before homework is assigned
 - [ ] Homework's Required/Diagnostic/Extension levels explained, with the submission format stated explicitly
+- [ ] Every participant has a Google Cloud project with billing enabled, and `gcloud auth application-default print-access-token` succeeds for it — the whole course depends on this and Class 3 is too late to discover it missing

@@ -1,0 +1,51 @@
+# The reproducible environment for the completed system (V10, Chapter 15).
+#
+# Versions before V10 do not need this file. A reader working through
+# Chapters 1-9 runs `uv sync` and `pytest` and nothing else — the database
+# arrives in Chapter 10 with retrieval, and the application container in
+# Chapter 15. Bringing the whole stack up in Chapter 4 would be scaffolding
+# for capabilities that do not exist yet.
+
+services:
+  postgres:
+    # pgvector ships as an image variant rather than something you install
+    # into stock postgres at runtime (Chapter 10).
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_USER: widgetware
+      POSTGRES_PASSWORD: widgetware
+      POSTGRES_DB: widgetware
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U widgetware -d widgetware"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # Non-root execution and a read-only root filesystem are part of the
+    # security architecture (Chapter 6), not deployment polish.
+    user: "10001:10001"
+    read_only: true
+    tmpfs:
+      - /tmp
+    environment:
+      APP_ENV: container
+      DATABASE_URL: postgresql://widgetware:widgetware@postgres:5432/widgetware
+      # Injected by the environment, never baked into the image and never
+      # read from a committed file.
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:?ANTHROPIC_API_KEY must be set}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+
+volumes:
+  postgres-data:

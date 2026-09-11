@@ -1,4 +1,0 @@
-# Book 5 — Frontier and Specialized Agent Systems
-### Multimodal Agents, Graph Intelligence and Model Adaptation
-
-Book 5 explores advanced architectures that become relevant only after the foundations of capability, reliability and operations have been established. Readers investigate browser and computer-use agents, real-time voice systems, knowledge graphs, synthetic environments and model adaptation. Each technique is examined through the same disciplined lens used throughout the book: what problem does it solve, what new risks does it introduce and does it outperform a simpler baseline? The section deliberately challenges fashionable patterns such as excessive reflection, unnecessary agent hierarchies and unbounded autonomy. Its purpose is not to add novelty to every application, but to equip experienced practitioners to select and justify specialized architectures when the task genuinely demands them.
