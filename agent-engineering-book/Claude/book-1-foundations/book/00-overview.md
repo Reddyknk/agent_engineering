@@ -1,6 +1,0 @@
-# Book 1 — Agent Engineering Foundations
-### Building the WidgetWare SDR Lab MVP
-
-This section establishes the essential building blocks of Agent Engineering through a bounded, inspectable project. Readers construct the first version of the WidgetWare SDR Lab: an evidence-backed system that researches companies, identifies relevant signals, develops business hypotheses, prepares outreach and pauses for human approval. The focus is on understanding each component rather than maximizing autonomy. By the end of the section, readers will have a complete agentic workflow running locally, supported by source control, structured data contracts, test cases and a reference implementation.
-
-Chapter 1 introduces the Seven Steps to Agent Engineering — frame the use case, build context, design agent capabilities, build the harness, orchestrate workflows, engineer loops, evaluate and govern — the repeatable process every chapter in this book follows. Book 1 builds one full pass through all seven steps; Books 2 through 5 deepen individual steps rather than adding new ones. [What Comes Next: Book 2](what-comes-next-book-2.md), immediately following Chapter 11, previews how. A [Chapter.Section index](zz-index.md) closes out the section.

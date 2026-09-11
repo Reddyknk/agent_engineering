@@ -4,7 +4,8 @@ Goal: a merged charter-and-harness checkpoint — the five charter documents, pl
 
 ## Prerequisites
 
-- **`../SETUP.md` complete** — Antigravity, Git, Python 3.11+ installed. One-time, done once.
+- **`../SETUP.md` complete** — Antigravity, Git, Python 3.11+, `gcloud`, and a Google Cloud project with billing enabled. One-time, done once.
+- **Your Google Cloud project exists before you finish this class.** Nothing in Class 1 calls a model, so it is tempting to defer. Don't: Class 2 onward assumes the project, the `gcloud` install, and working Application Default Credentials. Confirm with `gcloud auth application-default print-access-token >/dev/null && echo OK`.
 - You've read Book 1, Chapters 1 and 2 (`../../Manuscript/03_Chapter_01_From_Language_Models_to_Agent_Engineering.md` and `../../Manuscript/04_Chapter_02_Building_with_Antigravity.md`).
 
 ## Part 1: The charter
@@ -56,7 +57,7 @@ pip install -e ".[dev]"
 ./scripts/check.sh
 ```
 
-Expect `verify_environment.py`, `ruff format --check`, `ruff check`, `mypy`, and `pytest` to all pass — 18 tests in the reference solution, though yours may have a different count if you wrote additional tests. No live-model tests exist at this checkpoint; nothing here should ever need `GOOGLE_API_KEY`.
+Expect `verify_environment.py`, `ruff format --check`, `ruff check`, `mypy`, and `pytest` to all pass — 18 tests in the reference solution, though yours may have a different count if you wrote additional tests. No live-model tests exist at this checkpoint; nothing here should ever need Google Cloud credentials, even though you have them by now.
 
 ## Compare against the reference
 

@@ -1,4 +1,0 @@
-# Book 4 — AgentOps and Production Engineering
-### Operating, Evaluating and Scaling Agent Systems
-
-Book 4 moves the agent from a controlled development environment into production. Readers learn how to package the system as an operational service using APIs, workers, queues, schedules and events while preserving state, security and traceability. Observability expands from logs into complete agent trajectories containing model calls, tools, retrievals, handoffs, policy decisions and human approvals. Evaluation becomes continuous and multidimensional, covering component quality, end-to-end outcomes, safety and business value. The section also addresses token and context management, latency, model routing, concurrency, release management and governance. By the end, the WidgetWare SDR Lab is operated as a measurable service with defined objectives, versioned components, controlled deployments and an evidence-driven improvement process.

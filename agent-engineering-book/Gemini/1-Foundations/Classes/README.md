@@ -2,7 +2,7 @@
 
 A ten-class, cumulative delivery of the Gemini edition's **Book 1** — two hours per class, one per Book 1 chapter, same instructional rhythm every class, one running WidgetWare SDR Lab codebase from Class 1 through the close of Book 1.
 
-Book 2 is its own separate ten-class program (one per Book 2 chapter), continuing the same WidgetWare system into enterprise-platform territory. It is not part of this directory's numbering — see [`../../2-Advanced-Architectures/`](../../2-Advanced-Architectures/) for the manuscript; its own `Classes/` companion follows the same pattern as this one once built.
+Book 2 is its own separate ten-class program (one per Book 2 chapter), continuing the same WidgetWare system into enterprise-platform territory. It is not part of this directory's numbering — see [`../../2-Enterprise-Agent-Platform/Manuscript/`](../../2-Enterprise-Agent-Platform/Manuscript/) for the manuscript; its own `Classes/` companion follows the same pattern as this one once built.
 
 This directory is the instructor's companion to the manuscript in [`../Manuscript/`](../Manuscript/). It does not replace the book — it sequences it into a live, cohort-paced program with a fixed classroom cadence, a golden-solution checkpoint per class, and a three-level homework pattern.
 

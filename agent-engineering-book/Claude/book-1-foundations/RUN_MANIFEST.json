@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-05T08:13:37+00:00",
+  "version_tag": "v0-harness",
+  "application": {
+    "version": "0.1.0",
+    "environment": "local",
+    "git_revision": "cbc0723"
+  },
+  "model": {
+    "model_id": "claude-sonnet-5",
+    "max_tokens": 4096,
+    "sampling": "model defaults (temperature/top_p/top_k not set)"
+  },
+  "runtime": {
+    "python": "3.11.6",
+    "platform": "darwin"
+  },
+  "dependencies": {
+    "langgraph": "1.2.11",
+    "langchain-anthropic": "1.7.1",
+    "langchain-core": "1.6.2",
+    "anthropic": "1.4.0",
+    "pydantic": "2.13.5",
+    "pydantic-settings": "2.15.0",
+    "pyyaml": "6.0.3",
+    "mcp": "2.1.1",
+    "psycopg[binary]": "3.3.5",
+    "pgvector": "0.5.0",
+    "sentence-transformers": "6.0.1",
+    "fastapi": "0.141.1",
+    "uvicorn[standard]": "0.52.4",
+    "langgraph-checkpoint-postgres": "3.1.2",
+    "opentelemetry-sdk": "1.44.0",
+    "opentelemetry-exporter-otlp-proto-http": "1.44.0",
+    "langfuse": "4.15.1",
+    "pytest": "9.1.1",
+    "pytest-asyncio": "1.4.0",
+    "jsonschema": "4.26.0",
+    "ruff": "0.16.6"
+  },
+  "autonomy_boundary": {
+    "external_send_enabled": false,
+    "note": "Book 1 builds no send tool. This records the boundary, it does not enforce it \u2014 the enforcement is the absence of the tool."
+  }
+}

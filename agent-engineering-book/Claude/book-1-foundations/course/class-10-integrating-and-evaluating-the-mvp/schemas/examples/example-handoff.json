@@ -1,8 +1,0 @@
-{
-  "target": "campaign-manager",
-  "completed_work": "Researched recent signals for Rockwell Automation via signal-hunter.",
-  "supporting_artifacts": ["EV-001", "EV-002", "SIG-001"],
-  "unresolved_questions": [
-    "EV-001 and EV-002 disagree on the announcement date (Feb 2026 vs Jan 2026); not resolved, flagged via conflicts_with."
-  ]
-}
