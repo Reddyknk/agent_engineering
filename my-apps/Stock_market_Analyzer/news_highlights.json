@@ -1,7 +1,7 @@
 {
-  "timestamp": "2026-09-11T00:14:15.624669+00:00",
+  "timestamp": "2026-09-14T23:26:03.916840+00:00",
   "source": "Google News (news.google.com)",
-  "totalCount": 27,
+  "totalCount": 28,
   "categories": [
     "Overview",
     "Mag 7 & OSIS",
@@ -12,91 +12,83 @@
   "highlights": [
     {
       "category": "Overview",
-      "title": "S&P 500 ends down as Treasury yields rise and traders fret about inflation - Reuters",
-      "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxPVUNZS2ZwczJmM0x1aEM5ZFJMbUhWckRSOE54a1NyTFZjb1NaNFNCZDFwOFJiMk40b1RJelZsVnhKOVNObGNGenNkZzVhUWtZRlktVzhTWk9Qc1EybkRweDk4RFRRUjh2bk1TU0lJazBncUFnUlcwcTlPVWY3NjBzdWVUd3JGTDlLeF9EMU1aTnEzSDctTVcxZVdzT1RZclZjanRhbkl3?oc=5",
-      "pubDate": "Thu, 10 Sep 2026 22:55:15 GMT",
-      "source": "Reuters",
-      "sentiment": "Bearish"
-    },
-    {
-      "category": "Overview",
-      "title": "Oil prices leap to their highest since May and drag Wall Street lower - Inquirer.com",
-      "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxQXzdXVjdGcXpEVlJVVm5XdDZPbkVqSzUxMUVvN2FTU0xKRHlKaDgyQUlZbW9nVUNFV0kxRDRrb0VkMjBJa21hYXh5dUEtREtQajFONlN5VEViVlJVQ2NWTGhrZnJsaDFHcGNPUDFTTlQ2ZVVNSGVmcXlsb2QxM0N6SlA1THA?oc=5",
-      "pubDate": "Thu, 10 Sep 2026 20:34:43 GMT",
-      "source": "Inquirer.com",
-      "sentiment": "Bullish"
-    },
-    {
-      "category": "Overview",
-      "title": "US Stock Market Today: S&P 500 Futures Edge Lower As Inflation Jitters Linger - simplywall.st",
-      "link": "https://news.google.com/rss/articles/CBMixwFBVV95cUxNYWRWYkViRW56YU9JeFR3VWdocmV3LUtRUGFFdFBKRDhPY0FYaFlyWFVaRXRac3BtVl9GdjBoS1VQZHFOVFpDRTFPQk4tbFQyZHlKdkVFSko1QnJYVy1xZ1kwbHhBQW9COHJ1YXJOYVhPQlhuM2liNlgwSWZuM09qUlhGQTNpNXo0X0FKMHpQTlFMQlJSOV9paFNFdUU0TXN3WHV4azBJZ3pBb2hMSHNDa2U5YXhPVHRUenVqZ2dEZzVuWVlwN2RN0gHMAUFVX3lxTE5pT21Nc3dCOFlPSEEzN0Zaa1VpUlNYVmRnNWNQN3BRNE9sV2FsenowdUxET3V2eXZJOTBZcnJJZjRJUFkwcjRDTFJnV1E3eGVybW9LOS1kaXhEUURHN1lHTDR4RFUzT1UtOUp0WWd1R1VSYVFBMDdFbnZadkMxdlFtQ3dkVXVFOWU0WEMtdmlXMnJnWUttcjZ3enJqQXp4TzEtaVpGZVhyLThSdjFxNXZ4VmVBc2NnOUROUENnYkhLX1ZuejZ5dHBwZUhJNQ?oc=5",
-      "pubDate": "Thu, 10 Sep 2026 08:23:10 GMT",
+      "title": "US Stock Market Today: S&P 500 Futures Climb On Persistent Inflation And Rate Jitters - simplywall.st",
+      "link": "https://news.google.com/rss/articles/CBMiygFBVV95cUxOUy1LVzhfVEVzajU3Rmo0WVBjejZGbEZVUFQtTmlTeVB5Y1RpcEJhQU5ybXZqdHVSeDlnd1NKT0h4T2I3SkhrckpzQUZhZnBXWmo2ak8yMG50M2o1cnhPWTdETU9nZDlKSzhwZkR0N1c2LU43MTFTc1dKX3o4aHNvSWI1cFRnaDhOZGVCeWVqbW5hOExFVlVHQ1UzSTgyRDRmVGpjNmFmSjRNbGdSenB0bW5XT19FUG5RQU4wRTZvRV9ocHphNy1LMzFn0gHPAUFVX3lxTFA3TFdrUDVteHVBSHRHeFB4REtzclZVdTllTElFMWUtNE1xSmVjX1d1Y3FFZ1FJRjJwYkJ4VG93VHQ0cHgzOEFhX28zdFVHTkotOE1HMXZTWHFqTTg1clc5Ul9kbmg2N055NWRCZGZjY0JRUEhybEI4SHY5ckJ6cTZRSUVic1NlX3hDUjROUzRWRnNSOG1FcDhLTmd4ZVVQa3pvMV9rUUFRMnA4bmp4SU1PZ3JNOWtWUGRBNmFsbmNvYWplQlJ3TEpxb091VEN5SQ?oc=5",
+      "pubDate": "Mon, 14 Sep 2026 08:24:26 GMT",
       "source": "simplywall.st",
       "sentiment": "Bearish"
     },
     {
       "category": "Overview",
-      "title": "Oil prices jump back to where they were in May and weigh on Wall Street - spectrumlocalnews.com",
-      "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxQREpWV1pfWGZfdjdOS1FZN3V1V18xWXgxOGlKUDNRV3FIcm1wUHlwUC1SaXNscXhzYjFGbFJ3M0J3NG5hbU1qeEpUb0NkTVI2c0ZwZ2VZcGtINEJENWNLVlp6WjdMelVDWEhCR01mRzBZQ0t1ZVljbEFlV016TWlxTHI0Z05vUU4ybUdJTFVZQkx2czBaSVdRNDZyamlyOXZHWFhUS25TcS1rQQ?oc=5",
-      "pubDate": "Thu, 10 Sep 2026 13:57:00 GMT",
-      "source": "spectrumlocalnews.com",
-      "sentiment": "Bullish"
-    },
-    {
-      "category": "Overview",
-      "title": "Wall Street slides as investors digest PPI report (SP500:) - Seeking Alpha",
-      "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNcmdZX21sUjhHYVZseC0tckJ6d1RUaEc0VGZfaF9BMVBObUw5Y1VMTTJYc29NT1VvSWJXYUF3cTRoNmctYzNPLUFSMmlkd2htNFJZSkpQTWhKSFZSZjZEdjRWQWlRdlZBY2g5SWZLTFdUbFFjelkweGJEc0R5OEJpMk9HN0traEM2?oc=5",
-      "pubDate": "Thu, 10 Sep 2026 13:31:00 GMT",
-      "source": "Seeking Alpha",
+      "title": "S&P 500, Nasdaq fall on AI slowdown fears, oil price surge - qz.com",
+      "link": "https://news.google.com/rss/articles/CBMid0FVX3lxTFBneHhIT2dwMzZlSFFZTC1FaVZwelEzM3JscDdLQTAyTkkyd0tpT2txUHprRkFva0VfbWd6cFpuT0dLelZrNk9uUHUzWnpqU2xPMXAwSlRHV2R6ZXNYQmdLVGYyRlZvS1h3UVRDTDJkd3p5cG1Ndjk4?oc=5",
+      "pubDate": "Mon, 14 Sep 2026 16:23:45 GMT",
+      "source": "qz.com",
       "sentiment": "Bearish"
     },
     {
       "category": "Overview",
-      "title": "S&P 500 posts 3% summer rally. Some on Wall Street think the gains can continue - cnbc.com",
-      "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOZnpTM0tYdTdvczYtRGQyZklaTWhHZFFBRW5SOU1KamRZWFhSTTFQeFpoYnhIX2huUXUtUUFqRTVMRGxjMW1lN3VveGhhYTF1QUx2Y1VBOHYzWThIRU91Y2FGRUVWSmVlRTBlQ1pyMVFha3JtRmpyVktlcUgyTWRoX1oyUTVOSTI0Z1RvQzQtNFZFM3dYVGFtR3hyRVlCLWRQcDFxVHpuUXkzcnM?oc=5",
-      "pubDate": "Tue, 08 Sep 2026 13:41:42 GMT",
-      "source": "cnbc.com",
-      "sentiment": "Bullish"
+      "title": "Research Roundup: Prominent Wall Street strategist raises S&P 500 target with a warning - The Globe and Mail",
+      "link": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxOYnRuRTFfU09hcmRiWDBjUWdodUVxbGtoVkdPS0dYbmpWZm9vaTRhQVJ2eEF4cmlRUm1qaC13R0NhZFpFZ1lHZ25WU3FrNkRKd2xDU0h0cklseXZETzVsVDlQeUhDYkI0MmJNMHFWTjltVUxjSm1udk9wWHZ1OThPNm5RdTZOd25lYmF5V3ZHbkdYZE9uTUd6SVV3UEhwZUUxRGs3Y0dzcUFOclRCcUNwMHZBRFBZZm9rMWVDSGJ2b2k1NmlQUlNfRTFNNEltSlRIVnBFamZ5R1hyb3NGUEE?oc=5",
+      "pubDate": "Mon, 14 Sep 2026 12:13:02 GMT",
+      "source": "The Globe and Mail",
+      "sentiment": "Bearish"
     },
     {
-      "category": "Mag 7 & OSIS",
-      "title": "Could an AI bubble crash the stockmarket? - 1News",
-      "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxOR0ktUFJQNXRtdmNlWTFaSFV6OXZfSDNSVUktcUNhVndfOWZxVUlxZVRPeEdrN3ZCSGZ6QWNiX3hmWF9CbXB4bmdQT0RIaTYyOFVydDM1Y3BxV3hzV096T1dTOGttRmhhVC1YT3E1VTJ6V0hna0wtbGJOblBqeURmNklR?oc=5",
-      "pubDate": "Mon, 15 Sep 2025 07:00:00 GMT",
-      "source": "1News",
+      "category": "Overview",
+      "title": "This Analyst Says A Full Reversion to the Mean Would Take the S&P 500 From 7,000 to 2,500 - 24/7 Wall St.",
+      "link": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQTlNlNXptcFRaZjVFekFCUDJfYVZPaTRhY0J5UFpZZ1RlRXFuc08yNzFRWmI3N0JpQ0VrRlRNOTVpZi1NbWJHWU0wSG9wVTFoOURQUWkwUkM0dVBnWUhkMDhUUWlaQXVUYkFSTzlrblNJeGZrQ094TVkzSzFobWw3NFVKQnlHWWRXdVFwcmZpWUZpdXV3d0ZEdEZkemNHdm10cUZJRk9xWl92TFJnLVhQMnFPSzEyc09yN29sSFFwckxyTHIyM2V6c0JR?oc=5",
+      "pubDate": "Mon, 14 Sep 2026 13:30:00 GMT",
+      "source": "24/7 Wall St.",
       "sentiment": "Neutral"
     },
     {
-      "category": "Mag 7 & OSIS",
-      "title": "What direction will the meta universe take in real-world 2022? - citynewsservice.cn",
-      "link": "https://news.google.com/rss/articles/CBMizgFBVV95cUxOTmVzWjdQTWg4eWVCcm82WTRSUjAtTW5WVGxlajBqWnpCVVlITFAtNzdkZTRLVWNUSGJnUlM1Q1l0eDFER1hTbldOS1dwVHRGNE92ZEVKbURRRm9VTk5HbmJfTU1nWWhMMmJxdHJhQW5kcWllOHhQczg5X2lfd1p2T29WbXFKdnlKQkJEbjU0YXkyN1Fydk53MzZTOW5GTEFrX3hFY2l6LXZGUTJxVHhSdWQyOEhlX25MZC00SnpwS3pqMmlkS01sMXM2c25BQQ?oc=5",
-      "pubDate": "Thu, 23 Dec 2021 08:00:00 GMT",
-      "source": "citynewsservice.cn",
+      "category": "Overview",
+      "title": "The S&P 500 at 7400 or 8000? Bank of America, Goldman Sachs, and Morgan Stanley Differ on Outlook - Barron's",
+      "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxPQnNpLWxySUJoSTI5YnViNFY3V045eUpIY0hSRmhPV1hXSG83ckNaXzRjTS1MN3NVTF81WmJHRE15Vm1RYW5TQkRLOVJ2ZzRLNldGNWN0Z2M4cXJpNTZsNzd1anpRRTQ1RHNjazJPVkE4T1I4VVpsUDg0eXVFXzdGYWtnbmJuM0hrRTVDQ0laSzRSU0ZmODdzVlc0bG9KWnZfSEhvWUFXbXF4UQ?oc=5",
+      "pubDate": "Mon, 14 Sep 2026 20:14:00 GMT",
+      "source": "Barron's",
       "sentiment": "Neutral"
     },
     {
-      "category": "Mag 7 & OSIS",
-      "title": "Combined profits from the 'Magnificent 7' big tech companies including Apple, Amazon and Meta are now bigger than all listed companies in almost every G20 country - dailymail.com",
-      "link": "https://news.google.com/rss/articles/CBMilgFBVV95cUxPRnpacUZBamlpb2xTdkFIcDBNQ0FIQVhzU3RYTU8zWVZYXzk0aFU1ZkdQYmtNcXUtZzRjcl9tT2xiZFp3ajZTbllvUlpKOG9YVlg1cmJoVUZJQmxnZGVHZmhXWDROeEVmdHczTEZqbzFvMlRBSjZqMVNuNjZDakYtZmZFMWdQZWtvelRibDhvYS1Rcl9va2fSAZsBQVVfeXFMTVFIc0hjSXRqanY0aFF1XzN6RGRoMEJ6Z090Vk9pbG1LaE1vLVJsWG1YWWJxREcxRkZpb1lHVmJJZGljR3BkWHJ6SXFTTFo5UGpmc3BJLWJBRjRjQ0Z1VE1ZSnRNblZWcDR6WnU3ZmRodVhFSjA3V21xLWxURC1sSjR3Um8ybHBUcjkxWGxIWTE3LTA4VUdHcEdibUk?oc=5",
-      "pubDate": "Tue, 20 Feb 2024 08:00:00 GMT",
-      "source": "dailymail.com",
-      "sentiment": "Neutral"
+      "category": "Overview",
+      "title": "2 S&P 500 Stocks with Impressive Fundamentals and 1 We Turn Down - Yahoo Finance",
+      "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQcHZaa2VSYUs2eVVCd1FGRFNZbG1tTy1hSjQyLTBoc1hEaVFOMU9UbWtsbXBmd3lpX1hXM3dZd3VlWXIzbXpuY003OHA3MGd0NzRhZ3FnVUlXOU1qcGlMV3B3MWJ5NmQ0ZWhPaFR0aDVKV2Qyd19FNUpNVHVWcU1OVEZqUC01VHp1bmk0UWVfVmZQa0wy?oc=5",
+      "pubDate": "Mon, 14 Sep 2026 18:51:30 GMT",
+      "source": "Yahoo Finance",
+      "sentiment": "Bearish"
     },
     {
-      "category": "Sectors",
-      "title": "Internet of Things Market Size & Share Report [2034] - Fortune Business Insights",
-      "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQQ3l5R1poVUtlS1o3VkF6OUlsZHJ3UHpsQnZQS0FMTjVXX2FxWTFNbHZwRUZBSVd2cF9EbkY3NGtfMmhRMVh1UGNodWdNYVJoOXFucDlwRVpnLWZsSzdFMF82YXBQYkhtUWw1VTUzWTA2QkRLdFFMMTh3VzBJc2lDc011ajRGdE5tWEJLXzBfWlBWazAyblRETA?oc=5",
+      "category": "Mag 7 & OSIS",
+      "title": "Pimco fund beating 97% of peers cuts Magnificent Seven to bet on Asia - The Business Times",
+      "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNalZWMk9JS3FteDNrR05aMHhhWDhQNkhqQWI1Q084cTl6RU50YmMtTVNlNThjYW5xcXQydzFlSU1INGp0LTJmOTJQXy1YcE1wTlZ0dkJFRnBBeHZMZmtKSXhfR25meDVKVjhHNlZINjZJN25qZXhudk5NSEpqanh6TXd4NVVoU1p0amE4eFNEeDRkNk9hbGRYM1pPdHFtSWZRUFZwenNsbVZ6NVZlRWZF?oc=5",
       "pubDate": "Fri, 04 Sep 2026 07:00:00 GMT",
-      "source": "Fortune Business Insights",
+      "source": "The Business Times",
       "sentiment": "Neutral"
     },
     {
-      "category": "Sectors",
-      "title": "US stocks fall as tech, industrials drop; healt... - Pluang",
-      "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPRWYyclZJaW9URDRBZm85aXpDb1ZjMFdyR1o3UElXSlBBVXVKU2dPQjdER3ZKaHE5X1ZNZmdMdE96WWFFd0ZsNDFHZ2ZueS1LbWEwT2hZQV93alFIMDBmQVk4d1ZoMmR0eG44M2l6c05mRUV4SHFfQUtnSVN0Q3pPNEZnQzh6aGc?oc=5",
-      "pubDate": "Tue, 25 Aug 2026 07:00:00 GMT",
-      "source": "Pluang",
-      "sentiment": "Bearish"
+      "category": "Mag 7 & OSIS",
+      "title": "Mag 7? Mangos? SpaceX IPO forces name rethink on Wall Street’s tech-stock moniker - The Business Times",
+      "link": "https://news.google.com/rss/articles/CBMi6AFBVV95cUxPSGVUUVV3eENMRXB1dEdOUkRVbGpiT2U1blgyal9iaU9EMnA5bjdZMVhOZnp0ZWY1dXRVRmp1WmtHV3RCUzdzcXhpd0FMNm91aUlVNWd4SjV2SnNpM3pEX2R0VUVQX3NrNHBYdWJZcmdFN21FUE1YbkhZWDQ2SW5zMHQzNVkyRmc1QUR2Qy1MRG9xQmtESGl1NmlxVk5EVWs2RlhZdWFESS1saXNvaXdxcG5jQkhvWUJfT0NNd2dYLWRhelVrRXp5Y2tqNTdEVGhhakpHcmdDa1lnTWpVWFhmRUZISURRbHEx?oc=5",
+      "pubDate": "Sun, 14 Jun 2026 07:00:00 GMT",
+      "source": "The Business Times",
+      "sentiment": "Neutral"
+    },
+    {
+      "category": "Mag 7 & OSIS",
+      "title": "GraniteShares Plans 20 Geared Single-Stock ETFs - ETF.com",
+      "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxOczRXQ2x4TDlrSnR6ejZXUm12V1cxaWpQQkhzN01KUlhwSEhEcHJMSDdKb3E0U2w5eWN1aUlvMVNwczJDTDFHNGNlbjg3NE1XN1VEQjQyRjhOc3dLU0Z3U0kwdXhIeEYybk1WcGUwTGNubHo5SFNja01CYS1LQ1NfM1k2TGl2TFU5M3pMbFA0cUxQY0VoYkpv?oc=5",
+      "pubDate": "Mon, 28 Feb 2022 08:00:00 GMT",
+      "source": "ETF.com",
+      "sentiment": "Neutral"
+    },
+    {
+      "category": "Mag 7 & OSIS",
+      "title": "2025 was not the year crypto died; it was the year crypto got a job - The Business Times",
+      "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQOG5VWHhDNGFBQmhYRExKQXpGQjBWRlV6T0lBeEdSaDlmNUNXUnVVbWoxYUxGSTZOSG1NWjFiMFgxb3pOSnMtUDhHY3BybUE0WXBuVlE0bWZkeGZuWXNCcVU5b294anNyMkNZaGE5bjhONjZHcDdKNGdQN2hteWluUDNuQVRlTzdjdFJIbjZZM2tGMjJ2TDV3ZnFLQldCTnNmNXNnTkhPRy1xV3h5VWVnUVl1OA?oc=5",
+      "pubDate": "Sun, 18 Jan 2026 08:00:00 GMT",
+      "source": "The Business Times",
+      "sentiment": "Neutral"
     },
     {
       "category": "Sectors",
@@ -108,18 +100,18 @@
     },
     {
       "category": "Sectors",
-      "title": "8 Best Robotics Stocks to Buy in 2026 and How to Invest - The Motley Fool",
-      "link": "https://news.google.com/rss/articles/CBMinwFBVV95cUxPcmszUHNFLVJYODRkTnJuT09DLVZSV0lCRmt5TWNSWEViWVhGYWlsQmVqbmdFWnJnU2dsMHk3SGQ1bHV6ZHVwc2VFYlJvM1BaZHdRMkFfZ1paTGZ5LWNSVVRrLVJhU0tFNnRZX1pDQVVZZU54SS1neE9tLS1BM1BuWjE3VmZVLUtXVnhsTTB3VzV5czZ4WXFJNE80MGVvcTA?oc=5",
-      "pubDate": "Thu, 03 Sep 2026 18:39:00 GMT",
-      "source": "The Motley Fool",
+      "title": "Stock Market Sectors 101: A Guide to All 11 Sectors | Investing - money.usnews.com",
+      "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxONlpDTW5LUFpnY25GdFZOUmxxbjg2ZzFoVlVaaU1idUdWZ01Ecnpjc0dURi0zWjBiUEp4QWozeDBHSGlOd3ZUYU53X0xBZEEwXzFkOGJYQl9xRlJWVklyX0trQ21kSzlHZmtoSklURVZBX1pEbThQYmRVaG45aE9VSTNpUFdheXVpWHF6Qk5FdGtHRkJoWkRQZjd3?oc=5",
+      "pubDate": "Fri, 01 May 2026 07:00:00 GMT",
+      "source": "money.usnews.com",
       "sentiment": "Neutral"
     },
     {
       "category": "Sectors",
-      "title": "Stock Market Sectors 101: A Guide to All 11 Sectors | Investing - U.S. News - Money",
-      "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxONlpDTW5LUFpnY25GdFZOUmxxbjg2ZzFoVlVaaU1idUdWZ01Ecnpjc0dURi0zWjBiUEp4QWozeDBHSGlOd3ZUYU53X0xBZEEwXzFkOGJYQl9xRlJWVklyX0trQ21kSzlHZmtoSklURVZBX1pEbThQYmRVaG45aE9VSTNpUFdheXVpWHF6Qk5FdGtHRkJoWkRQZjd3?oc=5",
-      "pubDate": "Fri, 01 May 2026 07:00:00 GMT",
-      "source": "U.S. News - Money",
+      "title": "Stock Market Sectors: 11 Official GICS Groups - The Motley Fool",
+      "link": "https://news.google.com/rss/articles/CBMia0FVX3lxTE01WHYzVHVsMEswUUo4TzdYZk9VblYzR1IzR1diS1FfTlRveDFBT0hCRnctQ1FFajZvbnpGSjMxV0VGZ2QxZ1d0SF9fdmVJWS1QRG9kYTY1bkV3V3JSbzMzckpWUUJldU5OX2Y4?oc=5",
+      "pubDate": "Thu, 07 May 2026 07:00:00 GMT",
+      "source": "The Motley Fool",
       "sentiment": "Neutral"
     },
     {
@@ -131,51 +123,67 @@
       "sentiment": "Bullish"
     },
     {
+      "category": "Sectors",
+      "title": "Internet of Things Market Size & Share Report [2034] - Fortune Business Insights",
+      "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQQ3l5R1poVUtlS1o3VkF6OUlsZHJ3UHpsQnZQS0FMTjVXX2FxWTFNbHZwRUZBSVd2cF9EbkY3NGtfMmhRMVh1UGNodWdNYVJoOXFucDlwRVpnLWZsSzdFMF82YXBQYkhtUWw1VTUzWTA2QkRLdFFMMTh3VzBJc2lDc011ajRGdE5tWEJLXzBfWlBWazAyblRETA?oc=5",
+      "pubDate": "Fri, 04 Sep 2026 07:00:00 GMT",
+      "source": "Fortune Business Insights",
+      "sentiment": "Neutral"
+    },
+    {
+      "category": "Sectors",
+      "title": "The Defensive Playbook Isn’t Your Average Inflation Roadmap - J.P. Morgan",
+      "link": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxNdUFHbFIzVjJkT3NrbTBtYVVnN1oxV0k5amFjd1VYbDBUQ1FZNE5DMUNIRVBZZWowWW1RS0tHOVBkQndqaUxRc19aM0xwY3p4YU9iMy1zRnVlRjV2M3hKdjNrUkxhU29JOUxQekQ5NjBCZXEzVHFEbHI0ZmM2SDUwaW5wRW1VdC1YX2NUWm02aHU5a19VbEdfS2F0QnNzMHBuUjVoN0tiNjNpWWRwQmJWZndMVGxnaEJXa0NUNk16VEx6Z3NsdUZOa1pfVHZabnc1VEhj?oc=5",
+      "pubDate": "Thu, 02 Apr 2026 07:00:00 GMT",
+      "source": "J.P. Morgan",
+      "sentiment": "Bearish"
+    },
+    {
       "category": "Macro & Fed",
-      "title": "The likelihood of a Fed interest rate hike next week just got a lot higher - cnbc.com",
-      "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxONjAwZFZ6bi16bV9pV1FMWDdfMzlhZUVicnJQaThwYjZySUZTbGhMQkNscFdkdHB1ME1Hc0RsaWYzVDM1SEk0ZmNSX3czTmlESXR1U0R1Zy1DMnU0cWU4REpYYWNVMHdBYlp3TjRkRHAyQ0pqLXdTZ2hoUUlkYnlPMHFCeUhZb2hEYmRVenQ1bWxpT0E1anFMT2NCRDFIdmlUaUlPVUtJX05idUVJa3lCd9IBtgFBVV95cUxNb09kWUpPaTFYX1J3T0ZYVDM1YjZURW4zVnh3R29VUWU2bzlsTWQxZ051RElKY1BzZmZ0X2RNT3BUWFR6TUpEV3pIOURqamZmMDM0YlJVSWpELXRJOUJhYkI1RU9xc2hvdFdiRHZNOWVVVXB0SFFfWG5NMFIwdXlwZ0ZsUUtfS1FsVGJBQ3RBZzJQbEx1NFNiN196NmNTdW5rZDB3TkpYbS1Ld3AwRThybGt5VjVEUQ?oc=5",
-      "pubDate": "Thu, 10 Sep 2026 14:34:55 GMT",
-      "source": "cnbc.com",
+      "title": "The Fed is likely to raise interest rates as inflation persists. What that means for consumers - CNBC",
+      "link": "https://news.google.com/rss/articles/CBMilgFBVV95cUxONzR2NnBtbXVOLWxnQlhkbkg5d3RhemtrU21LbDhNaWwxajZpMXA3eFM4ZXpTZlVzYUNiSG9IV3JMSHZpOWtiZ0JYWGxCdm40VEpadmU0dW9EU2QwWTczMWhKU1pCTUhMdXhfdFZjMGgzaDd2bXNmN2tMOWwtWVBvY0ZkdFE4Y3dxQlU5eW5BZkhuV00tTGfSAZsBQVVfeXFMT0E2cjJJeUpWNEpwd0h3OGptRlhyTVhYY3NlY0hRTzRVRXJoRFFjd0ZmakJ5N2FkNy1ZdzZVMGxXdTVicl9WX2NzMU5yemxSWlh4S2RmLVFKSUNWVjNlaVduXzR3Z01kOHlhOHF6WVlpYWFDUzI1aTlPaVRhTlJlSFBFWmh2RTNNNEJ2YlZsZDJoWmg5LWk1WFlKZGs?oc=5",
+      "pubDate": "Mon, 14 Sep 2026 16:17:03 GMT",
+      "source": "CNBC",
+      "sentiment": "Bearish"
+    },
+    {
+      "category": "Macro & Fed",
+      "title": "Why the Odds of a US Fed Interest Rate Hike Just Shot Higher - Morningstar",
+      "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNTzBZZlkwZWhpeGhFSmpPNzc3eGVJdl90Zk1PTXVmV3VpM1lwcFpnZTY5ckV3NmhrekJGendHSEpTYzNkZlMyUXF1M21jTHNUNWhIV3c3U1hHcnF0X3ZNSkNZSnBiV200b3R5WVZVb3A2NkN5N19lUWpjUTVGNF9vVjczNmlQQ1BVVUpiSXNIYUV0R3R3SDVxZXdUbng?oc=5",
+      "pubDate": "Mon, 14 Sep 2026 09:19:25 GMT",
+      "source": "Morningstar",
       "sentiment": "Bullish"
     },
     {
       "category": "Macro & Fed",
-      "title": "Will the Fed raise interest rates this year? Divided economists weigh in - ABC News - Breaking News, Latest News and Videos",
-      "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNX3NMLXhhYU1lOVVLWU9sY0k0SDUyQnEwMG9SZ1RzNHZobTIyYk9KWGJlOGhic3FKdlQ2NXlIVDF6SW1oRlNWZlY2NHlNLWlnNGoybzAwLWlkV3V1Q1ZtM21KS2FLTy02NEF6VjY4UmFNc2hYa21mRURlSkJYZWxtc1R3VmRYZFlKNUU3NzZiMkZGNGJZcG1xZUNCN0RQNkRndEVPb9IBqgFBVV95cUxOU1FSZ3pWOURaQUxBS296TzBtRFFGclJXTnpLYWwzZXU1Q01kcVZUczBxUDAwR3FaYmFZdzlXUWM2T0Q3TDVldm9nSVY4OERYRUtkdm5sdndPSU1ETU1yc3BuMEpXLTd2VFFZRTVQcWdMZFdEZ0EzYjhTS200RFBkZy1jbE01WVhVbEgyX1Z2dXc4MWxmbXd6cl9pSlp2TDRldkdkS2hwOVE0Zw?oc=5",
-      "pubDate": "Thu, 10 Sep 2026 16:22:02 GMT",
-      "source": "ABC News - Breaking News, Latest News and Videos",
+      "title": "The Fed is preparing to raise rates. What if it doesn’t work? - CNN",
+      "link": "https://news.google.com/rss/articles/CBMigwFBVV95cUxQQzF1NEVQblNId1pHOU1fTlY5cndudGk3MXR5MWh5d2pwNHdxYlVUamQ5TW5VbXk1a3pTRDhxbXhKOTFFUkN0YlhUMVAwTWVCNWNHdzF1MG1XZUZxcU9YSFJSZWhiZzBXVDI0S2lCS2JQNFVTYzNiYjVpUnBfRDM4cWpWVQ?oc=5",
+      "pubDate": "Mon, 14 Sep 2026 09:00:30 GMT",
+      "source": "CNN",
       "sentiment": "Neutral"
     },
     {
       "category": "Macro & Fed",
-      "title": "What a Fed Rate Hike Actually Means for the US Economy and Inflation - Yahoo Finance",
-      "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQTnd6R0J2a3A3T3U2VHZVTmt1RzdNa0htSHMtZkJ0cjB2XzRCMnR6SU83dnVtbDJGb3Rqc2dRMG5zaHg5TWdXdUt5V013N0tVbjNrY0hNeExLUFVuVERMa0hzMU83SkhwVUdCZkl2N2RLaHRaa0V1Q0JrR0lDenV5dF9FbnZlcG5fTHozc01rRHExejlfaERENA?oc=5",
-      "pubDate": "Thu, 10 Sep 2026 11:00:00 GMT",
+      "title": "Federal Reserve faces no easy choices with stubborn inflation and economic strains - WBFF",
+      "link": "https://news.google.com/rss/articles/CBMilAJBVV95cUxNNVg3bXRtNzlWQW9WejNqODlqU2Y2cnlxdm1hT3FFWks0eFM4YXJQV3ZVeFlObkMwaGl1X0o4TXNmZmlkZE16VGFScVRwM3FleW1XMGg1TzBpbEg5STFQazV6X3hPMkJid0U4alZSbHR3WHBMYUJ3aHA5QVBuRFZkYTBXWGZ2MG9qcVduWFliS3dSRlB6OVhxYlZpc3loQTB1b0VxTWVabGlYalhGMzBTYlJVTElPRy0ydHBkeHRzNFhHSVl6SkFyZHItY215TTR4QS1YMU5CQW01emppRkVSZ1ZEYk5JRDNRZFBXTGpzZG91MDFXeHB2Q3VrUmxwUjM4RmxvUkJ3Y3J5azZPV2FOYnZ6WkE?oc=5",
+      "pubDate": "Mon, 14 Sep 2026 17:13:48 GMT",
+      "source": "WBFF",
+      "sentiment": "Bearish"
+    },
+    {
+      "category": "Macro & Fed",
+      "title": "The U.S. dollar rises as investors anticipate an interest rate hike - marketplace.org",
+      "link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQNFM3UVJlSmNJbjlUREZuTjJsdHJpU0oxOXhaUUw3QzdBNjFsTzY2a045OHoyb0p6QVljVm9SbWp4S2VMOFZoWUFiRXJzWi1COWpNTUFqOGNkWXVWZ0xBSWpSeHcxOXNUTm5LTUd5UzlreW9zS3dQLXNXT1pPR3JHcnE5ZVJTeGhrY21DZzRTWGFYaVBZTE1JZlBOZDVkYVRHXzZIQlF4VQ?oc=5",
+      "pubDate": "Mon, 14 Sep 2026 22:31:59 GMT",
+      "source": "marketplace.org",
+      "sentiment": "Neutral"
+    },
+    {
+      "category": "Macro & Fed",
+      "title": "The market says a Fed rate hike is a done deal. Here's why it might hold steady. - Yahoo Finance",
+      "link": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxNQ1pzcVpwYlJueU10b2lzTTJCd0VwUFJjZmhFckpZMVJfVm9yMXFnaE9seklLMWQ1VHBGemJrcXhlX2tHQUN3dllBZ0hnUXduYmNNWTNhRkxUODJKbXRiay0tQ1JNN2JoUUFkSzAtcFVNMWVFR1RxNmNwc0M3SkthWnlKNzlUWF8tSHYwbW42dGwwSUFBV09vQjJMcHFoV0w1Y0pXazd0ZG9HZzVwNXRSYS1jTllTNk13aW9JdThhYTBaMEZvTGY0VzQ3b2RGWmRoU2JjVXZhckE?oc=5",
+      "pubDate": "Mon, 14 Sep 2026 10:00:00 GMT",
       "source": "Yahoo Finance",
-      "sentiment": "Bearish"
-    },
-    {
-      "category": "Macro & Fed",
-      "title": "What a Fed Rate Hike Actually Means for the US Economy and Inflation - Bloomberg.com",
-      "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPbURnSGJWd2lvYWxON2xJVEdlQ3lpQ2NGdy1zc3pfTnFybC0tRUg5ZTlFd3lEZlU2emJvQkhyREpWV2VUTzd5anQxUTRJbnROWTMyWml0YzFseHRqeURHekU0WWpPRmNMUVlheXkwNzFjUTBRRjJpT1hLUWF0VDRfbldJcktzZk1Db1RSdDN1dWhOOUpTZmJ6ZGcxNnJMbFBXNkQ1dS03RGRnR3lVaG90VFkzSQ?oc=5",
-      "pubDate": "Thu, 10 Sep 2026 18:28:32 GMT",
-      "source": "Bloomberg.com",
-      "sentiment": "Bearish"
-    },
-    {
-      "category": "Macro & Fed",
-      "title": "A Tiny Shift in the Inflation Rate Could Decide the Fed’s Next Move - WSJ",
-      "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQU2VrRkdPcXF6U3ZvMTdqQ1pLT2Jua0N1MHlyQXM4c2hNN1M0SEY4bHZMakxwZm9jRjRKUHpsdnFuemtxSjFLZUhSVFJSTE41NzJQajl5M09PSlZNbkczMlZHTGN4U2wyalN2SnJiZG1JT3Roem00c0hmRXlRX3gtZzRNM2RBaS05VkRabUVSenVyUUV1ODQwUUNyTlE?oc=5",
-      "pubDate": "Thu, 10 Sep 2026 01:00:00 GMT",
-      "source": "WSJ",
-      "sentiment": "Bearish"
-    },
-    {
-      "category": "Macro & Fed",
-      "title": "Fed to hold rates steady in rest of 2026; rising number of analysts see at least one hike: Reuters poll - Reuters",
-      "link": "https://news.google.com/rss/articles/CBMiugFBVV95cUxOZ0NreUFoTnFxX3ZzQnd3YU9FNFVkQmhfZlBrSVBUUm12Q0lCckxRTHdWcUVHbmJpcDZKbVhNZG5RektYQlpqaUZGMjl2TnJ0amhPMGJBWnB6OG9FVTB5dVJPTlc1ZjJaa2djUl9HR3VhYzIxODJjVEx1NUswdkVkblYxNVNSY1dYWlpUdzlEQU9UNTNzaUtVWXVtdXljVEUzSnVOQTV2bTJHSXN6Q2E3U0pzcVk5U19qUmc?oc=5",
-      "pubDate": "Wed, 09 Sep 2026 13:29:11 GMT",
-      "source": "Reuters",
       "sentiment": "Neutral"
     },
     {
@@ -188,19 +196,19 @@
     },
     {
       "category": "Movers",
-      "title": "Egyptian stocks rally as EGX30 hits two-month high - Egypt Today",
-      "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxNWmVBeUFFOFdqb1d5djVKWllxdnZ6RFJMUGtUR1BVenZ4dUZSbmZDbHdoQVdTNnJFWkZsMXR0czJMVnZfUGpQTUlIdUdQTWVmeEFhei1Fak11TjlfSDd1TDRJeWxBN3dEYjF2bkZHbUhQcnBuQ3IwUlBxUkhOSU1IdEpnVzZ2QkFEV3NYOUJSQlpLWWxndHF6TEtR?oc=5",
-      "pubDate": "Sun, 19 Apr 2026 07:00:00 GMT",
-      "source": "Egypt Today",
-      "sentiment": "Bullish"
-    },
-    {
-      "category": "Movers",
       "title": "Why is US stock market booming today: what’s powering Wall Street’s comeback? — see top Dow, S&P 500, Nasd - The Economic Times",
       "link": "https://news.google.com/rss/articles/CBMi2wJBVV95cUxQUm1QZW1VYnQtOWQyR3JLc3RiX2FoU1hidkZ5ZVpERzAyVU9HODBjZWVTNkE0bEY2djYzWlV4aFlVdkRQQnkxNFhYNG1iM3BCcmJWZDJVb0h2ZHQ3ZVpzUU9vbkx6QWl6NTJHTEZpRzcwR1NzbE51cGt6d240QVFMaWphTUtTNC1tNE9sWDEtVGo2TlNkTFVXRjFGS2RDWGVZUC11UGgyNkVCblllNGJPQjBCQnZlTEFiZ1l5NEw3bzhKMl9PV0w2bVNQTzB2VnF5RVFYUW00RlBNbVg2dXBZT01lVTVaWF84dmwtdVZMQmVDY0lra3pCT1hSYTEzX1BhZ2pOLVFqb1VobmxfdVV1V3JpYmZBa0lCLUlfdWlEVk5UZ3pzZnhJazluRXh4dTN6ZEQwSlY1NkMxdkhJWXIzSTRVNm5NemhEeUlTUl81V1ZvSkpBQUZPZ3BDTdIB4AJBVV95cUxQZGRMMXdqWHk0bi1QaFBod1BlRG5qeEFtZ2pySmY3cEE1TFdTTUNoRmQzZzVvTzUtX1Q1Vm9KWWR1NGR6SHFsMnBLZFRQVHJxLVprY1pBU2lxaEM2alhjd0lHRXUzTEJ6b2RYYjBqbEVzUFNMWXNQS3ZmZjZTRl9UYXI5d2FpbThuajhUZTk5MnYzY1kwSlBJQkxhUEREMUFXVDljb2FtNjVWbFZfaVpGYXFtRkN4T2dqb2tHZDFlY0dRY0t2YkwwejE5VjItQ2NVUHV3QkV1NG1QU2FrQndkTlRnMkY2ZGRTZDE0b2tnSUhpNVZma3NLZER0S2gyMVQtWk5lbU9TaGlINVVpOHFmOE9lNlRJM2pvYUQ5UXZENzI4MHlRN21sWnlkNktOUlE5Q2NOQ0duQkwwWVEweUszUU4zQnlzbXNGdGxqNkdpTTdXNEVON2dZVVZrSTQ2ZFVN?oc=5",
       "pubDate": "Wed, 15 Oct 2025 07:00:00 GMT",
       "source": "The Economic Times",
       "sentiment": "Neutral"
+    },
+    {
+      "category": "Movers",
+      "title": "Today’s Biggest Pre-Market Stock Movers: 10 Top Gainers and Losers on Thursday - InvestorPlace",
+      "link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPZkNtaFhLaXpBNkhsanJEQXNCNTlvQWU0RjNpWkZzRE5ydE13M01vMU5VMVJmZ0JsVW03T0xpa2lPNWoyMVRIZEh4YXB0a2tjYzJUN1ZKUVRWTkgySGNSN21jVlFWVTNoWm5uSjdBd2NXQkNkb21QUlRsVWJuMHhxdmdnU1hCSXQ1MGpHbHJRNGtkM1pjWjMzZW9UVFlJYkN3ZHNpNnZpcWxTcWpFcGE5d3FQd2IwdnNUZnBSSnA3Yw?oc=5",
+      "pubDate": "Thu, 11 Apr 2024 07:00:00 GMT",
+      "source": "InvestorPlace",
+      "sentiment": "Bullish"
     },
     {
       "category": "Movers",
@@ -212,115 +220,107 @@
     },
     {
       "category": "Movers",
-      "title": "Today’s Biggest Pre-Market Stock Movers: 10 Top Gainers and Losers on Monday - InvestorPlace",
-      "link": "https://news.google.com/rss/articles/CBMivAFBVV95cUxPdFR4X3pTTU5pS1BtckUzNTRPeTJDa1JHYkRaMkpTVGJHMHNLZnNhR1lrRVNIdmMybjZzdTNTXzdHbFk1TXdITDA2cGcza3dadWhXNUhuNjN4X2p6ajBSZFNNR09leGlnQjZrMi1aS1JrZy13cFYtbFQ4TWVtRER2Si1URHlsa25zQ3l3R0RZQ3JFWV9yYVRuOWZTSmpSUzJFbGNjejVBT2dHWEx1VG5VT3o0YWQ1bXF2R2FOSw?oc=5",
-      "pubDate": "Mon, 29 Apr 2024 07:00:00 GMT",
-      "source": "InvestorPlace",
-      "sentiment": "Bullish"
-    },
-    {
-      "category": "Movers",
       "title": "Weekly Market Update: Tech Stocks Lead Market Lower, Basic Materials Gain - Morningstar",
       "link": "https://news.google.com/rss/articles/CBMigwFBVV95cUxPek1tVWh3dmxLSVE2Z3JNVG9mcDh0YUpPMDA5MzNDb05EWTgzWHM5ejVxdVhlRG5kZDUxSzktTTNSeGVMbUl2MHRMbUJwak1USEswTmdGT3gwcnFlRklSeFZBZE5XVVdCZ2JneHIxdWMycDBNem4yODlVUjBDU0tla1UwZw?oc=5",
       "pubDate": "Fri, 12 Dec 2025 08:00:00 GMT",
       "source": "Morningstar",
       "sentiment": "Bullish"
+    },
+    {
+      "category": "Movers",
+      "title": "Biggest stock movers Friday: ROST, MSTR, MRVL, HOOD, and more - Seeking Alpha",
+      "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxOc18zMi1TYk1IcXNqZUcwaU0zaDFLSE51NGRWbXlpTUxIcnVQbGs0bS1OdW43R01obk15ZDR2ZW54bEV2MVVwZTd4UTZsMGU2QzhEUHlDS3YzbTFLZGQyejJZb1h1UzM1UFpXandmOU9tenBLaDJCSWNJMjlJbmZjbmc0UlRDbFEwS1dr?oc=5",
+      "pubDate": "Fri, 21 Aug 2026 07:00:00 GMT",
+      "source": "Seeking Alpha",
+      "sentiment": "Neutral"
     }
   ],
   "categorized": {
     "Overview": [
       {
         "category": "Overview",
-        "title": "S&P 500 ends down as Treasury yields rise and traders fret about inflation - Reuters",
-        "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxPVUNZS2ZwczJmM0x1aEM5ZFJMbUhWckRSOE54a1NyTFZjb1NaNFNCZDFwOFJiMk40b1RJelZsVnhKOVNObGNGenNkZzVhUWtZRlktVzhTWk9Qc1EybkRweDk4RFRRUjh2bk1TU0lJazBncUFnUlcwcTlPVWY3NjBzdWVUd3JGTDlLeF9EMU1aTnEzSDctTVcxZVdzT1RZclZjanRhbkl3?oc=5",
-        "pubDate": "Thu, 10 Sep 2026 22:55:15 GMT",
-        "source": "Reuters",
-        "sentiment": "Bearish"
-      },
-      {
-        "category": "Overview",
-        "title": "Oil prices leap to their highest since May and drag Wall Street lower - Inquirer.com",
-        "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxQXzdXVjdGcXpEVlJVVm5XdDZPbkVqSzUxMUVvN2FTU0xKRHlKaDgyQUlZbW9nVUNFV0kxRDRrb0VkMjBJa21hYXh5dUEtREtQajFONlN5VEViVlJVQ2NWTGhrZnJsaDFHcGNPUDFTTlQ2ZVVNSGVmcXlsb2QxM0N6SlA1THA?oc=5",
-        "pubDate": "Thu, 10 Sep 2026 20:34:43 GMT",
-        "source": "Inquirer.com",
-        "sentiment": "Bullish"
-      },
-      {
-        "category": "Overview",
-        "title": "US Stock Market Today: S&P 500 Futures Edge Lower As Inflation Jitters Linger - simplywall.st",
-        "link": "https://news.google.com/rss/articles/CBMixwFBVV95cUxNYWRWYkViRW56YU9JeFR3VWdocmV3LUtRUGFFdFBKRDhPY0FYaFlyWFVaRXRac3BtVl9GdjBoS1VQZHFOVFpDRTFPQk4tbFQyZHlKdkVFSko1QnJYVy1xZ1kwbHhBQW9COHJ1YXJOYVhPQlhuM2liNlgwSWZuM09qUlhGQTNpNXo0X0FKMHpQTlFMQlJSOV9paFNFdUU0TXN3WHV4azBJZ3pBb2hMSHNDa2U5YXhPVHRUenVqZ2dEZzVuWVlwN2RN0gHMAUFVX3lxTE5pT21Nc3dCOFlPSEEzN0Zaa1VpUlNYVmRnNWNQN3BRNE9sV2FsenowdUxET3V2eXZJOTBZcnJJZjRJUFkwcjRDTFJnV1E3eGVybW9LOS1kaXhEUURHN1lHTDR4RFUzT1UtOUp0WWd1R1VSYVFBMDdFbnZadkMxdlFtQ3dkVXVFOWU0WEMtdmlXMnJnWUttcjZ3enJqQXp4TzEtaVpGZVhyLThSdjFxNXZ4VmVBc2NnOUROUENnYkhLX1ZuejZ5dHBwZUhJNQ?oc=5",
-        "pubDate": "Thu, 10 Sep 2026 08:23:10 GMT",
+        "title": "US Stock Market Today: S&P 500 Futures Climb On Persistent Inflation And Rate Jitters - simplywall.st",
+        "link": "https://news.google.com/rss/articles/CBMiygFBVV95cUxOUy1LVzhfVEVzajU3Rmo0WVBjejZGbEZVUFQtTmlTeVB5Y1RpcEJhQU5ybXZqdHVSeDlnd1NKT0h4T2I3SkhrckpzQUZhZnBXWmo2ak8yMG50M2o1cnhPWTdETU9nZDlKSzhwZkR0N1c2LU43MTFTc1dKX3o4aHNvSWI1cFRnaDhOZGVCeWVqbW5hOExFVlVHQ1UzSTgyRDRmVGpjNmFmSjRNbGdSenB0bW5XT19FUG5RQU4wRTZvRV9ocHphNy1LMzFn0gHPAUFVX3lxTFA3TFdrUDVteHVBSHRHeFB4REtzclZVdTllTElFMWUtNE1xSmVjX1d1Y3FFZ1FJRjJwYkJ4VG93VHQ0cHgzOEFhX28zdFVHTkotOE1HMXZTWHFqTTg1clc5Ul9kbmg2N055NWRCZGZjY0JRUEhybEI4SHY5ckJ6cTZRSUVic1NlX3hDUjROUzRWRnNSOG1FcDhLTmd4ZVVQa3pvMV9rUUFRMnA4bmp4SU1PZ3JNOWtWUGRBNmFsbmNvYWplQlJ3TEpxb091VEN5SQ?oc=5",
+        "pubDate": "Mon, 14 Sep 2026 08:24:26 GMT",
         "source": "simplywall.st",
         "sentiment": "Bearish"
       },
       {
         "category": "Overview",
-        "title": "Oil prices jump back to where they were in May and weigh on Wall Street - spectrumlocalnews.com",
-        "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxQREpWV1pfWGZfdjdOS1FZN3V1V18xWXgxOGlKUDNRV3FIcm1wUHlwUC1SaXNscXhzYjFGbFJ3M0J3NG5hbU1qeEpUb0NkTVI2c0ZwZ2VZcGtINEJENWNLVlp6WjdMelVDWEhCR01mRzBZQ0t1ZVljbEFlV016TWlxTHI0Z05vUU4ybUdJTFVZQkx2czBaSVdRNDZyamlyOXZHWFhUS25TcS1rQQ?oc=5",
-        "pubDate": "Thu, 10 Sep 2026 13:57:00 GMT",
-        "source": "spectrumlocalnews.com",
-        "sentiment": "Bullish"
-      },
-      {
-        "category": "Overview",
-        "title": "Wall Street slides as investors digest PPI report (SP500:) - Seeking Alpha",
-        "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNcmdZX21sUjhHYVZseC0tckJ6d1RUaEc0VGZfaF9BMVBObUw5Y1VMTTJYc29NT1VvSWJXYUF3cTRoNmctYzNPLUFSMmlkd2htNFJZSkpQTWhKSFZSZjZEdjRWQWlRdlZBY2g5SWZLTFdUbFFjelkweGJEc0R5OEJpMk9HN0traEM2?oc=5",
-        "pubDate": "Thu, 10 Sep 2026 13:31:00 GMT",
-        "source": "Seeking Alpha",
+        "title": "S&P 500, Nasdaq fall on AI slowdown fears, oil price surge - qz.com",
+        "link": "https://news.google.com/rss/articles/CBMid0FVX3lxTFBneHhIT2dwMzZlSFFZTC1FaVZwelEzM3JscDdLQTAyTkkyd0tpT2txUHprRkFva0VfbWd6cFpuT0dLelZrNk9uUHUzWnpqU2xPMXAwSlRHV2R6ZXNYQmdLVGYyRlZvS1h3UVRDTDJkd3p5cG1Ndjk4?oc=5",
+        "pubDate": "Mon, 14 Sep 2026 16:23:45 GMT",
+        "source": "qz.com",
         "sentiment": "Bearish"
       },
       {
         "category": "Overview",
-        "title": "S&P 500 posts 3% summer rally. Some on Wall Street think the gains can continue - cnbc.com",
-        "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOZnpTM0tYdTdvczYtRGQyZklaTWhHZFFBRW5SOU1KamRZWFhSTTFQeFpoYnhIX2huUXUtUUFqRTVMRGxjMW1lN3VveGhhYTF1QUx2Y1VBOHYzWThIRU91Y2FGRUVWSmVlRTBlQ1pyMVFha3JtRmpyVktlcUgyTWRoX1oyUTVOSTI0Z1RvQzQtNFZFM3dYVGFtR3hyRVlCLWRQcDFxVHpuUXkzcnM?oc=5",
-        "pubDate": "Tue, 08 Sep 2026 13:41:42 GMT",
-        "source": "cnbc.com",
-        "sentiment": "Bullish"
+        "title": "Research Roundup: Prominent Wall Street strategist raises S&P 500 target with a warning - The Globe and Mail",
+        "link": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxOYnRuRTFfU09hcmRiWDBjUWdodUVxbGtoVkdPS0dYbmpWZm9vaTRhQVJ2eEF4cmlRUm1qaC13R0NhZFpFZ1lHZ25WU3FrNkRKd2xDU0h0cklseXZETzVsVDlQeUhDYkI0MmJNMHFWTjltVUxjSm1udk9wWHZ1OThPNm5RdTZOd25lYmF5V3ZHbkdYZE9uTUd6SVV3UEhwZUUxRGs3Y0dzcUFOclRCcUNwMHZBRFBZZm9rMWVDSGJ2b2k1NmlQUlNfRTFNNEltSlRIVnBFamZ5R1hyb3NGUEE?oc=5",
+        "pubDate": "Mon, 14 Sep 2026 12:13:02 GMT",
+        "source": "The Globe and Mail",
+        "sentiment": "Bearish"
+      },
+      {
+        "category": "Overview",
+        "title": "This Analyst Says A Full Reversion to the Mean Would Take the S&P 500 From 7,000 to 2,500 - 24/7 Wall St.",
+        "link": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQTlNlNXptcFRaZjVFekFCUDJfYVZPaTRhY0J5UFpZZ1RlRXFuc08yNzFRWmI3N0JpQ0VrRlRNOTVpZi1NbWJHWU0wSG9wVTFoOURQUWkwUkM0dVBnWUhkMDhUUWlaQXVUYkFSTzlrblNJeGZrQ094TVkzSzFobWw3NFVKQnlHWWRXdVFwcmZpWUZpdXV3d0ZEdEZkemNHdm10cUZJRk9xWl92TFJnLVhQMnFPSzEyc09yN29sSFFwckxyTHIyM2V6c0JR?oc=5",
+        "pubDate": "Mon, 14 Sep 2026 13:30:00 GMT",
+        "source": "24/7 Wall St.",
+        "sentiment": "Neutral"
+      },
+      {
+        "category": "Overview",
+        "title": "The S&P 500 at 7400 or 8000? Bank of America, Goldman Sachs, and Morgan Stanley Differ on Outlook - Barron's",
+        "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxPQnNpLWxySUJoSTI5YnViNFY3V045eUpIY0hSRmhPV1hXSG83ckNaXzRjTS1MN3NVTF81WmJHRE15Vm1RYW5TQkRLOVJ2ZzRLNldGNWN0Z2M4cXJpNTZsNzd1anpRRTQ1RHNjazJPVkE4T1I4VVpsUDg0eXVFXzdGYWtnbmJuM0hrRTVDQ0laSzRSU0ZmODdzVlc0bG9KWnZfSEhvWUFXbXF4UQ?oc=5",
+        "pubDate": "Mon, 14 Sep 2026 20:14:00 GMT",
+        "source": "Barron's",
+        "sentiment": "Neutral"
+      },
+      {
+        "category": "Overview",
+        "title": "2 S&P 500 Stocks with Impressive Fundamentals and 1 We Turn Down - Yahoo Finance",
+        "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQcHZaa2VSYUs2eVVCd1FGRFNZbG1tTy1hSjQyLTBoc1hEaVFOMU9UbWtsbXBmd3lpX1hXM3dZd3VlWXIzbXpuY003OHA3MGd0NzRhZ3FnVUlXOU1qcGlMV3B3MWJ5NmQ0ZWhPaFR0aDVKV2Qyd19FNUpNVHVWcU1OVEZqUC01VHp1bmk0UWVfVmZQa0wy?oc=5",
+        "pubDate": "Mon, 14 Sep 2026 18:51:30 GMT",
+        "source": "Yahoo Finance",
+        "sentiment": "Bearish"
       }
     ],
     "Mag 7 & OSIS": [
       {
         "category": "Mag 7 & OSIS",
-        "title": "Could an AI bubble crash the stockmarket? - 1News",
-        "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxOR0ktUFJQNXRtdmNlWTFaSFV6OXZfSDNSVUktcUNhVndfOWZxVUlxZVRPeEdrN3ZCSGZ6QWNiX3hmWF9CbXB4bmdQT0RIaTYyOFVydDM1Y3BxV3hzV096T1dTOGttRmhhVC1YT3E1VTJ6V0hna0wtbGJOblBqeURmNklR?oc=5",
-        "pubDate": "Mon, 15 Sep 2025 07:00:00 GMT",
-        "source": "1News",
+        "title": "Pimco fund beating 97% of peers cuts Magnificent Seven to bet on Asia - The Business Times",
+        "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNalZWMk9JS3FteDNrR05aMHhhWDhQNkhqQWI1Q084cTl6RU50YmMtTVNlNThjYW5xcXQydzFlSU1INGp0LTJmOTJQXy1YcE1wTlZ0dkJFRnBBeHZMZmtKSXhfR25meDVKVjhHNlZINjZJN25qZXhudk5NSEpqanh6TXd4NVVoU1p0amE4eFNEeDRkNk9hbGRYM1pPdHFtSWZRUFZwenNsbVZ6NVZlRWZF?oc=5",
+        "pubDate": "Fri, 04 Sep 2026 07:00:00 GMT",
+        "source": "The Business Times",
         "sentiment": "Neutral"
       },
       {
         "category": "Mag 7 & OSIS",
-        "title": "What direction will the meta universe take in real-world 2022? - citynewsservice.cn",
-        "link": "https://news.google.com/rss/articles/CBMizgFBVV95cUxOTmVzWjdQTWg4eWVCcm82WTRSUjAtTW5WVGxlajBqWnpCVVlITFAtNzdkZTRLVWNUSGJnUlM1Q1l0eDFER1hTbldOS1dwVHRGNE92ZEVKbURRRm9VTk5HbmJfTU1nWWhMMmJxdHJhQW5kcWllOHhQczg5X2lfd1p2T29WbXFKdnlKQkJEbjU0YXkyN1Fydk53MzZTOW5GTEFrX3hFY2l6LXZGUTJxVHhSdWQyOEhlX25MZC00SnpwS3pqMmlkS01sMXM2c25BQQ?oc=5",
-        "pubDate": "Thu, 23 Dec 2021 08:00:00 GMT",
-        "source": "citynewsservice.cn",
+        "title": "Mag 7? Mangos? SpaceX IPO forces name rethink on Wall Street’s tech-stock moniker - The Business Times",
+        "link": "https://news.google.com/rss/articles/CBMi6AFBVV95cUxPSGVUUVV3eENMRXB1dEdOUkRVbGpiT2U1blgyal9iaU9EMnA5bjdZMVhOZnp0ZWY1dXRVRmp1WmtHV3RCUzdzcXhpd0FMNm91aUlVNWd4SjV2SnNpM3pEX2R0VUVQX3NrNHBYdWJZcmdFN21FUE1YbkhZWDQ2SW5zMHQzNVkyRmc1QUR2Qy1MRG9xQmtESGl1NmlxVk5EVWs2RlhZdWFESS1saXNvaXdxcG5jQkhvWUJfT0NNd2dYLWRhelVrRXp5Y2tqNTdEVGhhakpHcmdDa1lnTWpVWFhmRUZISURRbHEx?oc=5",
+        "pubDate": "Sun, 14 Jun 2026 07:00:00 GMT",
+        "source": "The Business Times",
         "sentiment": "Neutral"
       },
       {
         "category": "Mag 7 & OSIS",
-        "title": "Combined profits from the 'Magnificent 7' big tech companies including Apple, Amazon and Meta are now bigger than all listed companies in almost every G20 country - dailymail.com",
-        "link": "https://news.google.com/rss/articles/CBMilgFBVV95cUxPRnpacUZBamlpb2xTdkFIcDBNQ0FIQVhzU3RYTU8zWVZYXzk0aFU1ZkdQYmtNcXUtZzRjcl9tT2xiZFp3ajZTbllvUlpKOG9YVlg1cmJoVUZJQmxnZGVHZmhXWDROeEVmdHczTEZqbzFvMlRBSjZqMVNuNjZDakYtZmZFMWdQZWtvelRibDhvYS1Rcl9va2fSAZsBQVVfeXFMTVFIc0hjSXRqanY0aFF1XzN6RGRoMEJ6Z090Vk9pbG1LaE1vLVJsWG1YWWJxREcxRkZpb1lHVmJJZGljR3BkWHJ6SXFTTFo5UGpmc3BJLWJBRjRjQ0Z1VE1ZSnRNblZWcDR6WnU3ZmRodVhFSjA3V21xLWxURC1sSjR3Um8ybHBUcjkxWGxIWTE3LTA4VUdHcEdibUk?oc=5",
-        "pubDate": "Tue, 20 Feb 2024 08:00:00 GMT",
-        "source": "dailymail.com",
+        "title": "GraniteShares Plans 20 Geared Single-Stock ETFs - ETF.com",
+        "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxOczRXQ2x4TDlrSnR6ejZXUm12V1cxaWpQQkhzN01KUlhwSEhEcHJMSDdKb3E0U2w5eWN1aUlvMVNwczJDTDFHNGNlbjg3NE1XN1VEQjQyRjhOc3dLU0Z3U0kwdXhIeEYybk1WcGUwTGNubHo5SFNja01CYS1LQ1NfM1k2TGl2TFU5M3pMbFA0cUxQY0VoYkpv?oc=5",
+        "pubDate": "Mon, 28 Feb 2022 08:00:00 GMT",
+        "source": "ETF.com",
+        "sentiment": "Neutral"
+      },
+      {
+        "category": "Mag 7 & OSIS",
+        "title": "2025 was not the year crypto died; it was the year crypto got a job - The Business Times",
+        "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQOG5VWHhDNGFBQmhYRExKQXpGQjBWRlV6T0lBeEdSaDlmNUNXUnVVbWoxYUxGSTZOSG1NWjFiMFgxb3pOSnMtUDhHY3BybUE0WXBuVlE0bWZkeGZuWXNCcVU5b294anNyMkNZaGE5bjhONjZHcDdKNGdQN2hteWluUDNuQVRlTzdjdFJIbjZZM2tGMjJ2TDV3ZnFLQldCTnNmNXNnTkhPRy1xV3h5VWVnUVl1OA?oc=5",
+        "pubDate": "Sun, 18 Jan 2026 08:00:00 GMT",
+        "source": "The Business Times",
         "sentiment": "Neutral"
       }
     ],
     "Sectors": [
-      {
-        "category": "Sectors",
-        "title": "Internet of Things Market Size & Share Report [2034] - Fortune Business Insights",
-        "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQQ3l5R1poVUtlS1o3VkF6OUlsZHJ3UHpsQnZQS0FMTjVXX2FxWTFNbHZwRUZBSVd2cF9EbkY3NGtfMmhRMVh1UGNodWdNYVJoOXFucDlwRVpnLWZsSzdFMF82YXBQYkhtUWw1VTUzWTA2QkRLdFFMMTh3VzBJc2lDc011ajRGdE5tWEJLXzBfWlBWazAyblRETA?oc=5",
-        "pubDate": "Fri, 04 Sep 2026 07:00:00 GMT",
-        "source": "Fortune Business Insights",
-        "sentiment": "Neutral"
-      },
-      {
-        "category": "Sectors",
-        "title": "US stocks fall as tech, industrials drop; healt... - Pluang",
-        "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPRWYyclZJaW9URDRBZm85aXpDb1ZjMFdyR1o3UElXSlBBVXVKU2dPQjdER3ZKaHE5X1ZNZmdMdE96WWFFd0ZsNDFHZ2ZueS1LbWEwT2hZQV93alFIMDBmQVk4d1ZoMmR0eG44M2l6c05mRUV4SHFfQUtnSVN0Q3pPNEZnQzh6aGc?oc=5",
-        "pubDate": "Tue, 25 Aug 2026 07:00:00 GMT",
-        "source": "Pluang",
-        "sentiment": "Bearish"
-      },
       {
         "category": "Sectors",
         "title": "US Stock Sector Outlooks: Morningstar’s Top Q3 Picks Across the Market - Morningstar",
@@ -331,18 +331,18 @@
       },
       {
         "category": "Sectors",
-        "title": "8 Best Robotics Stocks to Buy in 2026 and How to Invest - The Motley Fool",
-        "link": "https://news.google.com/rss/articles/CBMinwFBVV95cUxPcmszUHNFLVJYODRkTnJuT09DLVZSV0lCRmt5TWNSWEViWVhGYWlsQmVqbmdFWnJnU2dsMHk3SGQ1bHV6ZHVwc2VFYlJvM1BaZHdRMkFfZ1paTGZ5LWNSVVRrLVJhU0tFNnRZX1pDQVVZZU54SS1neE9tLS1BM1BuWjE3VmZVLUtXVnhsTTB3VzV5czZ4WXFJNE80MGVvcTA?oc=5",
-        "pubDate": "Thu, 03 Sep 2026 18:39:00 GMT",
-        "source": "The Motley Fool",
+        "title": "Stock Market Sectors 101: A Guide to All 11 Sectors | Investing - money.usnews.com",
+        "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxONlpDTW5LUFpnY25GdFZOUmxxbjg2ZzFoVlVaaU1idUdWZ01Ecnpjc0dURi0zWjBiUEp4QWozeDBHSGlOd3ZUYU53X0xBZEEwXzFkOGJYQl9xRlJWVklyX0trQ21kSzlHZmtoSklURVZBX1pEbThQYmRVaG45aE9VSTNpUFdheXVpWHF6Qk5FdGtHRkJoWkRQZjd3?oc=5",
+        "pubDate": "Fri, 01 May 2026 07:00:00 GMT",
+        "source": "money.usnews.com",
         "sentiment": "Neutral"
       },
       {
         "category": "Sectors",
-        "title": "Stock Market Sectors 101: A Guide to All 11 Sectors | Investing - U.S. News - Money",
-        "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxONlpDTW5LUFpnY25GdFZOUmxxbjg2ZzFoVlVaaU1idUdWZ01Ecnpjc0dURi0zWjBiUEp4QWozeDBHSGlOd3ZUYU53X0xBZEEwXzFkOGJYQl9xRlJWVklyX0trQ21kSzlHZmtoSklURVZBX1pEbThQYmRVaG45aE9VSTNpUFdheXVpWHF6Qk5FdGtHRkJoWkRQZjd3?oc=5",
-        "pubDate": "Fri, 01 May 2026 07:00:00 GMT",
-        "source": "U.S. News - Money",
+        "title": "Stock Market Sectors: 11 Official GICS Groups - The Motley Fool",
+        "link": "https://news.google.com/rss/articles/CBMia0FVX3lxTE01WHYzVHVsMEswUUo4TzdYZk9VblYzR1IzR1diS1FfTlRveDFBT0hCRnctQ1FFajZvbnpGSjMxV0VGZ2QxZ1d0SF9fdmVJWS1QRG9kYTY1bkV3V3JSbzMzckpWUUJldU5OX2Y4?oc=5",
+        "pubDate": "Thu, 07 May 2026 07:00:00 GMT",
+        "source": "The Motley Fool",
         "sentiment": "Neutral"
       },
       {
@@ -352,55 +352,71 @@
         "pubDate": "Mon, 13 Jul 2026 07:00:00 GMT",
         "source": "ETF Database",
         "sentiment": "Bullish"
+      },
+      {
+        "category": "Sectors",
+        "title": "Internet of Things Market Size & Share Report [2034] - Fortune Business Insights",
+        "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQQ3l5R1poVUtlS1o3VkF6OUlsZHJ3UHpsQnZQS0FMTjVXX2FxWTFNbHZwRUZBSVd2cF9EbkY3NGtfMmhRMVh1UGNodWdNYVJoOXFucDlwRVpnLWZsSzdFMF82YXBQYkhtUWw1VTUzWTA2QkRLdFFMMTh3VzBJc2lDc011ajRGdE5tWEJLXzBfWlBWazAyblRETA?oc=5",
+        "pubDate": "Fri, 04 Sep 2026 07:00:00 GMT",
+        "source": "Fortune Business Insights",
+        "sentiment": "Neutral"
+      },
+      {
+        "category": "Sectors",
+        "title": "The Defensive Playbook Isn’t Your Average Inflation Roadmap - J.P. Morgan",
+        "link": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxNdUFHbFIzVjJkT3NrbTBtYVVnN1oxV0k5amFjd1VYbDBUQ1FZNE5DMUNIRVBZZWowWW1RS0tHOVBkQndqaUxRc19aM0xwY3p4YU9iMy1zRnVlRjV2M3hKdjNrUkxhU29JOUxQekQ5NjBCZXEzVHFEbHI0ZmM2SDUwaW5wRW1VdC1YX2NUWm02aHU5a19VbEdfS2F0QnNzMHBuUjVoN0tiNjNpWWRwQmJWZndMVGxnaEJXa0NUNk16VEx6Z3NsdUZOa1pfVHZabnc1VEhj?oc=5",
+        "pubDate": "Thu, 02 Apr 2026 07:00:00 GMT",
+        "source": "J.P. Morgan",
+        "sentiment": "Bearish"
       }
     ],
     "Macro & Fed": [
       {
         "category": "Macro & Fed",
-        "title": "The likelihood of a Fed interest rate hike next week just got a lot higher - cnbc.com",
-        "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxONjAwZFZ6bi16bV9pV1FMWDdfMzlhZUVicnJQaThwYjZySUZTbGhMQkNscFdkdHB1ME1Hc0RsaWYzVDM1SEk0ZmNSX3czTmlESXR1U0R1Zy1DMnU0cWU4REpYYWNVMHdBYlp3TjRkRHAyQ0pqLXdTZ2hoUUlkYnlPMHFCeUhZb2hEYmRVenQ1bWxpT0E1anFMT2NCRDFIdmlUaUlPVUtJX05idUVJa3lCd9IBtgFBVV95cUxNb09kWUpPaTFYX1J3T0ZYVDM1YjZURW4zVnh3R29VUWU2bzlsTWQxZ051RElKY1BzZmZ0X2RNT3BUWFR6TUpEV3pIOURqamZmMDM0YlJVSWpELXRJOUJhYkI1RU9xc2hvdFdiRHZNOWVVVXB0SFFfWG5NMFIwdXlwZ0ZsUUtfS1FsVGJBQ3RBZzJQbEx1NFNiN196NmNTdW5rZDB3TkpYbS1Ld3AwRThybGt5VjVEUQ?oc=5",
-        "pubDate": "Thu, 10 Sep 2026 14:34:55 GMT",
-        "source": "cnbc.com",
+        "title": "The Fed is likely to raise interest rates as inflation persists. What that means for consumers - CNBC",
+        "link": "https://news.google.com/rss/articles/CBMilgFBVV95cUxONzR2NnBtbXVOLWxnQlhkbkg5d3RhemtrU21LbDhNaWwxajZpMXA3eFM4ZXpTZlVzYUNiSG9IV3JMSHZpOWtiZ0JYWGxCdm40VEpadmU0dW9EU2QwWTczMWhKU1pCTUhMdXhfdFZjMGgzaDd2bXNmN2tMOWwtWVBvY0ZkdFE4Y3dxQlU5eW5BZkhuV00tTGfSAZsBQVVfeXFMT0E2cjJJeUpWNEpwd0h3OGptRlhyTVhYY3NlY0hRTzRVRXJoRFFjd0ZmakJ5N2FkNy1ZdzZVMGxXdTVicl9WX2NzMU5yemxSWlh4S2RmLVFKSUNWVjNlaVduXzR3Z01kOHlhOHF6WVlpYWFDUzI1aTlPaVRhTlJlSFBFWmh2RTNNNEJ2YlZsZDJoWmg5LWk1WFlKZGs?oc=5",
+        "pubDate": "Mon, 14 Sep 2026 16:17:03 GMT",
+        "source": "CNBC",
+        "sentiment": "Bearish"
+      },
+      {
+        "category": "Macro & Fed",
+        "title": "Why the Odds of a US Fed Interest Rate Hike Just Shot Higher - Morningstar",
+        "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNTzBZZlkwZWhpeGhFSmpPNzc3eGVJdl90Zk1PTXVmV3VpM1lwcFpnZTY5ckV3NmhrekJGendHSEpTYzNkZlMyUXF1M21jTHNUNWhIV3c3U1hHcnF0X3ZNSkNZSnBiV200b3R5WVZVb3A2NkN5N19lUWpjUTVGNF9vVjczNmlQQ1BVVUpiSXNIYUV0R3R3SDVxZXdUbng?oc=5",
+        "pubDate": "Mon, 14 Sep 2026 09:19:25 GMT",
+        "source": "Morningstar",
         "sentiment": "Bullish"
       },
       {
         "category": "Macro & Fed",
-        "title": "Will the Fed raise interest rates this year? Divided economists weigh in - ABC News - Breaking News, Latest News and Videos",
-        "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNX3NMLXhhYU1lOVVLWU9sY0k0SDUyQnEwMG9SZ1RzNHZobTIyYk9KWGJlOGhic3FKdlQ2NXlIVDF6SW1oRlNWZlY2NHlNLWlnNGoybzAwLWlkV3V1Q1ZtM21KS2FLTy02NEF6VjY4UmFNc2hYa21mRURlSkJYZWxtc1R3VmRYZFlKNUU3NzZiMkZGNGJZcG1xZUNCN0RQNkRndEVPb9IBqgFBVV95cUxOU1FSZ3pWOURaQUxBS296TzBtRFFGclJXTnpLYWwzZXU1Q01kcVZUczBxUDAwR3FaYmFZdzlXUWM2T0Q3TDVldm9nSVY4OERYRUtkdm5sdndPSU1ETU1yc3BuMEpXLTd2VFFZRTVQcWdMZFdEZ0EzYjhTS200RFBkZy1jbE01WVhVbEgyX1Z2dXc4MWxmbXd6cl9pSlp2TDRldkdkS2hwOVE0Zw?oc=5",
-        "pubDate": "Thu, 10 Sep 2026 16:22:02 GMT",
-        "source": "ABC News - Breaking News, Latest News and Videos",
+        "title": "The Fed is preparing to raise rates. What if it doesn’t work? - CNN",
+        "link": "https://news.google.com/rss/articles/CBMigwFBVV95cUxQQzF1NEVQblNId1pHOU1fTlY5cndudGk3MXR5MWh5d2pwNHdxYlVUamQ5TW5VbXk1a3pTRDhxbXhKOTFFUkN0YlhUMVAwTWVCNWNHdzF1MG1XZUZxcU9YSFJSZWhiZzBXVDI0S2lCS2JQNFVTYzNiYjVpUnBfRDM4cWpWVQ?oc=5",
+        "pubDate": "Mon, 14 Sep 2026 09:00:30 GMT",
+        "source": "CNN",
         "sentiment": "Neutral"
       },
       {
         "category": "Macro & Fed",
-        "title": "What a Fed Rate Hike Actually Means for the US Economy and Inflation - Yahoo Finance",
-        "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQTnd6R0J2a3A3T3U2VHZVTmt1RzdNa0htSHMtZkJ0cjB2XzRCMnR6SU83dnVtbDJGb3Rqc2dRMG5zaHg5TWdXdUt5V013N0tVbjNrY0hNeExLUFVuVERMa0hzMU83SkhwVUdCZkl2N2RLaHRaa0V1Q0JrR0lDenV5dF9FbnZlcG5fTHozc01rRHExejlfaERENA?oc=5",
-        "pubDate": "Thu, 10 Sep 2026 11:00:00 GMT",
+        "title": "Federal Reserve faces no easy choices with stubborn inflation and economic strains - WBFF",
+        "link": "https://news.google.com/rss/articles/CBMilAJBVV95cUxNNVg3bXRtNzlWQW9WejNqODlqU2Y2cnlxdm1hT3FFWks0eFM4YXJQV3ZVeFlObkMwaGl1X0o4TXNmZmlkZE16VGFScVRwM3FleW1XMGg1TzBpbEg5STFQazV6X3hPMkJid0U4alZSbHR3WHBMYUJ3aHA5QVBuRFZkYTBXWGZ2MG9qcVduWFliS3dSRlB6OVhxYlZpc3loQTB1b0VxTWVabGlYalhGMzBTYlJVTElPRy0ydHBkeHRzNFhHSVl6SkFyZHItY215TTR4QS1YMU5CQW01emppRkVSZ1ZEYk5JRDNRZFBXTGpzZG91MDFXeHB2Q3VrUmxwUjM4RmxvUkJ3Y3J5azZPV2FOYnZ6WkE?oc=5",
+        "pubDate": "Mon, 14 Sep 2026 17:13:48 GMT",
+        "source": "WBFF",
+        "sentiment": "Bearish"
+      },
+      {
+        "category": "Macro & Fed",
+        "title": "The U.S. dollar rises as investors anticipate an interest rate hike - marketplace.org",
+        "link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQNFM3UVJlSmNJbjlUREZuTjJsdHJpU0oxOXhaUUw3QzdBNjFsTzY2a045OHoyb0p6QVljVm9SbWp4S2VMOFZoWUFiRXJzWi1COWpNTUFqOGNkWXVWZ0xBSWpSeHcxOXNUTm5LTUd5UzlreW9zS3dQLXNXT1pPR3JHcnE5ZVJTeGhrY21DZzRTWGFYaVBZTE1JZlBOZDVkYVRHXzZIQlF4VQ?oc=5",
+        "pubDate": "Mon, 14 Sep 2026 22:31:59 GMT",
+        "source": "marketplace.org",
+        "sentiment": "Neutral"
+      },
+      {
+        "category": "Macro & Fed",
+        "title": "The market says a Fed rate hike is a done deal. Here's why it might hold steady. - Yahoo Finance",
+        "link": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxNQ1pzcVpwYlJueU10b2lzTTJCd0VwUFJjZmhFckpZMVJfVm9yMXFnaE9seklLMWQ1VHBGemJrcXhlX2tHQUN3dllBZ0hnUXduYmNNWTNhRkxUODJKbXRiay0tQ1JNN2JoUUFkSzAtcFVNMWVFR1RxNmNwc0M3SkthWnlKNzlUWF8tSHYwbW42dGwwSUFBV09vQjJMcHFoV0w1Y0pXazd0ZG9HZzVwNXRSYS1jTllTNk13aW9JdThhYTBaMEZvTGY0VzQ3b2RGWmRoU2JjVXZhckE?oc=5",
+        "pubDate": "Mon, 14 Sep 2026 10:00:00 GMT",
         "source": "Yahoo Finance",
-        "sentiment": "Bearish"
-      },
-      {
-        "category": "Macro & Fed",
-        "title": "What a Fed Rate Hike Actually Means for the US Economy and Inflation - Bloomberg.com",
-        "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPbURnSGJWd2lvYWxON2xJVEdlQ3lpQ2NGdy1zc3pfTnFybC0tRUg5ZTlFd3lEZlU2emJvQkhyREpWV2VUTzd5anQxUTRJbnROWTMyWml0YzFseHRqeURHekU0WWpPRmNMUVlheXkwNzFjUTBRRjJpT1hLUWF0VDRfbldJcktzZk1Db1RSdDN1dWhOOUpTZmJ6ZGcxNnJMbFBXNkQ1dS03RGRnR3lVaG90VFkzSQ?oc=5",
-        "pubDate": "Thu, 10 Sep 2026 18:28:32 GMT",
-        "source": "Bloomberg.com",
-        "sentiment": "Bearish"
-      },
-      {
-        "category": "Macro & Fed",
-        "title": "A Tiny Shift in the Inflation Rate Could Decide the Fed’s Next Move - WSJ",
-        "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQU2VrRkdPcXF6U3ZvMTdqQ1pLT2Jua0N1MHlyQXM4c2hNN1M0SEY4bHZMakxwZm9jRjRKUHpsdnFuemtxSjFLZUhSVFJSTE41NzJQajl5M09PSlZNbkczMlZHTGN4U2wyalN2SnJiZG1JT3Roem00c0hmRXlRX3gtZzRNM2RBaS05VkRabUVSenVyUUV1ODQwUUNyTlE?oc=5",
-        "pubDate": "Thu, 10 Sep 2026 01:00:00 GMT",
-        "source": "WSJ",
-        "sentiment": "Bearish"
-      },
-      {
-        "category": "Macro & Fed",
-        "title": "Fed to hold rates steady in rest of 2026; rising number of analysts see at least one hike: Reuters poll - Reuters",
-        "link": "https://news.google.com/rss/articles/CBMiugFBVV95cUxOZ0NreUFoTnFxX3ZzQnd3YU9FNFVkQmhfZlBrSVBUUm12Q0lCckxRTHdWcUVHbmJpcDZKbVhNZG5RektYQlpqaUZGMjl2TnJ0amhPMGJBWnB6OG9FVTB5dVJPTlc1ZjJaa2djUl9HR3VhYzIxODJjVEx1NUswdkVkblYxNVNSY1dYWlpUdzlEQU9UNTNzaUtVWXVtdXljVEUzSnVOQTV2bTJHSXN6Q2E3U0pzcVk5U19qUmc?oc=5",
-        "pubDate": "Wed, 09 Sep 2026 13:29:11 GMT",
-        "source": "Reuters",
         "sentiment": "Neutral"
       }
     ],
@@ -415,19 +431,19 @@
       },
       {
         "category": "Movers",
-        "title": "Egyptian stocks rally as EGX30 hits two-month high - Egypt Today",
-        "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxNWmVBeUFFOFdqb1d5djVKWllxdnZ6RFJMUGtUR1BVenZ4dUZSbmZDbHdoQVdTNnJFWkZsMXR0czJMVnZfUGpQTUlIdUdQTWVmeEFhei1Fak11TjlfSDd1TDRJeWxBN3dEYjF2bkZHbUhQcnBuQ3IwUlBxUkhOSU1IdEpnVzZ2QkFEV3NYOUJSQlpLWWxndHF6TEtR?oc=5",
-        "pubDate": "Sun, 19 Apr 2026 07:00:00 GMT",
-        "source": "Egypt Today",
-        "sentiment": "Bullish"
-      },
-      {
-        "category": "Movers",
         "title": "Why is US stock market booming today: what’s powering Wall Street’s comeback? — see top Dow, S&P 500, Nasd - The Economic Times",
         "link": "https://news.google.com/rss/articles/CBMi2wJBVV95cUxQUm1QZW1VYnQtOWQyR3JLc3RiX2FoU1hidkZ5ZVpERzAyVU9HODBjZWVTNkE0bEY2djYzWlV4aFlVdkRQQnkxNFhYNG1iM3BCcmJWZDJVb0h2ZHQ3ZVpzUU9vbkx6QWl6NTJHTEZpRzcwR1NzbE51cGt6d240QVFMaWphTUtTNC1tNE9sWDEtVGo2TlNkTFVXRjFGS2RDWGVZUC11UGgyNkVCblllNGJPQjBCQnZlTEFiZ1l5NEw3bzhKMl9PV0w2bVNQTzB2VnF5RVFYUW00RlBNbVg2dXBZT01lVTVaWF84dmwtdVZMQmVDY0lra3pCT1hSYTEzX1BhZ2pOLVFqb1VobmxfdVV1V3JpYmZBa0lCLUlfdWlEVk5UZ3pzZnhJazluRXh4dTN6ZEQwSlY1NkMxdkhJWXIzSTRVNm5NemhEeUlTUl81V1ZvSkpBQUZPZ3BDTdIB4AJBVV95cUxQZGRMMXdqWHk0bi1QaFBod1BlRG5qeEFtZ2pySmY3cEE1TFdTTUNoRmQzZzVvTzUtX1Q1Vm9KWWR1NGR6SHFsMnBLZFRQVHJxLVprY1pBU2lxaEM2alhjd0lHRXUzTEJ6b2RYYjBqbEVzUFNMWXNQS3ZmZjZTRl9UYXI5d2FpbThuajhUZTk5MnYzY1kwSlBJQkxhUEREMUFXVDljb2FtNjVWbFZfaVpGYXFtRkN4T2dqb2tHZDFlY0dRY0t2YkwwejE5VjItQ2NVUHV3QkV1NG1QU2FrQndkTlRnMkY2ZGRTZDE0b2tnSUhpNVZma3NLZER0S2gyMVQtWk5lbU9TaGlINVVpOHFmOE9lNlRJM2pvYUQ5UXZENzI4MHlRN21sWnlkNktOUlE5Q2NOQ0duQkwwWVEweUszUU4zQnlzbXNGdGxqNkdpTTdXNEVON2dZVVZrSTQ2ZFVN?oc=5",
         "pubDate": "Wed, 15 Oct 2025 07:00:00 GMT",
         "source": "The Economic Times",
         "sentiment": "Neutral"
+      },
+      {
+        "category": "Movers",
+        "title": "Today’s Biggest Pre-Market Stock Movers: 10 Top Gainers and Losers on Thursday - InvestorPlace",
+        "link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPZkNtaFhLaXpBNkhsanJEQXNCNTlvQWU0RjNpWkZzRE5ydE13M01vMU5VMVJmZ0JsVW03T0xpa2lPNWoyMVRIZEh4YXB0a2tjYzJUN1ZKUVRWTkgySGNSN21jVlFWVTNoWm5uSjdBd2NXQkNkb21QUlRsVWJuMHhxdmdnU1hCSXQ1MGpHbHJRNGtkM1pjWjMzZW9UVFlJYkN3ZHNpNnZpcWxTcWpFcGE5d3FQd2IwdnNUZnBSSnA3Yw?oc=5",
+        "pubDate": "Thu, 11 Apr 2024 07:00:00 GMT",
+        "source": "InvestorPlace",
+        "sentiment": "Bullish"
       },
       {
         "category": "Movers",
@@ -439,19 +455,19 @@
       },
       {
         "category": "Movers",
-        "title": "Today’s Biggest Pre-Market Stock Movers: 10 Top Gainers and Losers on Monday - InvestorPlace",
-        "link": "https://news.google.com/rss/articles/CBMivAFBVV95cUxPdFR4X3pTTU5pS1BtckUzNTRPeTJDa1JHYkRaMkpTVGJHMHNLZnNhR1lrRVNIdmMybjZzdTNTXzdHbFk1TXdITDA2cGcza3dadWhXNUhuNjN4X2p6ajBSZFNNR09leGlnQjZrMi1aS1JrZy13cFYtbFQ4TWVtRER2Si1URHlsa25zQ3l3R0RZQ3JFWV9yYVRuOWZTSmpSUzJFbGNjejVBT2dHWEx1VG5VT3o0YWQ1bXF2R2FOSw?oc=5",
-        "pubDate": "Mon, 29 Apr 2024 07:00:00 GMT",
-        "source": "InvestorPlace",
-        "sentiment": "Bullish"
-      },
-      {
-        "category": "Movers",
         "title": "Weekly Market Update: Tech Stocks Lead Market Lower, Basic Materials Gain - Morningstar",
         "link": "https://news.google.com/rss/articles/CBMigwFBVV95cUxPek1tVWh3dmxLSVE2Z3JNVG9mcDh0YUpPMDA5MzNDb05EWTgzWHM5ejVxdVhlRG5kZDUxSzktTTNSeGVMbUl2MHRMbUJwak1USEswTmdGT3gwcnFlRklSeFZBZE5XVVdCZ2JneHIxdWMycDBNem4yODlVUjBDU0tla1UwZw?oc=5",
         "pubDate": "Fri, 12 Dec 2025 08:00:00 GMT",
         "source": "Morningstar",
         "sentiment": "Bullish"
+      },
+      {
+        "category": "Movers",
+        "title": "Biggest stock movers Friday: ROST, MSTR, MRVL, HOOD, and more - Seeking Alpha",
+        "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxOc18zMi1TYk1IcXNqZUcwaU0zaDFLSE51NGRWbXlpTUxIcnVQbGs0bS1OdW43R01obk15ZDR2ZW54bEV2MVVwZTd4UTZsMGU2QzhEUHlDS3YzbTFLZGQyejJZb1h1UzM1UFpXandmOU9tenBLaDJCSWNJMjlJbmZjbmc0UlRDbFEwS1dr?oc=5",
+        "pubDate": "Fri, 21 Aug 2026 07:00:00 GMT",
+        "source": "Seeking Alpha",
+        "sentiment": "Neutral"
       }
     ]
   }

@@ -108,3 +108,20 @@ outputs:
   notifications:
     on_success: true
     channels: ["log", "dashboard_websocket"]
+
+critic_agent_checklist:
+  enabled: true
+  description: "Automated validation criteria used by the Critic Agent to verify scanner outputs and market data integrity."
+  validation_steps:
+    - id: "yfinance_price_validation"
+      name: "YFinance Stock Price & Pivot Verification"
+      frequency: "post_scan"
+      output_file: "validated_yahoo_data.json"
+      checks:
+        - "Fetch live OHLCV data directly from YFinance API for all target symbols"
+        - "Cross-verify Close, Open, High, Low, and Volume against market_analysis_results.json"
+        - "Validate Relative Volume formula: RelVol = Volume / AvgVolume"
+        - "Validate Floor Pivot levels: Pivot P = (High + Low + Close) / 3, R1 = 2P - Low, S1 = 2P - High"
+        - "Format Market Cap ($T / $B / $M) and P/E ratios"
+        - "Ensure zero unicode encoding errors and exit code 0"
+

@@ -81,6 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initEvents();
     initFinvizMovers();
     renderSectorsGrid();
+    loadLowRiskTrades();
     
     // Load active stock
     loadStock(state.currentTicker);
@@ -875,3 +876,89 @@ function simulateTick() {
         renderCharts();
     }
 }
+
+async function loadLowRiskTrades() {
+    const container = document.getElementById("lowRiskContainer");
+    if (!container) return;
+
+    try {
+        const resp = await fetch('validated_yahoo_data.json');
+        if (resp.ok) {
+            const data = await resp.json();
+            let candidates = data.filter(item => item.Risk_Reward && item.Risk_Reward.rr_ratio >= 1.2);
+            candidates.sort((a, b) => b.Risk_Reward.rr_ratio - a.Risk_Reward.rr_ratio);
+            
+            const top6 = candidates.slice(0, 6);
+            if (top6.length > 0) {
+                renderLowRiskCards(top6);
+                return;
+            }
+        }
+    } catch (e) {
+        console.warn("Could not fetch validated_yahoo_data.json, using fallback candidates.", e);
+    }
+
+    // Fallback Top 6 Low-Risk Candidates
+    const fallbackTop6 = [
+        { Ticker: "JNJ", Company: "Johnson & Johnson", "Yahoo Price": 266.32, S1: 264.52, R1: 269.84, "Pivot P": 268.03, Risk_Reward: { rr_ratio: 1.96, risk_percent: 0.68, reward_percent: 1.32 } },
+        { Ticker: "PEP", Company: "PepsiCo, Inc.", "Yahoo Price": 136.34, S1: 135.40, R1: 138.05, "Pivot P": 137.10, Risk_Reward: { rr_ratio: 1.82, risk_percent: 0.69, reward_percent: 1.25 } },
+        { Ticker: "APD", Company: "Air Products", "Yahoo Price": 287.13, S1: 284.66, R1: 291.47, "Pivot P": 289.01, Risk_Reward: { rr_ratio: 1.77, risk_percent: 0.86, reward_percent: 1.51 } },
+        { Ticker: "NEE", Company: "NextEra Energy", "Yahoo Price": 81.63, S1: 81.19, R1: 82.41, "Pivot P": 81.96, Risk_Reward: { rr_ratio: 1.77, risk_percent: 0.54, reward_percent: 0.96 } },
+        { Ticker: "EQIX", Company: "Equinix, Inc.", "Yahoo Price": 998.72, S1: 986.64, R1: 1019.12, "Pivot P": 1007.10, Risk_Reward: { rr_ratio: 1.69, risk_percent: 1.21, reward_percent: 2.04 } },
+        { Ticker: "OSIS", Company: "OSI Systems, Inc.", "Yahoo Price": 199.95, S1: 198.31, R1: 202.65, "Pivot P": 201.01, Risk_Reward: { rr_ratio: 1.65, risk_percent: 0.82, reward_percent: 1.35 } }
+    ];
+    renderLowRiskCards(fallbackTop6);
+}
+
+function renderLowRiskCards(candidates) {
+    const container = document.getElementById("lowRiskContainer");
+    if (!container) return;
+
+    container.innerHTML = candidates.map((item, index) => {
+        const symbol = item.Ticker || item.symbol;
+        const company = item.Company || item.company || symbol;
+        const price = item["Yahoo Price"] || item.close || item.basePrice || 100.0;
+        const s1 = item.S1 || item.s1 || (price * 0.98);
+        const r1 = item.R1 || item.r1 || (price * 1.02);
+        const rr = item.Risk_Reward ? item.Risk_Reward.rr_ratio : 1.5;
+        const riskPct = item.Risk_Reward ? item.Risk_Reward.risk_percent : (((price - s1) / price) * 100).toFixed(2);
+        const rewardPct = item.Risk_Reward ? item.Risk_Reward.reward_percent : (((r1 - price) / price) * 100).toFixed(2);
+        const medal = index === 0 ? "🥇 " : index === 1 ? "🥈 " : index === 2 ? "🥉 " : `#${index + 1} `;
+
+        return `
+            <div class="low-risk-trade-card" onclick="loadStock('${symbol}')" title="Click to view ${symbol} chart">
+                <div class="lr-card-header">
+                    <div class="lr-symbol-group">
+                        <div class="lr-symbol-avatar">${symbol.substring(0, 4)}</div>
+                        <div>
+                            <div class="lr-symbol-name">${medal}${symbol}</div>
+                            <div style="font-size: 0.72rem; color: var(--text-muted);">${company}</div>
+                        </div>
+                    </div>
+                    <span class="lr-rr-badge"><i class="fa-solid fa-shield-halved"></i> ${rr}x R/R</span>
+                </div>
+
+                <div class="lr-levels-grid">
+                    <div class="lr-level-item">
+                        <span class="lr-level-label">Entry</span>
+                        <span class="lr-level-val entry">$${price}</span>
+                    </div>
+                    <div class="lr-level-item">
+                        <span class="lr-level-label">Stop (S1)</span>
+                        <span class="lr-level-val risk">$${s1}</span>
+                    </div>
+                    <div class="lr-level-item">
+                        <span class="lr-level-label">Target (R1)</span>
+                        <span class="lr-level-val target">$${r1}</span>
+                    </div>
+                </div>
+
+                <div class="lr-footer-action">
+                    <span><i class="fa-solid fa-arrow-down text-red"></i> Risk: -${riskPct}%</span>
+                    <span><i class="fa-solid fa-arrow-up text-green"></i> Reward: +${rewardPct}%</span>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+

@@ -14,6 +14,9 @@ Per specification in agent_market_scanner.yaml and spec.md:
 import json
 import datetime
 import math
+import sys
+import http.server
+import socketserver
 
 try:
     import yfinance as yf
@@ -170,7 +173,35 @@ def run_agent_market_scanner():
     except Exception as e:
         print(f"Error running news fetcher: {e}")
 
+    # Run Critic Agent verification & accuracy audit pipeline
+    try:
+        from critic_agent import run_critic_agent_audit
+        run_critic_agent_audit()
+    except Exception as e:
+        print(f"Error running Critic Agent audit: {e}")
+
     return output_payload
+
+def start_http_server(port=8080):
+    """Starts local HTTP server on specified port (equivalent to python -m http.server 8080)."""
+    class ReuseTCPServer(socketserver.TCPServer):
+        allow_reuse_address = True
+
+    handler = http.server.SimpleHTTPRequestHandler
+    print(f"\n[HTTP Server] Starting web server on http://localhost:{port} ...")
+    try:
+        with ReuseTCPServer(("", port), handler) as httpd:
+            print(f"[HTTP Server] Dashboard active at http://localhost:{port}/index.html")
+            print("[HTTP Server] Press Ctrl+C to stop.")
+            httpd.serve_forever()
+    except OSError as e:
+        print(f"[HTTP Server] Port {port} is already in use (or HTTP server is already running): {e}")
+        print(f"[HTTP Server] Access dashboard at http://localhost:{port}/index.html")
+    except KeyboardInterrupt:
+        print("\n[HTTP Server] Server stopped.")
 
 if __name__ == "__main__":
     run_agent_market_scanner()
+    if "--no-serve" not in sys.argv:
+        start_http_server(8080)
+

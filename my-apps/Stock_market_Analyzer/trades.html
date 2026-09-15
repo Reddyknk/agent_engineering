@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>US Market Movers — Winners & Losers Terminal</title>
-    <meta name="description" content="Top US stock market winners and losers grouped by sector, price change, and relative volume.">
+    <title>Asymmetric Low-Risk Trades — Critic Agent Terminal</title>
+    <meta name="description" content="Top 6 Asymmetric Low-Risk stock trades evaluated by Critic Agent using Floor Pivots, Risk/Reward Ratios, and YFinance API feeds.">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,8 +36,8 @@
         <!-- Navigation Links -->
         <nav class="nav-links">
             <a href="index.html" class="nav-link"><i class="fa-solid fa-chart-pie"></i> Dashboard</a>
-            <a href="trades.html" class="nav-link"><i class="fa-solid fa-shield-halved text-emerald"></i> Low-Risk Trades</a>
-            <a href="movers.html" class="nav-link active"><i class="fa-solid fa-fire"></i> Market Movers</a>
+            <a href="trades.html" class="nav-link active"><i class="fa-solid fa-shield-halved text-emerald"></i> Low-Risk Trades</a>
+            <a href="movers.html" class="nav-link"><i class="fa-solid fa-fire"></i> Market Movers</a>
             <a href="mag7.html" class="nav-link"><i class="fa-solid fa-crown text-gold"></i> Mag 7</a>
             <a href="news.html" class="nav-link"><i class="fa-solid fa-newspaper text-cyan"></i> News Highlights</a>
         </nav>
@@ -53,7 +53,7 @@
         <div class="header-actions">
             <button class="action-btn live-status-badge">
                 <span class="pulse-dot"></span>
-                <span>YFINANCE SCREENER</span>
+                <span>CRITIC AGENT AUDITED</span>
             </button>
         </div>
     </header>
@@ -62,58 +62,55 @@
     <main class="movers-page-container">
         <div class="page-header">
             <div class="page-title">
-                <h1><i class="fa-solid fa-fire text-coral"></i> US Stock Market Movers</h1>
-                <p class="page-subtitle">Real-time market movers (Price > $15, Volume > 1M, RelVol = Volume / AvgVolume > 1.0)</p>
+                <h1><i class="fa-solid fa-shield-halved text-emerald"></i> Top Asymmetric Low-Risk Trades</h1>
+                <p class="page-subtitle">Critic Agent Evaluated Trade Setups (Ranked by Risk/Reward Ratio $\ge 1.2\text{x}$, Stop-Loss at Floor Pivot $S_1$, Target at $R_1$)</p>
             </div>
         </div>
 
-        <!-- Filter Controls Bar -->
+        <!-- Top 6 Asymmetric Low-Risk Featured Cards Grid -->
+        <div class="section-title-row">
+            <h2><i class="fa-solid fa-trophy text-gold"></i> Top 6 Asymmetric Low-Risk Trade Candidates</h2>
+            <span class="subtitle">100% Verified against YFinance Live Market Feeds</span>
+        </div>
+        <div class="low-risk-grid" id="top6TradeGrid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px;">
+            <!-- Dynamically populated by trades.js -->
+        </div>
+
+        <!-- Filter Controls Bar for Full Table -->
         <div class="filter-bar">
             <div class="filter-controls">
-                <div class="segmented-control" id="moverTypeControl">
-                    <button class="seg-btn active" data-type="all">All Movers</button>
-                    <button class="seg-btn" data-type="winners"><i class="fa-solid fa-arrow-trend-up text-green"></i> Winners</button>
-                    <button class="seg-btn" data-type="losers"><i class="fa-solid fa-arrow-trend-down text-red"></i> Losers</button>
+                <div class="segmented-control" id="rrFilterControl">
+                    <button class="seg-btn active" data-rr="all">All Qualified (R/R &ge; 1.2x)</button>
+                    <button class="seg-btn" data-rr="high"><i class="fa-solid fa-shield text-green"></i> Top Tier (R/R &ge; 1.5x)</button>
+                    <button class="seg-btn" data-rr="tight"><i class="fa-solid fa-compress text-blue"></i> Tight Stop (&le; 1.0% Risk)</button>
                 </div>
-
-                <select class="custom-select" id="sectorFilter">
-                    <option value="ALL">All Sectors</option>
-                    <option value="Technology">Technology</option>
-                    <option value="Healthcare">Healthcare</option>
-                    <option value="Industrials">Industrials</option>
-                    <option value="Financials">Financials</option>
-                    <option value="Basic Materials">Basic Materials</option>
-                    <option value="Consumer Cyclical">Consumer Cyclical</option>
-                    <option value="Energy">Energy</option>
-                    <option value="Real Estate">Real Estate</option>
-                    <option value="Utilities">Utilities</option>
-                </select>
             </div>
 
             <div class="search-input-box" style="width: 280px;">
                 <i class="fa-solid fa-filter search-icon"></i>
-                <input type="text" id="moversTableFilter" placeholder="Filter result list...">
+                <input type="text" id="tradesTableFilter" placeholder="Filter trade list...">
             </div>
         </div>
 
-        <!-- Table Viewport -->
+        <!-- Ranked Low-Risk Table Viewport -->
         <div class="movers-table-wrapper">
             <table class="movers-table">
                 <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Ticker / Company</th>
-                        <th>Sector</th>
-                        <th>Price ($)</th>
-                        <th>Change (%)</th>
-                        <th>Volume</th>
-                        <th>Rel Vol (Vol / AvgVol)</th>
-                        <th>Floor Pivot (P)</th>
-                        <th>Action</th>
+                        <th style="width: 60px;">Rank</th>
+                        <th>Symbol & Company</th>
+                        <th>Entry Price</th>
+                        <th>Stop-Loss ($S_1$)</th>
+                        <th>Downside Risk</th>
+                        <th>Take-Profit ($R_1$)</th>
+                        <th>Upside Reward</th>
+                        <th>Pivot ($P$)</th>
+                        <th>R/R Ratio</th>
+                        <th style="text-align: right;">Action</th>
                     </tr>
                 </thead>
-                <tbody id="moversTableBody">
-                    <!-- Populated dynamically by movers.js -->
+                <tbody id="tradesTableBody">
+                    <!-- Dynamically populated by trades.js -->
                 </tbody>
             </table>
         </div>
@@ -121,9 +118,9 @@
 
     <!-- Footer -->
     <footer class="app-footer">
-        <p>PulseMarket Terminal &copy; 2026. Data sourced via YFinance screener rules (Price > $15, Vol > 1M, RelVol = Vol / AvgVol).</p>
+        <p>PulseMarket Terminal &copy; 2026. Evaluated by Critic Agent with Floor Pivots & YFinance API Data.</p>
     </footer>
 
-    <script src="movers.js"></script>
+    <script src="trades.js"></script>
 </body>
 </html>

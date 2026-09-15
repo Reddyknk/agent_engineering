@@ -1319,3 +1319,106 @@ body {
     text-decoration: underline;
 }
 
+/* Low-Risk Trade Cards */
+.low-risk-trade-card {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(20, 28, 46, 0.95));
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    transition: all 0.25s ease;
+    cursor: pointer;
+    position: relative;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.low-risk-trade-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--bullish-green);
+    box-shadow: 0 8px 24px rgba(16, 185, 129, 0.25);
+}
+
+.lr-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.lr-symbol-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.lr-symbol-avatar {
+    width: 36px;
+    height: 36px;
+    background: rgba(16, 185, 129, 0.2);
+    color: var(--bullish-green);
+    font-weight: 700;
+    font-size: 0.85rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.lr-symbol-name {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.lr-rr-badge {
+    background: rgba(16, 185, 129, 0.2);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 12px;
+}
+
+.lr-levels-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 12px;
+}
+
+.lr-level-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.lr-level-label {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.lr-level-val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.88rem;
+    font-weight: 600;
+}
+
+.lr-level-val.risk { color: var(--bearish-red); }
+.lr-level-val.target { color: var(--bullish-green); }
+.lr-level-val.entry { color: var(--accent-blue); }
+
+.lr-footer-action {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+}
+
+

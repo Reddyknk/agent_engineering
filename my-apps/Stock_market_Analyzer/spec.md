@@ -59,7 +59,12 @@ The **Stock Market Analyzer** is a state-of-the-art web application and analytic
 - Filtering by Sector (`Technology`, `Healthcare`, `Energy`, `Financials`, `Industrials`, `Real Estate`, `Utilities`, etc.).
 - Direct cross-navigation linking any mover row to the terminal chart dashboard (`index.html?ticker=SYMBOL`).
 
-### 3.6 Dedicated Magnificent Seven & OSIS Page (`mag7.html`)
+### 3.6 Dedicated Asymmetric Low-Risk Trades Page (`trades.html`)
+- Dedicated multi-page view featuring the **Top 6 Asymmetric Low-Risk Trade Candidates** evaluated by the Critic Agent.
+- Interactive featured cards and ranked screener table sorted by Risk/Reward ratio ($\text{R/R} \ge 1.2\text{x}$).
+- Downside risk calculation to Stop-Loss ($S_1$), upside reward calculation to Take-Profit ($R_1$), and direct chart analysis cross-linking.
+
+### 3.7 Dedicated Magnificent Seven & OSIS Page (`mag7.html`)
 - Dedicated multi-page view for tech heavyweights (`AAPL`, `MSFT`, `NVDA`, `AMZN`, `GOOGL`, `META`, `TSLA`) + security technology leader `OSIS` (OSI Systems, Inc.).
 - Technical Floor Pivot Points ($P, R_1, S_1$), Relative Volume ($\text{RelVol} = \frac{\text{Volume}}{\text{AvgVolume}}$), P/E ratios, market caps, and interactive stock selection.
 
@@ -73,9 +78,10 @@ The **Stock Market Analyzer** is a state-of-the-art web application and analytic
   - **Market Movers**: High-volume breakouts, earnings reports, stock rallies.
 - **Features**: Interactive Category Filter Tabs, instant keyword search bar, source publisher badges (CNBC, Reuters, Bloomberg, WSJ, Seeking Alpha), relative timestamp tags, sentiment tags (Bullish / Neutral / Bearish), and direct external links to full Google News stories.
 
-### 3.8 Agent Market Scanner & Pivot Calculation Engine (per `market_scanner_agent.yaml`)
+### 3.8 Agent Market Scanner & Integrated HTTP Server (per `market_scanner_agent.yaml`)
 - **Automated Execution**: Runs at market close (`4:00 PM EST`, Mon-Fri cron schedule).
 - **Data Source**: Fetches `Open`, `High`, `Low`, `Close`, `Volume`, and `AvgVolume` via `yfinance`.
+- **Integrated Web Server**: Automatically launches Python `http.server` on **port 8080** serving `http://localhost:8080` immediately after scanning finishes. Supports `--no-serve` CLI argument for head-less background scan runs.
 - **Screening Filter**:
   - Price > $15.00
   - Volume > 1,000,000
@@ -204,7 +210,7 @@ technical_analysis:
 
 ---
 
-## 7. Verification & Implementation Roadmap
+## 7. Verification, Implementation & Critic Agent Roadmap
 
 | Phase | Deliverable | Key Tasks |
 | :--- | :--- | :--- |
@@ -214,6 +220,13 @@ technical_analysis:
 | **Phase 4** | Technical & Pivot Engine | Write math routines for SMA, EMA, RSI, MACD, and Floor Pivots (P, R1-R3, S1-S3). |
 | **Phase 5** | Market Movers Page | Implement `movers.html` with sector filtering and cross-navigation. |
 | **Phase 6** | Agent Market Scanner | Implement cron-triggered YFinance scanner executing at market close (4:00 PM EST). |
+| **Phase 7** | **Critic Agent Validation** | Automated YFinance price, volume, relative volume, and Floor Pivot math verification (`validated_yahoo_data.json`). |
+
+### 7.1 Critic Agent Checklist Specifications
+- **Live Price Cross-Validation**: Query YFinance API for all 45 symbols to verify Close, Open, High, Low, and Volume accuracy against `market_analysis_results.json`.
+- **Pivot Calculation Audit**: Validate Floor Pivots ($P = \frac{\text{High} + \text{Low} + \text{Close}}{3}$), $R_1$, $S_1$ mathematical precision across all equities and sector ETFs.
+- **RelVol Verification**: Verify $\text{RelVol} = \frac{\text{Volume}}{\text{Avg Volume}}$ ratio consistency.
+- **Output Artifact**: Export verified dataset to [`validated_yahoo_data.json`](file:///c:/Users/nkonr/Documents/AI%20Agents/Agentic_Engineering/agent_engineering/my-apps/Stock_market_Analyzer/validated_yahoo_data.json).
 
 ---
 
@@ -222,3 +235,4 @@ technical_analysis:
 - **Responsiveness**: Fully functional layout across Mobile (375px+), Tablet (768px+), and Desktop (1200px+).
 - **Resilience**: Automatic fallback to simulated market generator if third-party stock APIs encounter rate limits.
 - **Accessibility**: High-contrast dark theme exceeding WCAG AA standards, semantic HTML5 elements, and keyboard navigability.
+
